@@ -16,6 +16,9 @@
 package org.cocoa4android.ns;
 
 public class NSObject {
+	public static final boolean YES = true;
+	public static final boolean NO = false;
+	
 	public boolean isEqual(NSObject o) {
 		return super.equals(o);
 	}
