@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.cg.CGSize;
 import org.cocoa4android.ui.UIControl;
-import org.cocoa4android.ui.UIControlEvent;
+import org.cocoa4android.ui.UIControl.UIControlEvent;
 import org.cocoa4android.ui.UIPageControl;
 import org.cocoa4android.ui.UIScrollView;
 import org.cocoa4android.ui.UIScrollView.UIScrollViewDelegate;
@@ -29,14 +29,14 @@ public class CAPageView extends UIView implements UIScrollViewDelegate{
     
     public CAPageView(CGRect frame){
     	super(frame);
-    	scrollView = new UIScrollView(new CGRect(0,0,frame.getSize().getWidth(),frame.getSize().getHeight()));
+    	scrollView = new UIScrollView(new CGRect(0,0,frame.size().width(),frame.size().height()));
     	scrollView.setShowsHorizontalScrollIndicator(false);
     	scrollView.setShowsVerticalScrollIndicator(false);
     	this.addSubView(scrollView);
     	
     	pageControl = new UIPageControl();
     	
-    	mask = new UIControl(new CGRect(0,0,frame.getSize().getWidth(),frame.getSize().getHeight()));
+    	mask = new UIControl(new CGRect(0,0,frame.size().width(),frame.size().height()));
     	mask.addEventListener(this, "didSelectOnView", UIControlEvent.UIControlEventTouchUpInside);
     }
     
@@ -47,9 +47,9 @@ public class CAPageView extends UIView implements UIScrollViewDelegate{
     		this.loadScrollViewWithPage(page+1);
  	        
  	        // update the scroll view to the appropriate page
- 	        CGRect frame = this.getFrame();
+ 	        CGRect frame = this.frame();
  	        
- 	        scrollView.scrollRectToVisible(new CGRect(frame.getSize().getWidth()*page,frame.getOrigin().getY(),frame.getSize().getWidth(),frame.getSize().getHeight()), true);
+ 	        scrollView.scrollRectToVisible(new CGRect(frame.size().width()*page,frame.origin().y(),frame.size().width(),frame.size().height()), true);
  	        // Set the boolean used when scrolls originate from the UIPageControl. See scrollViewDidScroll: above.
  	        pageControlUsed = true;
  	    }
@@ -79,8 +79,8 @@ public class CAPageView extends UIView implements UIScrollViewDelegate{
 	        {
 				views.add(null);
 	        }
-			CGRect frame = this.getFrame();
-			CGSize size = new CGSize(frame.getSize().getWidth()*kNumberOfPages,frame.getSize().getHeight());
+			CGRect frame = this.frame();
+			CGSize size = new CGSize(frame.size().width()*kNumberOfPages,frame.size().height());
 			scrollView.setContentSize(size);
 			scrollView.setDelegate(this);
 			scrollView.setPageEnabled(true);
@@ -102,12 +102,12 @@ public class CAPageView extends UIView implements UIScrollViewDelegate{
 	    	views.set(page, view);
 	    }
 	    if(view!=null && view.getSuperView()==null){
-	    	CGRect frame = this.getFrame();
-	    	CGRect viewFrame = view.getFrame();
+	    	CGRect frame = this.frame();
+	    	CGRect viewFrame = view.frame();
 	    	
-	    	float x = frame.getSize().getWidth()*page + (frame.getSize().getWidth()-viewFrame.getSize().getWidth())/2;
-	    	float y = (frame.getSize().getHeight()-viewFrame.getSize().getHeight())/2;
-	    	view.setFrame(new CGRect(x,y,viewFrame.getSize().getWidth(),viewFrame.getSize().getHeight()));
+	    	float x = frame.size().width()*page + (frame.size().width()-viewFrame.size().width())/2;
+	    	float y = (frame.size().height()-viewFrame.size().height())/2;
+	    	view.setFrame(new CGRect(x,y,viewFrame.size().width(),viewFrame.size().height()));
 	    	scrollView.addSubView(view);
 	    }
 	    if (isTouchMaskEnabled&&page==0&&mask.getSuperView()==null) {
@@ -134,8 +134,8 @@ public class CAPageView extends UIView implements UIScrollViewDelegate{
 	        // do nothing - the scroll was initiated from the page control, not the user dragging
 	        return;
 	    }
-		float pageWidth = scrollView.getFrame().getSize().getWidth();
-		int page = (int) (Math.floor((scrollView.contentOffSet().getX()-pageWidth/2)/pageWidth)+1);
+		float pageWidth = scrollView.frame().size().width();
+		int page = (int) (Math.floor((scrollView.contentOffSet().x()-pageWidth/2)/pageWidth)+1);
 		pageControl.setCurrentPage(page);
 		this.loadScrollViewWithPage(page-1);
         this.loadScrollViewWithPage(page);
@@ -153,8 +153,8 @@ public class CAPageView extends UIView implements UIScrollViewDelegate{
 		// TODO Auto-generated method stub
 		pageControlUsed = false;
 		
-		CGRect frame = mask.getFrame();
-	    frame.getOrigin().setX(pageControl.getCurrentPage()*this.getFrame().getSize().getWidth());
+		CGRect frame = mask.frame();
+	    frame.origin().setX(pageControl.getCurrentPage()*this.frame().size().width());
 	    mask.setFrame(frame);
 	    scrollView.bringSubviewToFront(mask);
 		if(delegate!=null){

@@ -23,8 +23,8 @@ public class CAAsyncImageView extends UIImageView implements UrlImageViewCallbac
 		super(frame);
 	}
 	public void setImageUrl(String imageUrl){
-		if(this.getImage()!=null){
-			UrlImageViewHelper.setUrlDrawable(this.imageView, imageUrl, this.getImage().getResId(),this);
+		if(this.image()!=null){
+			UrlImageViewHelper.setUrlDrawable(this.imageView, imageUrl, this.image().getDrawable(),this);
 		}else{
 			UrlImageViewHelper.setUrlDrawable(this.imageView, imageUrl,this);
 		}

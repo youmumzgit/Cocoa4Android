@@ -65,7 +65,7 @@ public class UIViewController extends NSObject{
 	}
 	public UIViewController(int viewid){
 		this.viewid = viewid;
-		inflater = LayoutInflater.from(UIApplication.getSharedApplication().getContext());  
+		inflater = LayoutInflater.from(UIApplication.sharedApplication().getContext());  
 		View v =  inflater.inflate(viewid, null);
 		this.setView(new UIView(v));
 	}
@@ -84,7 +84,7 @@ public class UIViewController extends NSObject{
 	}
 
 
-	public UIViewController getParentViewController() {
+	public UIViewController parentViewController() {
 		return parentViewController;
 	}
 
@@ -94,7 +94,7 @@ public class UIViewController extends NSObject{
 
 
 
-	public UITabBarController getTabBarController() {
+	public UITabBarController tabBarController() {
 		return tabBarController;
 	}
 
@@ -115,9 +115,9 @@ public class UIViewController extends NSObject{
 	public void presentModalViewController(UIViewController viewController,boolean animated){
 		UIView modalView = viewController.getView();
 		modalView.setFrame(UIScreen.getMainScreen().getApplicationFrame());
-		modalView.setBackgroundColor(UIColor.getWhiteColor());
+		modalView.setBackgroundColor(UIColor.whiteColor());
 		
-		UIApplication.getSharedApplication().getDelegate().window.addSubView(modalView);
+		UIApplication.sharedApplication().delegate().window.addSubView(modalView);
 		
 		if(animated){
 			this.setPresentingViewController(viewController);
@@ -141,8 +141,8 @@ public class UIViewController extends NSObject{
 				this.getPresentedViewController().getView().removeFromSuperView();
 				this.setPresentedViewController(null);
 			}
-		}else if(checkParent&&this.getParentViewController()!=null){
-			this.getParentViewController().dismissModalViewController(animated,false);
+		}else if(checkParent&&this.parentViewController()!=null){
+			this.parentViewController().dismissModalViewController(animated,false);
 		}
 	}
 	private void translateBetweenViews(UIView modalView ,boolean isPresent){
@@ -152,7 +152,7 @@ public class UIViewController extends NSObject{
 		float density = UIScreen.getMainScreen().getDensity();
 		
 		CGRect applicationFrame = UIScreen.getMainScreen().getApplicationFrame();
-		float applicationheight = applicationFrame.getSize().getHeight()*density;
+		float applicationheight = applicationFrame.size().height()*density;
 		TranslateAnimation animation = null;
 		if(isPresent){
 			animation = new TranslateAnimation(0,0,applicationheight,0);
@@ -223,7 +223,7 @@ public class UIViewController extends NSObject{
 		return true;
 	}
 
-	public String getTitle() {
+	public String title() {
 		return title;
 	}
 

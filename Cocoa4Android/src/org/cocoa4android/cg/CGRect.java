@@ -32,13 +32,13 @@ public class CGRect {
 		this.origin = new CGPoint(r.left/density,r.top/density);
 		this.size = new CGSize((r.right-r.left)/density,(r.bottom - r.top)/density);
 	}
-	public CGPoint getOrigin() {
+	public CGPoint origin() {
 		return origin;
 	}
 	public void setOrigin(CGPoint origin) {
 		this.origin = origin;
 	}
-	public CGSize getSize() {
+	public CGSize size() {
 		return size;
 	}
 	public void setSize(CGSize size) {
@@ -46,6 +46,6 @@ public class CGRect {
 	}
 	public Rect getRect(){
 		float density = UIScreen.getMainScreen().getDensity();
-		return new Rect((int)(this.origin.getX()*density),(int)(this.origin.getY()*density),(int)((this.origin.getX()+this.size.getWidth())*density),(int)((this.origin.getY()+this.size.getHeight())*density));
+		return new Rect((int)(this.origin.x()*density),(int)(this.origin.y()*density),(int)((this.origin.x()+this.size.width())*density),(int)((this.origin.y()+this.size.height())*density));
 	}
 }

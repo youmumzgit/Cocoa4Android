@@ -29,7 +29,7 @@ public class UILabel extends UIView {
 		TextView lbl = new TextView(context);
 		this.setLabel(lbl);
 		this.setView(lbl);
-		this.setTextColor(UIColor.getBlackColor());
+		this.setTextColor(UIColor.blackColor());
 		this.setFontSize(16);
 	}
 	public UILabel(CGRect frame){

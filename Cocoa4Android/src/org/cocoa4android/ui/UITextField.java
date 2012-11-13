@@ -38,7 +38,7 @@ public class UITextField extends UIView {
 		this.setView(textField);
 		
 		ShapeDrawable background = new ShapeDrawable(new RoundRectShape(new float[] {25,25, 25,25, 25,25, 25,25},null,null));
-		background.getPaint().setColor(UIColor.getWhiteColor().getColor());
+		background.getPaint().setColor(UIColor.whiteColor().getColor());
 		background.getPaint().setStrokeWidth(2);
 		this.textField.setBackgroundDrawable(background);
 		
@@ -94,7 +94,7 @@ public class UITextField extends UIView {
 	public void becomeFirstResponder(){
 		textField.requestFocus();
 		
-		InputMethodManager imm = (InputMethodManager) UIApplication.getSharedApplication().getDelegate().getSystemService(Context.INPUT_METHOD_SERVICE);
+		InputMethodManager imm = (InputMethodManager) UIApplication.sharedApplication().delegate().getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.showSoftInput(textField, InputMethodManager.SHOW_IMPLICIT);
 		
 		//UIApplication.getSharedApplication().getDelegate().getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE);
@@ -102,7 +102,7 @@ public class UITextField extends UIView {
 	public void resignFirstResponder(){
 		textField.clearFocus();
 		
-		InputMethodManager imm = (InputMethodManager) UIApplication.getSharedApplication().getDelegate().getSystemService(Context.INPUT_METHOD_SERVICE);
+		InputMethodManager imm = (InputMethodManager) UIApplication.sharedApplication().delegate().getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(textField.getWindowToken(), 0);
 	}
 	

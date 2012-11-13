@@ -25,7 +25,7 @@ import android.preference.PreferenceManager;
 public class NSUserDefaults extends NSObject {
 	private static NSUserDefaults userDefaults = null;
 	private Editor editor = null;
-	public static NSUserDefaults getStandardUserDefaults(){
+	public static NSUserDefaults standardUserDefaults(){
 		if(userDefaults==null){
 			userDefaults = new NSUserDefaults();
 		}
@@ -36,7 +36,7 @@ public class NSUserDefaults extends NSObject {
 	
 	public NSUserDefaults(){
 		mPerferences = PreferenceManager     
-		        .getDefaultSharedPreferences(UIApplication.getSharedApplication().getContext());     
+		        .getDefaultSharedPreferences(UIApplication.sharedApplication().getContext());     
 	}
 	public void setString(String value,String key){
 		editor = mPerferences.edit();

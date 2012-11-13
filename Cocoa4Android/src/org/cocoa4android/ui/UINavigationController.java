@@ -64,7 +64,7 @@ public class UINavigationController extends UIViewController {
 				this.translateBetweenViews(fromViewController.getView(), toViewController.getView(),false);
 			}else{
 				CGRect frame = UIScreen.getMainScreen().getApplicationFrame();
-				toViewController.getView().setFrame(new CGRect(0,0,frame.getSize().getWidth(),frame.getSize().getHeight()));
+				toViewController.getView().setFrame(new CGRect(0,0,frame.size().width(),frame.size().height()));
 				toViewController.getView().setHidden(false);
 				fromViewController.getView().removeFromSuperView();
 			}
@@ -84,7 +84,7 @@ public class UINavigationController extends UIViewController {
 		this.isPush = isPush;
 		
 		CGRect applicationFrame = UIScreen.getMainScreen().getApplicationFrame();
-		float applicationWidth = applicationFrame.getSize().getWidth()*density;
+		float applicationWidth = applicationFrame.size().width()*density;
 		TranslateAnimation animation1 = null;
 		TranslateAnimation animation2 = null;
 		if(isPush){

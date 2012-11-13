@@ -22,7 +22,7 @@ public class UIApplication {
 	
 	private static UIApplication sharedApplication = null;
 
-	public static UIApplication getSharedApplication() {
+	public static UIApplication sharedApplication() {
 		if(sharedApplication==null){
 			sharedApplication = new UIApplication();
 		}
@@ -34,7 +34,7 @@ public class UIApplication {
 	public void setContext(Context context) {
 		this.context = context;
 	}
-	public UIAppDelegate getDelegate() {
+	public UIAppDelegate delegate() {
 		return delegate;
 	}
 	public void setDelegate(UIAppDelegate delegate) {

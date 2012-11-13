@@ -20,21 +20,21 @@ import org.cocoa4android.cg.CGRect;
 public class UIWindow extends UIView {
 	public UIWindow(CGRect frame){
 		super(frame);
-		this.setBackgroundColor(UIColor.getWhiteColor());
+		this.setBackgroundColor(UIColor.whiteColor());
 	}
 	public UIWindow(){
 		super();
-		this.setBackgroundColor(UIColor.getWhiteColor());
+		this.setBackgroundColor(UIColor.whiteColor());
 	}
 	public UIWindow(int viewid) {
 		super(viewid);
-		this.setBackgroundColor(UIColor.getWhiteColor());
+		this.setBackgroundColor(UIColor.whiteColor());
 	}
 	private UIViewController rootViewController;
 	public void makeKeyAndVisible(){
 		this.setHidden(false);
 	}
-	public UIViewController getRootViewController() {
+	public UIViewController rootViewController() {
 		return rootViewController;
 	}
 	public void setRootViewController(UIViewController rootViewController) {

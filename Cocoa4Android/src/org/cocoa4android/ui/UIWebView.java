@@ -44,13 +44,13 @@ public class UIWebView extends UIView {
 	}
 	public void setFrame(CGRect frame){
 		this.frame = frame;
-		LayoutParams params = new LayoutParams((int)(frame.getSize().getWidth()*density), LayoutParams.WRAP_CONTENT);
+		LayoutParams params = new LayoutParams((int)(frame.size().width()*density), LayoutParams.WRAP_CONTENT);
 		//LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
 		params.alignWithParent = true;
 		params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 		params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-		params.leftMargin = (int)(frame.getOrigin().getX()*density);
-		params.topMargin = (int)(frame.getOrigin().getY()*density);
+		params.leftMargin = (int)(frame.origin().x()*density);
+		params.topMargin = (int)(frame.origin().y()*density);
 		this.getView().setLayoutParams(params);
 	}
 	public void loadHTMLString(String string,String baseUrl){

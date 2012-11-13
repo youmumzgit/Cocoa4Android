@@ -25,7 +25,7 @@ import android.util.Xml;
 
 public class CANibInflater {
 	public static UIView[] inflater(String xib,Object fileOwner){
-		AssetManager assetManager = UIApplication.getSharedApplication().getDelegate().getResources().getAssets();
+		AssetManager assetManager = UIApplication.sharedApplication().delegate().getResources().getAssets();
 		InputStream is;
 		try {
 			is = assetManager.open(xib);

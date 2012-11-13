@@ -83,5 +83,17 @@ public class UIControl extends UIView {
 			}
 		}
 	}
+
+	public enum UIControlEvent{
+		UIControlEventTouchUpInside,
+	}
+	
+	public enum UIControlState{
+		UIControlStateNormal,
+		UIControlStateDisabled,
+		UIControlStateHighlighted,
+		UIControlStateSelected
+	}
+
 	
 }

@@ -31,12 +31,12 @@ public class UITabBarController extends UIViewController {
 		//add two part of view					 
 		int tabBarHeight = 49;
 		CGRect frame = UIScreen.getMainScreen().getApplicationFrame();
-		container = new UIView(new CGRect(0,0,frame.getSize().getWidth(),frame.getSize().getHeight()-tabBarHeight));
+		container = new UIView(new CGRect(0,0,frame.size().width(),frame.size().height()-tabBarHeight));
 		this.view.addSubView(container);
 		
 		//default set tabBar 49
-		tabBar = new UIView(new CGRect(0,frame.getSize().getHeight()-tabBarHeight,frame.getSize().getWidth(),tabBarHeight));
-		tabBar.setBackgroundColor(UIColor.getBlackColor());
+		tabBar = new UIView(new CGRect(0,frame.size().height()-tabBarHeight,frame.size().width(),tabBarHeight));
+		tabBar.setBackgroundColor(UIColor.blackColor());
 		this.view.addSubView(tabBar);
 	}
 	

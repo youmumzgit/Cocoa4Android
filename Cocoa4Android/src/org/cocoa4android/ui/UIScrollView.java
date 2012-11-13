@@ -84,7 +84,7 @@ public class UIScrollView extends UIView {
 	}
 	
 	public void setContentOffSet(CGPoint contentOffSet) {
-		this.scrollView.scrollTo((int)(contentOffSet.getX()*density), (int)(contentOffSet.getY()*density));
+		this.scrollView.scrollTo((int)(contentOffSet.x()*density), (int)(contentOffSet.y()*density));
 	}
 	public CGPoint contentOffSet() {
 		return new CGPoint(scrollView.getScrollX()/density,scrollView.getScrollY()/density);
@@ -93,8 +93,8 @@ public class UIScrollView extends UIView {
 	public void setContentSize(CGSize contentSize) {
 		this.contentSize = contentSize;
 		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-				(int)(contentSize.getWidth()*density),
-				(int)(contentSize.getHeight()*density)
+				(int)(contentSize.width()*density),
+				(int)(contentSize.height()*density)
 			);
 		
 		this.contentView.getView().setLayoutParams(params);
@@ -162,19 +162,19 @@ public class UIScrollView extends UIView {
 			if(this.pageEnabled){
 				//ajust to page
 				
-				CGRect frame = this.getFrame();
+				CGRect frame = this.frame();
 				int x  =  (int) (scrollView.getScrollX()/density);
 				int y  =  (int) (scrollView.getScrollY()/density);
 				
-				float pageWidth = this.getFrame().getSize().getWidth();
-				int pagew = (int) (Math.floor((this.contentOffSet().getX()-pageWidth/2)/pageWidth)+1);
+				float pageWidth = this.frame().size().width();
+				int pagew = (int) (Math.floor((this.contentOffSet().x()-pageWidth/2)/pageWidth)+1);
 				
 				
-				float pageHeight = this.getFrame().getSize().getHeight();
-				int pageh = (int) (Math.floor((this.contentOffSet().getY()-pageHeight/2)/pageHeight)+1);
+				float pageHeight = this.frame().size().height();
+				int pageh = (int) (Math.floor((this.contentOffSet().y()-pageHeight/2)/pageHeight)+1);
 				
-				int towardX = (int) (frame.getSize().getWidth()*pagew);
-				int towardY = (int) (frame.getSize().getHeight()*pageh);
+				int towardX = (int) (frame.size().width()*pagew);
+				int towardY = (int) (frame.size().height()*pageh);
 				
 				scrollView.smoothScrollTo((int)(towardX*density), (int)(towardY*density));
 				//scrollView.scrollTo((int)(towardX*density), (int)(towardY*density));
