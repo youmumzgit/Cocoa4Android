@@ -60,10 +60,10 @@ public abstract class UIAppDelegate extends Activity {
         	if(this.window!=null){
 	        	UIViewController viewController = this.window.rootViewController();
 	        	if(viewController!=null){
-	        		viewController.backKeyDidClicked();
+	        		return viewController.backKeyDidClicked();
 	        	}
         	}
-            return false;
+            return true;
         }
         return false;
     }

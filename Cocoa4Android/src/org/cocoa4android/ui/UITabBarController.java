@@ -93,10 +93,12 @@ public class UITabBarController extends UIViewController {
 			}
 		}
 		//×Ô¼º
+		/*
 		if(this.previousSelectedIndex!=-1){
 			this.setSelectedIndex(previousSelectedIndex);
 			return false;
 		}
+		*/
 		return true;
 	}
 
