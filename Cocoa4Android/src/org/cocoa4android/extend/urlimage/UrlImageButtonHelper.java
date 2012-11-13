@@ -15,7 +15,6 @@ import java.util.Hashtable;
 import junit.framework.Assert;
 
 import org.apache.http.NameValuePair;
-import org.cocoa4android.ui.UIButton;
 
 //import android.annotation.TargetApi;
 import android.app.Activity;
@@ -31,7 +30,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Looper;
 import android.provider.ContactsContract;
 import android.util.DisplayMetrics;
