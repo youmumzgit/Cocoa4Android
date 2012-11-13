@@ -15,6 +15,18 @@
  */
 package org.cocoa4android.ns;
 
-public class NSMutableArray extends NSArray {
+import java.util.ArrayList;
 
+
+public class NSMutableArray extends NSArray {
+	private ArrayList<Object> list;
+	
+	
+	public NSMutableArray array(){
+		return new NSMutableArray();
+	}
+	
+	public NSMutableArray(){
+		list = new ArrayList<Object>();
+	}
 }

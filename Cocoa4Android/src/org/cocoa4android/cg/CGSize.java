@@ -22,13 +22,13 @@ public class CGSize {
 		this.setWidth(width);
 		this.setHeight(height);
 	}
-	public float getWidth() {
+	public float width() {
 		return width;
 	}
 	public void setWidth(float width) {
 		this.width = width;
 	}
-	public float getHeight() {
+	public float height() {
 		return height;
 	}
 	public void setHeight(float height) {

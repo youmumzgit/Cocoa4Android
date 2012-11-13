@@ -15,6 +15,8 @@
  */
 package org.cocoa4android.ui;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 public class UIImage {
@@ -25,12 +27,18 @@ public class UIImage {
 	
 	public UIImage(int resId){
 		this.setResId(resId);
+		Drawable d = UIApplication.sharedApplication().delegate().getResources().getDrawable(resId);
+		this.setDrawable(d);
 	}
 	public UIImage(Drawable drawable){
 		this.setDrawable(drawable);
 	}
+	public UIImage(Bitmap bitmap){
+		Drawable drawable = new BitmapDrawable(bitmap);
+		this.setDrawable(drawable);
+	}
 
-	public int getResId() {
+	protected int getResId() {
 		return resId;
 	}
 

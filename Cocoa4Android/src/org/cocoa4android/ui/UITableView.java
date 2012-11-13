@@ -77,7 +77,7 @@ public class UITableView extends UIView {
 				listView.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
 				
 				if(selectedView != null){
-					selectedView.setBackgroundColor(UIColor.getWhiteColor());
+					selectedView.setBackgroundColor(UIColor.whiteColor());
 					listView.invalidate();
 					if (delegate != null) {
 						delegate.disDeselectRowAtIndexPath(UITableView.this, selectedIndexPath);
@@ -85,7 +85,7 @@ public class UITableView extends UIView {
 				}
 				selectedView = cellsList.get(position);
 				selectedIndexPath = mappingList.get(position);
-				selectedView.setBackgroundColor(UIColor.getBlueColor());
+				selectedView.setBackgroundColor(UIColor.blueColor());
 				listView.invalidate();
 				if(delegate != null) {
 					delegate.didSelectRowAtIndexPath(UITableView.this, selectedIndexPath);
@@ -146,7 +146,7 @@ public class UITableView extends UIView {
 		if (cellsList != null) {
 			int position = mappingList.indexOf(indexPath);
 			if (selectedView != null) {
-				selectedView.setBackgroundColor(UIColor.getWhiteColor());
+				selectedView.setBackgroundColor(UIColor.whiteColor());
 				listView.invalidate();
 			}
 			selectedIndexPath = indexPath;
@@ -155,7 +155,7 @@ public class UITableView extends UIView {
 	}
 	public void deselectRowAtIndexPath(NSIndexPath indexPath) {
 		if (indexPath.isEqual(selectedIndexPath)) {
-			selectedView.setBackgroundColor(UIColor.getWhiteColor());
+			selectedView.setBackgroundColor(UIColor.whiteColor());
 			listView.invalidate();
 			selectedIndexPath = null;
 			selectedView = null;
@@ -236,7 +236,7 @@ public class UITableView extends UIView {
 						if(height <= 0 || view == null) {
 							view = new UIView();
 						}
-						view.setBackgroundColor(UIColor.getClearColor());
+						view.setBackgroundColor(UIColor.clearColor());
 						AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.FILL_PARENT, (int)(height*density));
 						view.getView().setLayoutParams(params);
 						return view.getView();
@@ -247,7 +247,7 @@ public class UITableView extends UIView {
 						if(height <= 0 || view == null) {
 							view = new UIView();
 						}
-						view.setBackgroundColor(UIColor.getClearColor());
+						view.setBackgroundColor(UIColor.clearColor());
 						AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.FILL_PARENT, (int)(height*density));
 						view.getView().setLayoutParams(params);
 						return view.getView();

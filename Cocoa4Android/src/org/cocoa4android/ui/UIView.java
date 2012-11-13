@@ -35,7 +35,7 @@ public class UIView{
 	protected CGRect frame;
 	private UIColor backgroundColor;
 	protected float density = UIScreen.getMainScreen().getDensity();
-	protected Context context = UIApplication.getSharedApplication().getContext();
+	protected Context context = UIApplication.sharedApplication().getContext();
 	protected LayoutInflater inflater;
 	private int tag;
 	public UIView(){
@@ -133,7 +133,7 @@ public class UIView{
 		this.isHidden = isHidden;
 		this.view.setVisibility(isHidden?View.INVISIBLE:View.VISIBLE);
 	}
-	public CGRect getFrame() {
+	public CGRect frame() {
 		if(frame==null){
 			float width = this.getView().getWidth()/density;
 			float height = this.getView().getHeight()/density;
@@ -150,15 +150,15 @@ public class UIView{
 	}
 	public void setFrame(CGRect frame) {
 		this.frame = frame;
-		LayoutParams params = new LayoutParams((int)(frame.getSize().getWidth()*density), (int)(frame.getSize().getHeight()*density));
+		LayoutParams params = new LayoutParams((int)(frame.size().width()*density), (int)(frame.size().height()*density));
 		params.alignWithParent = true;
 		params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 		params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-		params.leftMargin = (int)(frame.getOrigin().getX()*density);
-		params.topMargin = (int)(frame.getOrigin().getY()*density);
+		params.leftMargin = (int)(frame.origin().x()*density);
+		params.topMargin = (int)(frame.origin().y()*density);
 		this.view.setLayoutParams(params);
 	}
-	public UIColor getBackgroundColor() {
+	public UIColor backgroundColor() {
 		return backgroundColor;
 	}
 	public void setBackgroundColor(UIColor backgroundColor) {
@@ -168,7 +168,7 @@ public class UIView{
 	protected boolean isViewGroup(){
 		return ViewGroup.class.isInstance(this.view);
 	}
-	public int getTag() {
+	public int tag() {
 		return tag;
 	}
 	public void setTag(int tag) {

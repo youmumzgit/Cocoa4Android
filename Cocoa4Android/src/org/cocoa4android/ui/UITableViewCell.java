@@ -39,7 +39,7 @@ public class UITableViewCell extends UIView {
 		this.getView().setLayoutParams(params);
 		
 		background = new ShapeDrawable(UITableViewCellShape.UITableViewCellShapeNoRound);
-		background.getPaint().setColor(UIColor.getWhiteColor().getColor());
+		background.getPaint().setColor(UIColor.whiteColor().getColor());
 		this.getView().setBackgroundDrawable(background);
 	}
 	
@@ -55,21 +55,21 @@ public class UITableViewCell extends UIView {
 		AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.FILL_PARENT, (int)(44*density));
 		this.getView().setLayoutParams(params);
 		background = new ShapeDrawable(UITableViewCellShape.UITableViewCellShapeNoRound);
-		background.getPaint().setColor(UIColor.getWhiteColor().getColor());
+		background.getPaint().setColor(UIColor.whiteColor().getColor());
 		this.getView().setBackgroundDrawable(background);
 	}
 	@Override
 	public void setFrame(CGRect frame) {
 		AbsListView.LayoutParams params = new AbsListView.LayoutParams(
-				(int)(frame.getSize().getWidth()*density), 
-				(int)(frame.getSize().getHeight()*density)
+				(int)(frame.size().width()*density), 
+				(int)(frame.size().height()*density)
 			);
 		this.getView().setLayoutParams(params);
 	}
 	public void setBackgroundColor(UIColor color) {
 		background.getPaint().setColor(color.getColor());
 	}
-	public UIColor getBackgroundColor() {
+	public UIColor backgroundColor() {
 		return new UIColor(background.getPaint().getColor());
 	}
 	public void setShapeType(UITableViewCellShapeType shapeType) {

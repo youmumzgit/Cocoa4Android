@@ -31,7 +31,7 @@ public class UIActivityIndicatorView extends UIView {
 		this();
 		this.setFrame(frame);
 	}
-	public ProgressBar getActivityIndicatorView() {
+	protected ProgressBar getActivityIndicatorView() {
 		return activityIndicatorView;
 	}
 

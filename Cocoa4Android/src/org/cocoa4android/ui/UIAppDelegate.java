@@ -34,8 +34,8 @@ public abstract class UIAppDelegate extends Activity {
 		//setTheme(android.R.style.Theme_Translucent_NoTitleBar);
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.main);
-        UIApplication.getSharedApplication().setContext(this);
-        UIApplication.getSharedApplication().setDelegate(this);
+        UIApplication.sharedApplication().setContext(this);
+        UIApplication.sharedApplication().setDelegate(this);
         
         
         
@@ -58,7 +58,7 @@ public abstract class UIAppDelegate extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
         	if(this.window!=null){
-	        	UIViewController viewController = this.window.getRootViewController();
+	        	UIViewController viewController = this.window.rootViewController();
 	        	if(viewController!=null){
 	        		viewController.backKeyDidClicked();
 	        	}

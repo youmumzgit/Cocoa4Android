@@ -22,13 +22,13 @@ public class CGPoint {
 		this.setX(x);
 		this.setY(y);
 	}
-	public float getX() {
+	public float x() {
 		return x;
 	}
 	public void setX(float x) {
 		this.x = x;
 	}
-	public float getY() {
+	public float y() {
 		return y;
 	}
 	public void setY(float y) {

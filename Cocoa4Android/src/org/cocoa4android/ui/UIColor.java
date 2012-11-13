@@ -29,35 +29,35 @@ public class UIColor {
 	public void setColor(int color) {
 		this.color = color;
 	}
-	public static UIColor getBlackColor(){
+	public static UIColor blackColor(){
 		return new UIColor(Color.BLACK);
 	}
-	public static UIColor getWhiteColor(){
+	public static UIColor whiteColor(){
 		return new UIColor(Color.WHITE);
 	}
-	public static UIColor getClearColor(){
+	public static UIColor clearColor(){
 		return new UIColor(Color.TRANSPARENT);
 	}
-	public static UIColor getGrayColor(){
+	public static UIColor grayColor(){
 		return new UIColor(Color.GRAY);
 	}
-	public static UIColor getDarkGrayColor(){
+	public static UIColor darkGrayColor(){
 		return new UIColor(Color.DKGRAY);
 	}
-	public static UIColor getLightGrayColor(){
+	public static UIColor lightGrayColor(){
 		return new UIColor(Color.LTGRAY);
 	}
 	
-	public static UIColor getBlueColor(){
+	public static UIColor blueColor(){
 		return new UIColor(Color.BLUE);
 	}
-	public static UIColor getGreenColor(){
+	public static UIColor greenColor(){
 		return new UIColor(Color.GREEN);
 	}
-	public static UIColor getRedColor(){
+	public static UIColor redColor(){
 		return new UIColor(Color.RED);
 	}
-	public static UIColor getYellowColor(){
+	public static UIColor yellowColor(){
 		return new UIColor(Color.YELLOW);
 	}
 	
