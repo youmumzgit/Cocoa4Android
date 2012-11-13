@@ -15,7 +15,7 @@
  */
 package org.cocoa4android.ui;
 
-public class UIPageControl {
+public class UIPageControl extends UIView{
 	private int numberOfPages;
 	private int currentPage;
 	

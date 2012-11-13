@@ -16,8 +16,9 @@
 package org.cocoa4android.ui;
 
 import org.cocoa4android.cg.CGPoint;
+import org.cocoa4android.ns.NSObject;
 
-public class UITouch{
+public class UITouch extends NSObject{
 	private float x;
 	private float y;
 	private float previousX;

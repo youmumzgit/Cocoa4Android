@@ -15,9 +15,11 @@
  */
 package org.cocoa4android.ui;
 
+import org.cocoa4android.ns.NSObject;
+
 import android.content.Context;
 
-public class UIApplication {
+public class UIApplication extends NSObject{
 	private UIAppDelegate delegate;
 	
 	private static UIApplication sharedApplication = null;

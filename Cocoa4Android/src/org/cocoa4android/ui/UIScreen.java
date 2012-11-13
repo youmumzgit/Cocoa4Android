@@ -16,8 +16,9 @@
 package org.cocoa4android.ui;
 
 import org.cocoa4android.cg.CGRect;
+import org.cocoa4android.ns.NSObject;
 
-public class UIScreen {
+public class UIScreen extends NSObject{
 	private CGRect bounds;
 	private CGRect applicationFrame;
 	private float density;

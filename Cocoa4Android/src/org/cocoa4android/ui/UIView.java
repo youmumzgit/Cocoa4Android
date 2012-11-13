@@ -16,6 +16,7 @@
 package org.cocoa4android.ui;
 
 import org.cocoa4android.cg.CGRect;
+import org.cocoa4android.ns.NSObject;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -28,7 +29,7 @@ import android.widget.RelativeLayout.LayoutParams;
 
 
 
-public class UIView{
+public class UIView extends NSObject{
 	private UIView superView;
 	private View view;
 	private boolean isHidden;

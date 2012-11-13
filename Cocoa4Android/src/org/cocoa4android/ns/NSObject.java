@@ -15,11 +15,13 @@
  */
 package org.cocoa4android.ns;
 
+import android.util.Log;
+
 public class NSObject {
 	public static final boolean YES = true;
 	public static final boolean NO = false;
-	public static void NSLog(){
-		
+	public static void NSLog(String format,Object...args){
+		Log.i("Cocoa4Android",NSString.stringWithFormat(format, args).getString());
 	}
 	
 	public boolean isEqual(NSObject o) {
