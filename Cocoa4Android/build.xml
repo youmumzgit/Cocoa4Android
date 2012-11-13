@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Cocoa4Android" default="jar">
+	<!--
+	<property file="local.properties"/>
+	<property file="build.properties"/>
+	<property file="default.properties"/>
+	<path id="android.antlibs">
+        <pathelement path="${sdk.dir}/tools/lib/anttasks.jar"/>
+        <pathelement path="${sdk.dir}/tools/lib/sdklib.jar"/>
+        <pathelement path="${sdk.dir}/tools/lib/androidprefs.jar"/>
+        <pathelement path="${sdk.dir}/tools/lib/apkbuilder.jar"/>
+        <pathelement path="${sdk.dir}/tools/lib/jarutils.jar"/>
+    </path>
+	<path id="android.libraries.src"><path refid="project.libraries.src" /></path>
+	<path id="android.libraries.jars"><path refid="project.libraries.jars" /></path>
+	-->
+	<target name="jar">
+    	<jar destfile="libs/Cocoa4Android.jar">
+        	<fileset dir="bin/classes" includes="**/*.class"/>
+    		<fileset dir="." includes="res/*/*.*,res/*"/>
+    	</jar>
+    </target>
+</project>

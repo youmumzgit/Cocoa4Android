@@ -70,49 +70,6 @@ public class UITableView extends UIView {
 		}
 		adapter = new refreshableAdapter(mappingList);
 		listView.setAdapter(adapter);
-		listView.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> listView, View view, int position, long id) {
-				// TODO Auto-generated method stub
-				
-				/*
-		        if (!listView.isFocused())
-		        {
-		            // listView.setItemsCanFocus(false);
-
-		            // Use beforeDescendants so that the EditText doesn't re-take focus
-		            listView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
-		            listView.requestFocus();
-		        }else{
-		        	 listView.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
-		        }
-			    
-				
-				
-				if(selectedView != null){
-					selectedView.setBackgroundColor(UIColor.getWhiteColor());
-					listView.invalidate();
-					if (delegate != null) {
-						delegate.disDeselectRowAtIndexPath(UITableView.this, selectedIndexPath);
-					}
-				}
-				selectedView = cellsList.get(position);
-				selectedIndexPath = mappingList.get(position);
-				selectedView.setBackgroundColor(UIColor.getBlueColor());
-				listView.invalidate();
-				if(delegate != null) {
-					delegate.didSelectRowAtIndexPath(UITableView.this, selectedIndexPath);
-				}
-				*/
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				//listView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
-			}
-		});
 		
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
