@@ -34,6 +34,6 @@ public class NSObject {
 		return super.hashCode();
 	}
 	public String description() {
-		return super.toString();
+		return this.toString();
 	}
 }
