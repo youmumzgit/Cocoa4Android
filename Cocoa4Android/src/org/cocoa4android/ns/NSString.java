@@ -17,6 +17,7 @@ package org.cocoa4android.ns;
 
 import java.nio.charset.Charset;
 
+import android.R.bool;
 import android.R.integer;
 import android.R.string;
 
@@ -55,28 +56,46 @@ public class NSString extends NSObject {
 		this.content = string;
 		return this;
 	}
-
-	//endsWith
-	public boolean endsWith (NSString string){
-		return this.endsWith(string);
-	}
 	//lastIndexOf
 	public NSString lastIndexOf (NSString string){
 		return this.lastIndexOf(string);
 	}
-	//字串长度
-	public int length(){
-		return  this.content.length();
+
+	//copyValueOf
+	public String copyValueOf(char c[]) {
+		return this.copyValueOf(c);	
 	}
-	
-	//抽取字串
+
+	//subStringFromIndex
 	public NSString subStringFromIndex(int start){
 		return new NSString(this.content.substring(start)) ;
 	}
 	//subStringFromIndexToIndex
-	public NSString subStringFromIndexToIndex(int start,int end) {
+	public NSString subStringToIndex(int end) {
+		int start = 0;
 		return new NSString(this.content.substring(start, end)) ;
 	}
+
+	//replaceAll (rule 正则表达式)
+	public String replaceAll(String rule , String replaceString) {
+		return this.content.replaceAll(rule, replaceString);
+	}
+
+	//字符截取字符串
+	public String[] componentsSeparatedBy (String string) {
+		return this.content.split(string);
+	}
+	
+	//找出子串的index，（start 开始位置）
+	public int IndexIsSearchSubstring(String string,int start) {
+		return this.content.lastIndexOf(string, start);
+	}
+	
+	//length
+	public int length(){
+		return  this.content.length();
+	}
+	
 	//getString
 	public String getString() {
 		return this.content;
@@ -90,10 +109,25 @@ public class NSString extends NSObject {
 	public boolean isEqualToString (NSString string){
 		return this.content.equals(string.getString());
 	}
+	//containsOfSubstring
+	public boolean containsOfSubstring (String string){
+		return this.content.contains(string);
+	}
+	//字串是否正则
+	public boolean matches (String string){
+		return this.matches(string);
+	}
+	//endsWith
+	public boolean endsWith (NSString string){
+		return this.endsWith(string);
+	}
 	
 	//toCharArray
-//	public char[] toCharArray() {
-//		return this.content.toCharArray();	
-//	}
-
+	public char[] toCharArray() {
+		return this.content.toCharArray();	
+	}
+	
+	public int intValue() {
+		return Integer.parseInt(this.content);
+	}
 }
