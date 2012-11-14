@@ -120,7 +120,7 @@ public class UITableView extends UIView {
 					mappingList.add(indexPath);
 					cellsList.add(dataSource.cellForRowAtIndexPath(this, indexPath));
 				}
-				mappingList.add(new NSIndexPath(section,-2));//footer
+				mappingList.add(new NSIndexPath(section,Integer.MAX_VALUE));//footer
 				cellsList.add(delegate.viewForFooterInSection(this, section));//footer
 			}
 		}
@@ -310,7 +310,7 @@ public class UITableView extends UIView {
 						view.getView().setLayoutParams(params);
 						return view.getView();
 					}
-					else if(indexPath.row() == -2) {//footer
+					else if(indexPath.row() == -Integer.MAX_VALUE) {//footer
 						UIView view = cellsList.get(position);
 						float height = delegate.heightForFooterInSection(UITableView.this, indexPath.section());
 						if(height <= 0 || view == null) {
