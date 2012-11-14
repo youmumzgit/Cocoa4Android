@@ -299,29 +299,27 @@ public class UITableView extends UIView {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if(dataSource != null && delegate != null) {
 				NSIndexPath indexPath = mappingList.get(position);
-				if(indexPath.row() < 0) {
-					if(indexPath.row() == -1) {//header
-						UIView view = cellsList.get(position);
-						float height = delegate.heightForHeaderInSection(UITableView.this, indexPath.section());
-						if(height <= 0 || view == null) {
-							view = new UIView();
-						}
-						view.setBackgroundColor(UIColor.clearColor());
-						AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.FILL_PARENT, (int)(height*density));
-						view.getView().setLayoutParams(params);
-						return view.getView();
+				if(indexPath.row() == -1) {//header
+					UIView view = cellsList.get(position);
+					float height = delegate.heightForHeaderInSection(UITableView.this, indexPath.section());
+					if(height <= 0 || view == null) {
+						view = new UIView();
 					}
-					else if(indexPath.row() == -Integer.MAX_VALUE) {//footer
-						UIView view = cellsList.get(position);
-						float height = delegate.heightForFooterInSection(UITableView.this, indexPath.section());
-						if(height <= 0 || view == null) {
-							view = new UIView();
-						}
-						view.setBackgroundColor(UIColor.clearColor());
-						AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.FILL_PARENT, (int)(height*density));
-						view.getView().setLayoutParams(params);
-						return view.getView();
+					view.setBackgroundColor(UIColor.clearColor());
+					AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.FILL_PARENT, (int)(height*density));
+					view.getView().setLayoutParams(params);
+					return view.getView();
+				}
+				else if(indexPath.row() == Integer.MAX_VALUE) {//footer
+					UIView view = cellsList.get(position);
+					float height = delegate.heightForFooterInSection(UITableView.this, indexPath.section());
+					if(height <= 0 || view == null) {
+						view = new UIView();
 					}
+					view.setBackgroundColor(UIColor.clearColor());
+					AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.FILL_PARENT, (int)(height*density));
+					view.getView().setLayoutParams(params);
+					return view.getView();
 				}
 				else {
 					UITableViewCell cell = (UITableViewCell) cellsList.get(position);
