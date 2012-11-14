@@ -206,7 +206,7 @@ public class UITableView extends UIView {
 			for(int j = position+1;j < mappingList.size();j++) {
 				tmpIndexPath = mappingList.get(j);
 				if (indexPath.section() == tmpIndexPath.section()) {
-					tmpIndexPath.setRow(indexPath.row()+1);
+					tmpIndexPath.setRow(tmpIndexPath.row()+1);
 				}
 				else {
 					break;
