@@ -15,6 +15,9 @@
  */
 package org.cocoa4android.ui;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import org.cocoa4android.cg.CGRect;
 
 import android.content.Context;
@@ -33,7 +36,7 @@ public class UITextField extends UIView {
 	private EditText textField = null;
 	public UITextField(){
 		textField = new EditText(context);
-		
+		textField.setFocusable(YES);
 		this.setTextField(textField);
 		this.setView(textField);
 		
@@ -92,10 +95,21 @@ public class UITextField extends UIView {
 		return false;
 	}
 	public void becomeFirstResponder(){
-		textField.requestFocus();
+		//textField.requestFocus();
 		
-		InputMethodManager imm = (InputMethodManager) UIApplication.sharedApplication().delegate().getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.showSoftInput(textField, InputMethodManager.SHOW_IMPLICIT);
+		//InputMethodManager imm = (InputMethodManager) UIApplication.sharedApplication().delegate().getSystemService(Context.INPUT_METHOD_SERVICE);
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				InputMethodManager imm = (InputMethodManager)textField.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+				NSLog("isActive %s", imm.isActive());
+				imm.showSoftInput(textField, InputMethodManager.SHOW_FORCED);
+				NSLog("isActive %s", imm.isActive());
+			}
+		}, 1000);
 		
 		//UIApplication.getSharedApplication().getDelegate().getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 	}
