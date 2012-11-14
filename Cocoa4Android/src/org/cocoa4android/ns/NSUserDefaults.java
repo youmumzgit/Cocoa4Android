@@ -17,7 +17,6 @@ package org.cocoa4android.ns;
 
 import java.util.HashMap;
 
-import org.cocoa4android.extend.JSONHelper;
 import org.cocoa4android.ui.UIApplication;
 
 import android.content.SharedPreferences;
@@ -66,12 +65,13 @@ public class NSUserDefaults extends NSObject {
 		return mPerferences.getBoolean(key, false);
 	}
 	public void setArray(String[] value,String key){
-		String array = JSONHelper.toJSON(value);
-		this.setString(array, key);
+		//String array = JSONHelper.toJSON(value);
+		//this.setString(array, key);
 	}
 	public String[] arrayForKey(String key){
 		String value = this.stringForKey(key);
-		return JSONHelper.parseArray(value, String.class);
+		//return JSONHelper.parseArray(value, String.class);
+		return null;
 	}
 	
 	public void synchronize(){;

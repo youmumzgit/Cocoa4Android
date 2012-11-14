@@ -24,7 +24,7 @@ public class NSStringJSON extends NSString {
 	 * @return
 	 */
 	public NSObject JSONValue(){
-		//this.getString()
+		
 		return null;
 	}
 }
