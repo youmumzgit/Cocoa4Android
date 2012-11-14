@@ -17,8 +17,6 @@ package org.cocoa4android.ns;
 
 import java.util.HashMap;
 
-import android.R.integer;
-
 public class NSDictionary extends NSObject {
 	protected HashMap<Object, Object> hashMap;
 	

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Wu Tong
+ * Copyright (C) 2012 Wu Tong,chao
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,15 @@
  */
 package org.cocoa4android.ns;
 
+import android.util.Log;
+
 public class NSObject {
+	public static final boolean YES = true;
+	public static final boolean NO = false;
+	public static void NSLog(String format,Object...args){
+		Log.i("Cocoa4Android",NSString.stringWithFormat(format, args).getString());
+	}
+	
 	public boolean isEqual(NSObject o) {
 		return super.equals(o);
 	}

@@ -15,6 +15,8 @@
  */
 package org.cocoa4android.ns;
 
+import java.util.HashMap;
+
 import org.cocoa4android.extend.JSONHelper;
 import org.cocoa4android.ui.UIApplication;
 
@@ -24,7 +26,6 @@ import android.preference.PreferenceManager;
 
 public class NSUserDefaults extends NSObject {
 	private static NSUserDefaults userDefaults = null;
-	private Editor editor = null;
 	public static NSUserDefaults standardUserDefaults(){
 		if(userDefaults==null){
 			userDefaults = new NSUserDefaults();
@@ -32,35 +33,33 @@ public class NSUserDefaults extends NSObject {
 		return userDefaults;
 	}
 	
+	private Editor editor = null;
 	private SharedPreferences mPerferences = null;
 	
 	public NSUserDefaults(){
 		mPerferences = PreferenceManager     
-		        .getDefaultSharedPreferences(UIApplication.sharedApplication().getContext());     
+		        .getDefaultSharedPreferences(UIApplication.sharedApplication().getContext());   
+		editor = mPerferences.edit();
 	}
 	public void setString(String value,String key){
-		editor = mPerferences.edit();
 		editor.putString(key, value);
 	}
 	public String stringForKey(String key){
 		return mPerferences.getString(key, null);
 	}
 	public void setInteger(int value,String key){
-		editor = mPerferences.edit();
 		editor.putInt(key, value);
 	}
 	public int integerForKey(String key){
 		return mPerferences.getInt(key, 0);
 	}
 	public void setFloat(float value,String key){
-		editor = mPerferences.edit();
 		editor.putFloat(key, value);
 	}
 	public float floatForKey(String key){
 		return mPerferences.getFloat(key, 0.0f);
 	}
 	public void setBoolean(boolean value,String key){
-		editor = mPerferences.edit();
 		editor.putBoolean(key, value);
 	}
 	public boolean booleanForKey(String key){
@@ -77,5 +76,7 @@ public class NSUserDefaults extends NSObject {
 	
 	public void synchronize(){;
 		editor.commit();
+		//new editor
+		editor = mPerferences.edit();
 	}
 }

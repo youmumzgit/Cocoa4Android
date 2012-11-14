@@ -16,16 +16,23 @@
 package org.cocoa4android.ui;
 
 import org.cocoa4android.cg.CGRect;
+import org.cocoa4android.ns.NSString;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.KeyEvent;
 
 public abstract class UIAppDelegate extends Activity {
-	public static Context context;
+	public static final boolean YES = true;
+	public static final boolean NO = false;
+	public static void NSLog(String format,Object...args){
+		Log.i("Cocoa4Android",NSString.stringWithFormat(format, args).getString());
+	}
 	
+	public static Context context;
 	public UIWindow window;
 	
 	@Override
@@ -60,10 +67,10 @@ public abstract class UIAppDelegate extends Activity {
         	if(this.window!=null){
 	        	UIViewController viewController = this.window.rootViewController();
 	        	if(viewController!=null){
-	        		viewController.backKeyDidClicked();
+	        		return viewController.backKeyDidClicked();
 	        	}
         	}
-            return false;
+            return true;
         }
         return false;
     }

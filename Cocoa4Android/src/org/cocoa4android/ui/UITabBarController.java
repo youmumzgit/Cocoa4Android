@@ -47,32 +47,45 @@ public class UITabBarController extends UIViewController {
 	public void setViewControllers(UIViewController[] viewControllers) {
 		if(viewControllers!=null&&viewControllers.length > 0){
 			this.viewControllers = viewControllers;
+			
 			for(int i = 0;i<viewControllers.length;i++){
 				UIViewController viewController = viewControllers[i];
 				viewController.setTabBarController(this);
-				UIView view = viewController.getView();
-				view.setHidden(true);
-				container.addSubView(view);
 			}
+			this.loadViewController(0);
 			//default select the first one
 			//this.setSelectedIndex(0);
 			this.selectedIndex = 0;
-			this.viewControllers[0].getView().setHidden(false);
 		}
 	}
-
+	private boolean loadViewController(int index){
+		if(index<this.viewControllers.length){
+			UIViewController viewController = viewControllers[index];
+			UIView view = viewController.getView();
+			if(view.superView()==null){
+				container.addSubView(view);
+			}
+			if(view.isHidden()){
+				view.setHidden(NO);
+			}
+			return true;
+		}
+		return false;
+	}
+	
 	public int getSelectedIndex() {
 		return selectedIndex;
 	}
 
 	public void setSelectedIndex(int selectedIndex) {
-		if(this.viewControllers!=null&&this.viewControllers.length>0){
-			if(this.selectedIndex!=-1){
-				this.viewControllers[this.selectedIndex].getView().setHidden(true);
+		if(selectedIndex!=this.selectedIndex){
+			if(this.viewControllers!=null&&this.loadViewController(selectedIndex)){
+				if(this.selectedIndex!=-1){
+					this.viewControllers[this.selectedIndex].getView().setHidden(YES);
+				}
 				previousSelectedIndex = this.selectedIndex;
+				this.selectedIndex = selectedIndex;
 			}
-			this.viewControllers[selectedIndex].getView().setHidden(false);
-			this.selectedIndex = selectedIndex;
 		}
 	}
 	public UIView getTabBar() {
@@ -91,11 +104,6 @@ public class UITabBarController extends UIViewController {
 			if(!viewController.backKeyDidClicked()){
 				return false;
 			}
-		}
-		//×Ô¼º
-		if(this.previousSelectedIndex!=-1){
-			this.setSelectedIndex(previousSelectedIndex);
-			return false;
 		}
 		return true;
 	}
