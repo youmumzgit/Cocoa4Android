@@ -11,8 +11,7 @@ public class NSDateFormatter extends NSObject {
 	}
 	
 	public NSString dateFormat() {
-		//return dateFormat.toPattern();
-		return null;
+		return new NSString(_dateFormat.toPattern());
 	}
 	
 	public void setDateFormat(NSString string) {
