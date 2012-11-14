@@ -83,6 +83,10 @@ public class UITextField extends UIView {
 		}
 		
 	}
+	public void setFont(UIFont font) {
+		this.textField.setTextSize(font.fontSize());
+		this.textField.setTypeface(font.getFont());
+	}
 	public void setFontSize(float fontSize){
 		this.textField.setTextSize(fontSize);
 	}
