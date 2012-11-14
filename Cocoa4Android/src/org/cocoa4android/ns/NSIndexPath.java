@@ -15,7 +15,7 @@
  */
 package org.cocoa4android.ns;
 
-public class NSIndexPath extends NSObject{
+public class NSIndexPath extends NSObject implements Comparable<NSIndexPath> {
 	private int section;
 	private int row;
 	
@@ -67,5 +67,26 @@ public class NSIndexPath extends NSObject{
 	@Override
 	public int hash() {
 		return this.section + this.row;
+	}
+
+	@Override
+	public int compareTo(NSIndexPath another) {
+		if (this.section < another.section()) {
+			return -1;
+		}
+		else if (this.section > another.section()) {
+			return 1;
+		}
+		else {
+			if (this.row < another.row()) {
+				return -1;
+			}
+			else if (this.row > another.row()) {
+				return 1;
+			}
+			else {
+				return 0;
+			}
+		}
 	}
 }
