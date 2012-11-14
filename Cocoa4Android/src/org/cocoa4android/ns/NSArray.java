@@ -30,4 +30,11 @@ public class NSArray extends NSObject {
 		 objects = new Object[1];
 		 objects[0] = object;
 	 }
+	 
+	 public int count() {
+		 return objects.length;
+	 }
+	 public Object objectAtIndex(int index) {
+		 return objects[index];
+	 }
 }
