@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cocoa4android.cg.CGRect;
+import org.cocoa4android.ns.NSArray;
 import org.cocoa4android.ns.NSIndexPath;
 import org.cocoa4android.ui.UITableViewCell.UITableViewCellSeparatorStyle;
 import org.cocoa4android.ui.UITableViewCell.UITableViewCellShapeType;
@@ -32,7 +33,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -175,6 +175,51 @@ public class UITableView extends UIView {
 		}
 	}
 	
+	public void insertRowsAtIndexPaths(NSArray indexPaths,UITableViewRowAnimation animation) {
+		NSIndexPath indexPath = null;
+		NSIndexPath tmpIndexPath = null;
+		for (int i = 0; i < indexPaths.count(); i++) {
+			indexPath = (NSIndexPath) indexPaths.objectAtIndex(i);
+			int position = 0;
+			int count = mappingList.size();
+			while (true) {
+				int middle = (position + count) / 2;
+				if (middle == position) {
+					break;
+				}
+				tmpIndexPath = mappingList.get(middle);
+				if (indexPath.compareTo(tmpIndexPath) > 0) {//indexPath > tmpIndexPath
+					position = middle;
+				}
+				else if (indexPath.compareTo(tmpIndexPath) < 0) {//indexPath < tmpIndexPath
+					count = middle;
+				}
+				else {//indexPath == tmpIndexPath
+					break;
+				}
+			}
+			mappingList.add(position, indexPath);
+			cellsList.add(position, dataSource.cellForRowAtIndexPath(this, indexPath));
+		}
+		adapter.mappingList = mappingList;
+		adapter.notifyDataSetChanged();
+		listView.invalidateViews();
+	}
+	
+	public void deleteRowsAtIndexPaths(NSArray indexPaths,UITableViewRowAnimation animation) {
+		NSIndexPath indexPath = null;
+		mappingList.indexOf(indexPath);
+		for (int i = 0; i < indexPaths.count(); i++) {
+			indexPath = (NSIndexPath) indexPaths.objectAtIndex(i);
+			int position = mappingList.indexOf(indexPath);
+			mappingList.remove(position);
+			cellsList.remove(position);
+		}
+		adapter.mappingList = mappingList;
+		adapter.notifyDataSetChanged();
+		listView.invalidateViews();
+	}
+	
 	public interface UITableViewDataSource {
 		int numberOfRowsInSection(UITableView tableView,int section);
 		UITableViewCell cellForRowAtIndexPath(UITableView tableView,NSIndexPath indexPath);
@@ -190,11 +235,23 @@ public class UITableView extends UIView {
 		UIView viewForFooterInSection(UITableView tableView,int section);
 		void didSelectRowAtIndexPath(UITableView tableView,NSIndexPath indexPath);
 		void disDeselectRowAtIndexPath(UITableView tableView,NSIndexPath indexPath);
+		void willDisplayCellForRowAtIndexPath(UITableView tableView,UITableViewCell cell,NSIndexPath indexPath);
 	}
 	
 	public enum UITableViewStyle {
 		UITableViewStylePlain,                  // regular table view
 	    UITableViewStyleGrouped                 // preferences style table view
+	}
+	
+	public enum UITableViewRowAnimation {
+		UITableViewRowAnimationFade,
+	    UITableViewRowAnimationRight,           // slide in from right (or out to right)
+	    UITableViewRowAnimationLeft,
+	    UITableViewRowAnimationTop,
+	    UITableViewRowAnimationBottom,
+	    UITableViewRowAnimationNone,            // available in iOS 3.0
+	    UITableViewRowAnimationMiddle,          // available in iOS 3.2.  attempts to keep cell centered in the space it will/did occupy
+	    UITableViewRowAnimationAutomatic        // available in iOS 5.0.  chooses an appropriate animation style for you
 	}
 	
 	public class refreshableAdapter extends BaseAdapter{
@@ -272,6 +329,7 @@ public class UITableView extends UIView {
 					else {
 						cell.setShapeType(UITableViewCellShapeType.UITableViewCellShapeNoRound);
 					}
+					delegate.willDisplayCellForRowAtIndexPath(UITableView.this, cell, indexPath);
 					return cell.getView();
 				}
 			}
