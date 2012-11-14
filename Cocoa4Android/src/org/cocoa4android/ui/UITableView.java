@@ -185,6 +185,9 @@ public class UITableView extends UIView {
 			while (true) {
 				int middle = (position + count) / 2;
 				if (middle == position) {
+					if (indexPath.compareTo(mappingList.get(middle)) > 0) {//indexPath is greater than last one
+						position = count;
+					}
 					break;
 				}
 				tmpIndexPath = mappingList.get(middle);
@@ -200,6 +203,15 @@ public class UITableView extends UIView {
 			}
 			mappingList.add(position, indexPath);
 			cellsList.add(position, dataSource.cellForRowAtIndexPath(this, indexPath));
+			for(int j = position+1;j < mappingList.size();j++) {
+				tmpIndexPath = mappingList.get(j);
+				if (indexPath.section() == tmpIndexPath.section()) {
+					tmpIndexPath.setRow(indexPath.row()+1);
+				}
+				else {
+					break;
+				}
+			}
 		}
 		adapter.mappingList = mappingList;
 		adapter.notifyDataSetChanged();
