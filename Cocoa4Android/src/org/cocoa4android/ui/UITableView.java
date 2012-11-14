@@ -206,7 +206,7 @@ public class UITableView extends UIView {
 			cellsList.add(position, dataSource.cellForRowAtIndexPath(this, indexPath));
 			for(int j = position+1;j < mappingList.size();j++) {
 				tmpIndexPath = mappingList.get(j);
-				if (indexPath.section() == tmpIndexPath.section() && indexPath.row() != Integer.MAX_VALUE) {
+				if (indexPath.section() == tmpIndexPath.section() && tmpIndexPath.row() != Integer.MAX_VALUE) {
 					tmpIndexPath.setRow(tmpIndexPath.row()+1);
 				}
 				else {
