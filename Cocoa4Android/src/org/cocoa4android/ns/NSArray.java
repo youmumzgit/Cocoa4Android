@@ -16,7 +16,7 @@
 package org.cocoa4android.ns;
 
 public class NSArray extends NSObject {
-	 private Object[] objects; 
+	 Object[] objects; 
 	 public static NSArray arrayWithObject(Object object){
 		 return new NSArray(object);
 	 }

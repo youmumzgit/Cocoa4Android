@@ -36,4 +36,7 @@ public class NSObject {
 	public String description() {
 		return this.toString();
 	}
+	public String JSONRepresentation(){
+		return "";
+	}
 }

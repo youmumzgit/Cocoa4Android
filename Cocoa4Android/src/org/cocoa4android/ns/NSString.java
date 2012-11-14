@@ -21,7 +21,7 @@ import android.R.integer;
 import android.R.string;
 
 public class NSString extends NSObject {
-	protected String content = null;
+	String content = null;
 	private  int length = 0;
 	
 	public NSString(){

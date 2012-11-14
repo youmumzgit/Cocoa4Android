@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 
 public class NSMutableArray extends NSArray {
-	private ArrayList<Object> list = null;
+	ArrayList<Object> list = null;
 	
 	public static NSMutableArray array(){
 		return new NSMutableArray();
