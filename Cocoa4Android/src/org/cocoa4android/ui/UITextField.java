@@ -98,6 +98,11 @@ public class UITextField extends UIView {
 		//textField.requestFocus();
 		
 		//InputMethodManager imm = (InputMethodManager) UIApplication.sharedApplication().delegate().getSystemService(Context.INPUT_METHOD_SERVICE);
+		InputMethodManager imm = (InputMethodManager)textField.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+		if (!imm.isActive()) {
+			imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+		}
+		/*
 		Timer timer = new Timer();
 		timer.schedule(new TimerTask() {
 			
@@ -105,12 +110,12 @@ public class UITextField extends UIView {
 			public void run() {
 				// TODO Auto-generated method stub
 				InputMethodManager imm = (InputMethodManager)textField.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-				NSLog("isActive %s", imm.isActive());
-				imm.showSoftInput(textField, InputMethodManager.SHOW_FORCED);
-				NSLog("isActive %s", imm.isActive());
+				if (!imm.isActive()) {
+					imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+				}
 			}
 		}, 1000);
-		
+		*/
 		//UIApplication.getSharedApplication().getDelegate().getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 	}
 	public void resignFirstResponder(){
