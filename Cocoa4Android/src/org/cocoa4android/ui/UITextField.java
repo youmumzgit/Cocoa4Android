@@ -29,11 +29,15 @@ import android.view.Gravity;
 import android.view.WindowManager.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
+import org.cocoa4android.ns.NSString;
 import org.cocoa4android.ns.NSTextAlignment;
 
 
 public class UITextField extends UIView {
 	private EditText textField = null;
+	public NSString placeholder;
+	
 	public UITextField(){
 		textField = new EditText(context);
 		textField.setFocusable(YES);
@@ -95,34 +99,24 @@ public class UITextField extends UIView {
 		return false;
 	}
 	public void becomeFirstResponder(){
-		//textField.requestFocus();
-		
-		//InputMethodManager imm = (InputMethodManager) UIApplication.sharedApplication().delegate().getSystemService(Context.INPUT_METHOD_SERVICE);
 		InputMethodManager imm = (InputMethodManager)textField.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 		if (!imm.isActive()) {
 			imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 		}
-		/*
-		Timer timer = new Timer();
-		timer.schedule(new TimerTask() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				InputMethodManager imm = (InputMethodManager)textField.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-				if (!imm.isActive()) {
-					imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-				}
-			}
-		}, 1000);
-		*/
-		//UIApplication.getSharedApplication().getDelegate().getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 	}
 	public void resignFirstResponder(){
 		textField.clearFocus();
-		
-		InputMethodManager imm = (InputMethodManager) UIApplication.sharedApplication().delegate().getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(textField.getWindowToken(), 0);
+		InputMethodManager imm = (InputMethodManager)textField.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+		if (imm.isActive()) {
+			imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+		}
 	}
 	
+	public NSString getPlaceholder() {
+		return placeholder;
+	}
+	public void setPlaceholder(NSString placeholder) {
+		this.placeholder = placeholder;
+		this.textField.setHint(placeholder.getString());
+	}
 }

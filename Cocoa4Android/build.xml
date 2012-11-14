@@ -17,7 +17,8 @@
 	<target name="jar">
     	<jar destfile="libs/Cocoa4Android.jar">
         	<fileset dir="bin/classes" includes="**/*.class"/>
-    		<fileset dir="." includes="res/*/*.*,res/*"/>
+    		<!-- <fileset dir="." includes="res/*/*.*,res/*"/> -->
     	</jar>
+    	
     </target>
 </project>

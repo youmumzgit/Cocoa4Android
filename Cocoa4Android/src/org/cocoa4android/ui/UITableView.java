@@ -120,7 +120,7 @@ public class UITableView extends UIView {
 					mappingList.add(indexPath);
 					cellsList.add(dataSource.cellForRowAtIndexPath(this, indexPath));
 				}
-				mappingList.add(new NSIndexPath(section,-2));//footer
+				mappingList.add(new NSIndexPath(section,Integer.MAX_VALUE));//footer
 				cellsList.add(delegate.viewForFooterInSection(this, section));//footer
 			}
 		}
@@ -198,6 +198,7 @@ public class UITableView extends UIView {
 					count = middle;
 				}
 				else {//indexPath == tmpIndexPath
+					position = middle;
 					break;
 				}
 			}
@@ -205,8 +206,8 @@ public class UITableView extends UIView {
 			cellsList.add(position, dataSource.cellForRowAtIndexPath(this, indexPath));
 			for(int j = position+1;j < mappingList.size();j++) {
 				tmpIndexPath = mappingList.get(j);
-				if (indexPath.section() == tmpIndexPath.section()) {
-					tmpIndexPath.setRow(indexPath.row()+1);
+				if (indexPath.section() == tmpIndexPath.section() && tmpIndexPath.row() != Integer.MAX_VALUE) {
+					tmpIndexPath.setRow(tmpIndexPath.row()+1);
 				}
 				else {
 					break;
@@ -298,29 +299,27 @@ public class UITableView extends UIView {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if(dataSource != null && delegate != null) {
 				NSIndexPath indexPath = mappingList.get(position);
-				if(indexPath.row() < 0) {
-					if(indexPath.row() == -1) {//header
-						UIView view = cellsList.get(position);
-						float height = delegate.heightForHeaderInSection(UITableView.this, indexPath.section());
-						if(height <= 0 || view == null) {
-							view = new UIView();
-						}
-						view.setBackgroundColor(UIColor.clearColor());
-						AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.FILL_PARENT, (int)(height*density));
-						view.getView().setLayoutParams(params);
-						return view.getView();
+				if(indexPath.row() == -1) {//header
+					UIView view = cellsList.get(position);
+					float height = delegate.heightForHeaderInSection(UITableView.this, indexPath.section());
+					if(height <= 0 || view == null) {
+						view = new UIView();
 					}
-					else if(indexPath.row() == -2) {//footer
-						UIView view = cellsList.get(position);
-						float height = delegate.heightForFooterInSection(UITableView.this, indexPath.section());
-						if(height <= 0 || view == null) {
-							view = new UIView();
-						}
-						view.setBackgroundColor(UIColor.clearColor());
-						AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.FILL_PARENT, (int)(height*density));
-						view.getView().setLayoutParams(params);
-						return view.getView();
+					view.setBackgroundColor(UIColor.clearColor());
+					AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.FILL_PARENT, (int)(height*density));
+					view.getView().setLayoutParams(params);
+					return view.getView();
+				}
+				else if(indexPath.row() == Integer.MAX_VALUE) {//footer
+					UIView view = cellsList.get(position);
+					float height = delegate.heightForFooterInSection(UITableView.this, indexPath.section());
+					if(height <= 0 || view == null) {
+						view = new UIView();
 					}
+					view.setBackgroundColor(UIColor.clearColor());
+					AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.FILL_PARENT, (int)(height*density));
+					view.getView().setLayoutParams(params);
+					return view.getView();
 				}
 				else {
 					UITableViewCell cell = (UITableViewCell) cellsList.get(position);
