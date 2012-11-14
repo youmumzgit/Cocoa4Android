@@ -33,4 +33,8 @@ public class NSDateFormatter extends NSObject {
 		}
 		return date;
 	}
+	
+	public SimpleDateFormat getDateFormat() {
+		return _dateFormat;
+	}
 }
