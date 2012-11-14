@@ -78,12 +78,14 @@ public class UITabBarController extends UIViewController {
 	}
 
 	public void setSelectedIndex(int selectedIndex) {
-		if(this.viewControllers!=null&&this.loadViewController(selectedIndex)){
-			if(this.selectedIndex!=-1){
-				this.viewControllers[this.selectedIndex].getView().setHidden(YES);
+		if(selectedIndex!=this.selectedIndex){
+			if(this.viewControllers!=null&&this.loadViewController(selectedIndex)){
+				if(this.selectedIndex!=-1){
+					this.viewControllers[this.selectedIndex].getView().setHidden(YES);
+				}
+				previousSelectedIndex = this.selectedIndex;
+				this.selectedIndex = selectedIndex;
 			}
-			previousSelectedIndex = this.selectedIndex;
-			this.selectedIndex = selectedIndex;
 		}
 	}
 	public UIView getTabBar() {
