@@ -21,11 +21,11 @@ import android.R.integer;
 import android.R.string;
 
 public class NSString extends NSObject {
-	private  String content = null;
+	protected String content = null;
 	private  int length = 0;
 	
 	public NSString(){
-		content = "";
+		this.content = "";
 	}
 	
 	public NSString(String string){
@@ -55,48 +55,45 @@ public class NSString extends NSObject {
 		this.content = string;
 		return this;
 	}
-	
-	//isEqualToString
-	public boolean isEqualToString (NSString string){
-		return this.isEqual(string);
-	}
+
 	//endsWith
 	public boolean endsWith (NSString string){
 		return this.endsWith(string);
 	}
 	//lastIndexOf
-	public String lastIndexOf (NSString string){
+	public NSString lastIndexOf (NSString string){
 		return this.lastIndexOf(string);
 	}
 	//×Ö´®³¤¶È
-	public int getLenth(){
+	public int length(){
 		return  this.content.length();
 	}
-//	//toString
-//	public String toString() {
-//		return this.content.toString()
-//	}
 	
 	//³éÈ¡×Ö´®
-	public String subStringFromIndex(int start){
-		return this.content.substring(start);
+	public NSString subStringFromIndex(int start){
+		return new NSString(this.content.substring(start)) ;
 	}
-	
-	public String subStringFromIndexToIndex(int start,int end) {
-		return this.content.substring(start, end);
+	//subStringFromIndexToIndex
+	public NSString subStringFromIndexToIndex(int start,int end) {
+		return new NSString(this.content.substring(start, end)) ;
 	}
-	
-	//toCharArray
-	public char[] toCharArray() {
-		return this.content.toCharArray();	
-	}
-	
+	//getString
 	public String getString() {
-		return content;
+		return this.content;
 	}
-	
 	//setString
 	public void setString (String string) {
 		this.content = string;
 	}
+	
+	//isEqualToString
+	public boolean isEqualToString (NSString string){
+		return this.content.equals(string.getString());
+	}
+	
+	//toCharArray
+//	public char[] toCharArray() {
+//		return this.content.toCharArray();	
+//	}
+
 }

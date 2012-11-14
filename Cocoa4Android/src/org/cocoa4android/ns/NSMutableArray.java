@@ -21,11 +21,25 @@ import java.util.ArrayList;
 public class NSMutableArray extends NSArray {
 	private ArrayList<Object> list = null;
 	
-	public NSMutableArray array(){
+	public static NSMutableArray array(){
 		return new NSMutableArray();
 	}
-	
+	public static NSMutableArray array(int capacity){
+		return new NSMutableArray(capacity);
+	}
+	public NSMutableArray(int capacity){
+		list = new ArrayList<Object>(capacity);
+	}
 	public NSMutableArray(){
 		list = new ArrayList<Object>();
+	}
+	public void addObject(Object anObject){
+		list.add(anObject);
+	}
+	public Object objectAtIndex(int index) {
+		 return list.get(index);
+	}
+	public int count() {
+		 return list.size();
 	}
 }
