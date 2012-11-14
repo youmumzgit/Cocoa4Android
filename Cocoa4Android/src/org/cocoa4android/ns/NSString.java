@@ -71,7 +71,8 @@ public class NSString extends NSObject {
 		return new NSString(this.content.substring(start)) ;
 	}
 	//subStringFromIndexToIndex
-	public NSString subStringFromIndexToIndex(int start,int end) {
+	public NSString subStringToIndex(int end) {
+		int start = 0;
 		return new NSString(this.content.substring(start, end)) ;
 	}
 
@@ -126,8 +127,7 @@ public class NSString extends NSObject {
 		return this.content.toCharArray();	
 	}
 	
-	public String intValueOf(int value) {
-		return this.content.valueOf(value);
+	public int intValue() {
+		return Integer.parseInt(this.content);
 	}
-
 }
