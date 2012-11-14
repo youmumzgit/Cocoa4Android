@@ -121,7 +121,7 @@ public class UIView extends NSObject{
 		}
 		*/
 	}
-	public UIView getSuperView() {
+	public UIView superView() {
 		return superView;
 	}
 	public void setSuperView(UIView superView) {
