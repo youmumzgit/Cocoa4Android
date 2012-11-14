@@ -198,6 +198,7 @@ public class UITableView extends UIView {
 					count = middle;
 				}
 				else {//indexPath == tmpIndexPath
+					position = middle;
 					break;
 				}
 			}
