@@ -13,28 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.cocoa4android.ns;
+package org.cocoa4android.third.sbjson;
 
-public class NSArray extends NSObject {
-	 private Object[] objects; 
-	 public static NSArray arrayWithObject(Object object){
-		 return new NSArray(object);
-	 }
-	 public static NSArray arrayWithObjects(Object ...objects){
-		 return new NSArray(objects);
-	 }
-	 public NSArray(Object ...objects){
-		 this.objects = objects;
-	 }
-	 public NSArray(Object object){
-		 objects = new Object[1];
-		 objects[0] = object;
-	 }
-	 
-	 public int count() {
-		 return objects.length;
-	 }
-	 public Object objectAtIndex(int index) {
-		 return objects[index];
-	 }
+import org.cocoa4android.ns.NSObject;
+import org.cocoa4android.ns.NSString;
+
+public class NSStringJSON extends NSString {
+	/**
+	 * Returns the NSDictionary or NSArray represented by the receiver's JSON representation, or nil on error
+	 * @return
+	 */
+	public NSObject JSONValue(){
+		//this.getString()
+		return null;
+	}
 }

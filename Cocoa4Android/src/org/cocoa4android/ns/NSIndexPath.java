@@ -19,6 +19,10 @@ public class NSIndexPath extends NSObject implements Comparable<NSIndexPath> {
 	private int section;
 	private int row;
 	
+	public static NSIndexPath indexPathForRow(int row,int section){
+		return new NSIndexPath(section,row);
+	}
+	
 	public NSIndexPath(int section,int row) {
 		this.section = section;
 		this.row = row;
@@ -30,7 +34,12 @@ public class NSIndexPath extends NSObject implements Comparable<NSIndexPath> {
 	public int row() {
 		return row;
 	}
-	
+	public void setSection(int section) {
+		this.section = section;
+	}
+	public void setRow(int row) {
+		this.row = row;
+	}
 
 	@Override
 	public boolean equals(Object o) {
