@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import android.R.array;
 import android.R.integer;
 
 public class NSArray extends NSObject implements Collection<Object>{
@@ -129,5 +130,17 @@ public class NSArray extends NSObject implements Collection<Object>{
 	public <T> T[] toArray(T[] array) {
 		// TODO Auto-generated method stub
 		return list.toArray(array);
+	}
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < this.count(); i++) {
+			sb.append(this.objectAtIndex(i));
+		}
+		return sb.toString();
+	}
+	
+	public static void main(String args[]) {
+		int i = 1;
+		System.out.println(i);
 	}
 }
