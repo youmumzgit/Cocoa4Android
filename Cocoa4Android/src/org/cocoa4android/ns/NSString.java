@@ -38,6 +38,14 @@ public class NSString extends NSObject {
 	public static NSString stringWithFormat(String string,Object ...args){
 		return new NSString(string, args);
 	}
+	//stringByAppendingFormat
+	public NSString stringByAppendingFormat(String string,Object ...args){
+		return new NSString(string, args);
+	}
+	//stringByAppendingString
+	public  NSString stringByAppendingString(String string){
+		return  new NSString(this.content = string) ;
+	}
 	
 	//ContentsOfFile
 //	public static NSString stringWithContentsOfFile(String string) {
@@ -93,57 +101,76 @@ public class NSString extends NSObject {
 		return array;
 	}
 	
-	stringByReplacingCharactersInRange:withString
+	//stringByReplacingCharactersInRange
+	public NSString stringByReplacingCharactersInRange (NSRange range,String string) {
+		int length =this.length();
+		String	stringBegin = this.content.substring(0,range.start);
+		String	stringEnd = this.content.substring(range.end+1,length);
+		return new NSString(stringBegin+string+stringEnd);
+	}
 	
-//	//lastIndexOf
-//	public NSString lastIndexOf (NSString string){
-//		return this.lastIndexOf(string);
-//	}
-//
-//	//copyValueOf
-//	public String copyValueOf(char c[]) {
-//		return this.copyValueOf(c);	
-//	}
+	//pathExtension
+	public NSString pathExtension () {
+		NSArray array = this.componentsSeparatedByString(".");
+		String string = "";
+		for (int i =array.count()-1; i>0; i--) {
+			if(!array.objectAtIndex(i).equals("")){
+				if (i!=0) {
+					string = (String)array.objectAtIndex(i);
+					break;
+				}
+			}
+		}
+		return new NSString(string);
+	}
+	//lastPathComponent
+	public NSString lastPathComponent () {
+		NSArray array = this.componentsSeparatedByString("/");
+		String string = "/";
+	    for (int i =0; i<array.count(); i++) {
+	        if (!array.objectAtIndex(i).equals("")) {
+	            string =(String) array.objectAtIndex(i);
+	        }
+	    }
+		return new NSString(string);
+	}
+	//pathComponents
+	public NSArray pathComponents() {
+		NSArray array = this.componentsSeparatedByString("/");
+		NSMutableArray pathArray = NSMutableArray.array();
+		String string = "/";
+	    for (int i =0; i<array.count(); i++) {
+	        if (!array.objectAtIndex(i).equals("")) {
+	        	if (i!=0 && i!=array.count()-1) {
+		            string =(String) array.objectAtIndex(i);
+		            pathArray.add(string);
+				}
+	        }
+	    }
+		return NSArray.arrayWithArray(pathArray);
+	}
 	
-	//getCharactersOfrange ( .. ing)
-//	public char getCharactersOfRange(NSRange()) {
-//		return this.content.;
-//	}
-
-//	//找出子串的index，（start 开始位置）
-//	public int IndexIsSearchSubstring(String string,int start) {
-//		return this.content.lastIndexOf(string, start);
-//	}
+//	//componentsSeparatedByString
+//	public NSArray componentsSeparatedByString(String string) {
 //
-//	//containsOfSubstring
-//	public boolean containsOfSubstring (String string){
-//		return this.content.contains(string);
-//	}
-//	//字串是否正则
-//	public boolean matches (String string){
-//		return this.matches(string);
-//	}
-//	//endsWith
-//	public boolean endsWith (NSString string){
-//		return this.endsWith(string);
 //	}
 	
 	//toCharArray
-	public char[] toCharArray() {
-		return this.content.toCharArray();	
-	}
-
+//	public char[] toCharArray() {
+//		return this.content.toCharArray();	
+//	}
+	
+//int,float,double,bool value
 	public int intValue() {
 		return Integer.parseInt(this.content);
+	}
+	public Float float1Value() {
+		return Float.parseFloat(this.content);
 	}
 	public Double doubleValue() {
 		return Double.parseDouble(this.content);
 	}
 	public Boolean boolValue() {
 		return Boolean.parseBoolean(this.content);
-	}
-	
-	public static void main(String c[]) {
-		System.out.print("ssssss");
 	}
 }
