@@ -21,6 +21,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import android.R.integer;
+
 public class NSArray extends NSObject implements Collection<Object>{
 	ArrayList<Object> list = null;
 	
@@ -56,6 +58,12 @@ public class NSArray extends NSObject implements Collection<Object>{
 	public Object objectAtIndex(int index) {
 		return list.get(index);
 	}
+	
+	public int indexOfObject(Object anObject){
+		return list.indexOf(anObject);
+	}
+	
+	
 	@Override
 	public boolean add(Object object) {
 		// TODO Auto-generated method stub
@@ -71,6 +79,7 @@ public class NSArray extends NSObject implements Collection<Object>{
 		// TODO Auto-generated method stub
 		list.clear();
 	}
+	
 	@Override
 	public boolean contains(Object object) {
 		// TODO Auto-generated method stub
