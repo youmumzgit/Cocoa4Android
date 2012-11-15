@@ -16,6 +16,7 @@
 package org.cocoa4android.ui;
 
 import org.cocoa4android.cg.CGRect;
+import org.cocoa4android.ns.NSString;
 
 import android.content.Context;
 import android.webkit.WebView;
@@ -53,10 +54,12 @@ public class UIWebView extends UIView {
 		params.topMargin = (int)(frame.origin().y()*density);
 		this.getView().setLayoutParams(params);
 	}
+	public void loadHTMLString(NSString string,NSString baseUrl){
+		webView.loadDataWithBaseURL(baseUrl.getString(), string.getString(), "text/html", "utf-8", null);
+	}
 	public void loadHTMLString(String string,String baseUrl){
 		webView.loadDataWithBaseURL(baseUrl, string, "text/html", "utf-8", null);
 	}
-	
 	public class ResizableWebView extends WebView{
 
 		public ResizableWebView(Context context) {
