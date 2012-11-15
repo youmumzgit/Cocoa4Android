@@ -47,23 +47,14 @@ public class NSString extends NSObject {
 	}
 	
 	//ContentsOfFile
-	public static NSString stringWithContentsOfFile(String string) {
-		return new NSString(string);
-	}
+//	public static NSString stringWithContentsOfFile(String string) {
+//		return new NSString(string);
+//	}
 	
 	//initWithString
 	public  NSString initWithString(String string) {
 		this.content = string;
 		return this;
-	}
-	//lastIndexOf
-	public NSString lastIndexOf (NSString string){
-		return this.lastIndexOf(string);
-	}
-
-	//copyValueOf
-	public String copyValueOf(char c[]) {
-		return this.copyValueOf(c);	
 	}
 
 	//subStringFromIndex
@@ -75,22 +66,6 @@ public class NSString extends NSObject {
 		int start = 0;
 		return new NSString(this.content.substring(start, end)) ;
 	}
-
-	//replaceAll (rule 正则表达式)
-	public String replaceAll(String rule , String replaceString) {
-		return this.content.replaceAll(rule, replaceString);
-	}
-
-	//字符截取字符串
-	public String[] componentsSeparatedBy (String string) {
-		return this.content.split(string);
-	}
-	
-	//找出子串的index，（start 开始位置）
-	public int IndexIsSearchSubstring(String string,int start) {
-		return this.content.lastIndexOf(string, start);
-	}
-	
 	//length
 	public int length(){
 		return  this.content.length();
@@ -104,30 +79,78 @@ public class NSString extends NSObject {
 	public void setString (String string) {
 		this.content = string;
 	}
-	
 	//isEqualToString
 	public boolean isEqualToString (NSString string){
 		return this.content.equals(string.getString());
 	}
-	//containsOfSubstring
-	public boolean containsOfSubstring (String string){
-		return this.content.contains(string);
+	//characterAtIndex
+	public char characterAtIndex(int index) {
+		return this.content.charAt(index);
 	}
-	//字串是否正则
-	public boolean matches (String string){
-		return this.matches(string);
+	
+	//substringWithRange
+	public NSString substringWithRange(NSRange range) {
+		 return new NSString(this.content.substring(range.start, range.end));
 	}
-	//endsWith
-	public boolean endsWith (NSString string){
-		return this.endsWith(string);
+	
+	//字符截取字符串
+	public NSArray componentsSeparatedByString (String string) {
+		String[] c = this.content.split(string);
+		NSArray array = NSArray.arrayWithObjects((Object[])c);
+		return array;
 	}
+	
+	stringByReplacingCharactersInRange:withString
+	
+//	//lastIndexOf
+//	public NSString lastIndexOf (NSString string){
+//		return this.lastIndexOf(string);
+//	}
+//
+//	//copyValueOf
+//	public String copyValueOf(char c[]) {
+//		return this.copyValueOf(c);	
+//	}
+	
+	//getCharactersOfrange ( .. ing)
+//	public char getCharactersOfRange(NSRange()) {
+//		return this.content.;
+//	}
+
+//	//找出子串的index，（start 开始位置）
+//	public int IndexIsSearchSubstring(String string,int start) {
+//		return this.content.lastIndexOf(string, start);
+//	}
+//
+//	//containsOfSubstring
+//	public boolean containsOfSubstring (String string){
+//		return this.content.contains(string);
+//	}
+//	//字串是否正则
+//	public boolean matches (String string){
+//		return this.matches(string);
+//	}
+//	//endsWith
+//	public boolean endsWith (NSString string){
+//		return this.endsWith(string);
+//	}
 	
 	//toCharArray
 	public char[] toCharArray() {
 		return this.content.toCharArray();	
 	}
-	
+
 	public int intValue() {
 		return Integer.parseInt(this.content);
+	}
+	public Double doubleValue() {
+		return Double.parseDouble(this.content);
+	}
+	public Boolean boolValue() {
+		return Boolean.parseBoolean(this.content);
+	}
+	
+	public static void main(String c[]) {
+		System.out.print("ssssss");
 	}
 }
