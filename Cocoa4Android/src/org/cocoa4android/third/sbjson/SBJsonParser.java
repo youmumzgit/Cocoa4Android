@@ -54,7 +54,7 @@ public class SBJsonParser extends NSObject {
 					NSObject nsDictionary = this.parseDictionary(value);
 					array.add(nsDictionary);
 				}else if(!content.toLowerCase().equals("null")){
-					array.add(value);
+					array.add(new NSString(value));
 				}else{
 					array.add(null);
 				}
@@ -87,7 +87,7 @@ public class SBJsonParser extends NSObject {
 					NSObject object = this.parseDictionary(content);
 					dic.setObject(object, key);
 				}else if(!value.toLowerCase().equals("null")){
-					dic.setObject(value, key);
+					dic.setObject(new NSString(value), key);
 				}else{
 					dic.setObject(null, key);
 				}

@@ -19,6 +19,13 @@ import org.cocoa4android.ns.NSObject;
 import org.cocoa4android.ns.NSString;
 
 public class NSStringJSON extends NSString {
+	
+	public NSStringJSON(){
+		super();
+	}
+	public NSStringJSON(String content){
+		super(content);
+	}
 	/**
 	 * Returns the NSDictionary or NSArray represented by the receiver's JSON representation, or nil on error
 	 * @return
