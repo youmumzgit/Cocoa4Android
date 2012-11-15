@@ -28,7 +28,7 @@ public class CGRect {
 		this.size = new CGSize(width,height);
 	}
 	public CGRect(Rect r){
-		float density = UIScreen.getMainScreen().getDensity();
+		float density = UIScreen.mainScreen().getDensity();
 		this.origin = new CGPoint(r.left/density,r.top/density);
 		this.size = new CGSize((r.right-r.left)/density,(r.bottom - r.top)/density);
 	}
@@ -45,7 +45,7 @@ public class CGRect {
 		this.size = size;
 	}
 	public Rect getRect(){
-		float density = UIScreen.getMainScreen().getDensity();
+		float density = UIScreen.mainScreen().getDensity();
 		return new Rect((int)(this.origin.x()*density),(int)(this.origin.y()*density),(int)((this.origin.x()+this.size.width())*density),(int)((this.origin.y()+this.size.height())*density));
 	}
 }
