@@ -16,8 +16,6 @@
 package org.cocoa4android.ns;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 
 public class NSMutableArray extends NSArray {
 	ArrayList<Object> list = null;
@@ -25,9 +23,34 @@ public class NSMutableArray extends NSArray {
 	public static NSMutableArray array(){
 		return new NSMutableArray();
 	}
+	public static NSMutableArray arrayWithObject(Object object){
+		return new NSMutableArray(object);
+	}
+	public static NSMutableArray arrayWithObjects(Object ...objects){
+		return new NSMutableArray(objects);
+	}
+	public static NSMutableArray arrayWithArray(NSArray array){
+		return new NSMutableArray(array);
+	}
+	
 	public static NSMutableArray array(int capacity){
 		return new NSMutableArray(capacity);
 	}
+	public NSMutableArray(NSArray array){
+		this.list = array.list;
+	}
+	public NSMutableArray(Object ...objects){
+		list = new ArrayList<Object>(objects.length);
+		for (Object object : objects) {
+			list.add(object);
+		}
+	}
+	public NSMutableArray(Object object){
+		list = new ArrayList<Object>(1);
+		list.add(object);
+	}
+	
+	
 	public NSMutableArray(int capacity){
 		list = new ArrayList<Object>(capacity);
 	}
@@ -37,76 +60,5 @@ public class NSMutableArray extends NSArray {
 	public void addObject(Object anObject){
 		list.add(anObject);
 	}
-	public Object objectAtIndex(int index) {
-		 return list.get(index);
-	}
-	public int count() {
-		 return list.size();
-	}
 	
-	@Override
-	public boolean add(Object object) {
-		// TODO Auto-generated method stub
-		return list.add(object);
-	}
-	@Override
-	public boolean addAll(Collection<? extends Object> arg0) {
-		// TODO Auto-generated method stub
-		return list.addAll(arg0);
-	}
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		list.clear();
-	}
-	@Override
-	public boolean contains(Object object) {
-		// TODO Auto-generated method stub
-		return list.contains(object);
-	}
-	@Override
-	public boolean containsAll(Collection<?> arg0) {
-		// TODO Auto-generated method stub
-		return list.containsAll(arg0);
-	}
-	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return list.isEmpty();
-	}
-	@Override
-	public Iterator<Object> iterator() {
-		return list.iterator();
-	}
-	@Override
-	public boolean remove(Object object) {
-		// TODO Auto-generated method stub
-		return list.remove(object);
-	}
-	@Override
-	public boolean removeAll(Collection<?> arg0) {
-		// TODO Auto-generated method stub
-		
-		return list.removeAll(arg0);
-	}
-	@Override
-	public boolean retainAll(Collection<?> arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return list.size();
-	}
-	@Override
-	public Object[] toArray() {
-		// TODO Auto-generated method stub
-		return list.toArray();
-	}
-	@Override
-	public <T> T[] toArray(T[] array) {
-		// TODO Auto-generated method stub
-		return list.toArray(array);
-	}
 }
