@@ -15,11 +15,14 @@
  */
 package org.cocoa4android.ns;
 
+import org.cocoa4android.third.sbjson.SBJsonWriter;
+
 import android.util.Log;
 
 public class NSObject {
 	public static final boolean YES = true;
 	public static final boolean NO = false;
+	
 	public static void NSLog(String format,Object...args){
 		Log.i("Cocoa4Android",NSString.stringWithFormat(format, args).getString());
 	}
@@ -35,5 +38,12 @@ public class NSObject {
 	}
 	public String description() {
 		return this.toString();
+	}
+	public NSString JSONRepresentation(){
+		SBJsonWriter writer = new SBJsonWriter();
+		return writer.stringWithObject(this);
+	}
+	public boolean isArray(){
+		return NSArray.class.isInstance(this);
 	}
 }
