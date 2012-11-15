@@ -22,6 +22,8 @@ import android.util.Log;
 public class NSObject {
 	public static final boolean YES = true;
 	public static final boolean NO = false;
+	public static final Object nil = null;
+	
 	public static void NSLog(String format,Object...args){
 		Log.i("Cocoa4Android",NSString.stringWithFormat(format, args).getString());
 	}
