@@ -58,7 +58,9 @@ public class UITextField extends UIView {
 	public void setTextField(EditText textField) {
 		this.textField = textField;
 	}
-
+	public void setText(String text){
+		this.textField.setText(text);
+	}
 	public void setText(NSString text){
 		this.textField.setText(text.getString());
 	}
