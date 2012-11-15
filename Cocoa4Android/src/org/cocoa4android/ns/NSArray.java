@@ -15,7 +15,13 @@
  */
 package org.cocoa4android.ns;
 
-public class NSArray extends NSObject {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+
+public class NSArray extends NSObject implements Collection<Object>{
 	 Object[] objects; 
 	 public static NSArray arrayWithObject(Object object){
 		 return new NSArray(object);
@@ -37,4 +43,96 @@ public class NSArray extends NSObject {
 	 public Object objectAtIndex(int index) {
 		 return objects[index];
 	 }
+	@Override
+	public boolean add(Object object) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean addAll(Collection<? extends Object> arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public boolean contains(Object object) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean containsAll(Collection<?> arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return objects.length == 0;
+	}
+	@Override
+	public Iterator<Object> iterator() {
+		return new NSArrayIterator(objects);
+	}
+	@Override
+	public boolean remove(Object object) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean removeAll(Collection<?> arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean retainAll(Collection<?> arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public int size() {
+		// TODO Auto-generated method stub
+		return objects.length;
+	}
+	@Override
+	public Object[] toArray() {
+		// TODO Auto-generated method stub
+		return objects;
+	}
+	@Override
+	public <T> T[] toArray(T[] array) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public class NSArrayIterator implements Iterator<Object>{
+		List<Object> objectList;
+		int index;
+		public NSArrayIterator(Object[] objects){
+			objectList = Arrays.asList(objects);
+		}
+		public NSArrayIterator(List<Object> list){
+			this.objectList = list;
+		}
+		@Override
+		public boolean hasNext() {
+			// TODO Auto-generated method stub
+			return index<objectList.size()-1;
+		}
+
+		@Override
+		public Object next() {
+			// TODO Auto-generated method stub
+			return objectList.get(index++);
+		}
+
+		@Override
+		public void remove() {
+			objectList.remove(index);
+		}
+		
+	}
 }

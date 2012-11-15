@@ -24,7 +24,7 @@ public class NSStringJSON extends NSString {
 	 * @return
 	 */
 	public NSObject JSONValue(){
-		
-		return null;
+		SBJsonParser parser = new SBJsonParser();
+		return parser.objectWithString(this);
 	}
 }

@@ -15,6 +15,8 @@
  */
 package org.cocoa4android.ns;
 
+import org.cocoa4android.third.sbjson.SBJsonWriter;
+
 import android.util.Log;
 
 public class NSObject {
@@ -36,7 +38,11 @@ public class NSObject {
 	public String description() {
 		return this.toString();
 	}
-	public String JSONRepresentation(){
-		return "";
+	public NSString JSONRepresentation(){
+		SBJsonWriter writer = new SBJsonWriter();
+		return writer.stringWithObject(this);
+	}
+	public boolean isArray(){
+		return NSArray.class.isInstance(this);
 	}
 }

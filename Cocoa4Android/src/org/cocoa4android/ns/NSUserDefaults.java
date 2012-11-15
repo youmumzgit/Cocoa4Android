@@ -64,6 +64,7 @@ public class NSUserDefaults extends NSObject {
 	public boolean booleanForKey(String key){
 		return mPerferences.getBoolean(key, false);
 	}
+	/*
 	public void setArray(String[] value,String key){
 		//String array = JSONHelper.toJSON(value);
 		//this.setString(array, key);
@@ -73,7 +74,7 @@ public class NSUserDefaults extends NSObject {
 		//return JSONHelper.parseArray(value, String.class);
 		return null;
 	}
-	
+	*/
 	public void synchronize(){;
 		editor.commit();
 		//new editor

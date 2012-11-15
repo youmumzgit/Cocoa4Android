@@ -16,7 +16,7 @@
 package org.cocoa4android.ns;
 
 public class NSString extends NSObject {
-	String content = null;
+	protected String content = null;
 	
 	public NSString(){
 		this.content = "";
