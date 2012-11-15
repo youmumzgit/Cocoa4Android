@@ -17,8 +17,6 @@ package org.cocoa4android.third.sbjson;
 
 import java.util.Iterator;
 
-import org.cocoa4android.ns.NSArray;
-import org.cocoa4android.ns.NSDictionary;
 import org.cocoa4android.ns.NSMutableArray;
 import org.cocoa4android.ns.NSMutableDictionary;
 import org.cocoa4android.ns.NSObject;
@@ -26,8 +24,6 @@ import org.cocoa4android.ns.NSString;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONStringer;
-import android.widget.AutoCompleteTextView.Validator;
 
 public class SBJsonParser extends NSObject {
 	

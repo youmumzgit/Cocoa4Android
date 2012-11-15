@@ -15,15 +15,12 @@
  */
 package org.cocoa4android.ui;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 
 import org.cocoa4android.cg.CGRect;
-import org.cocoa4android.util.CAObjectMethod;
 
 import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class UIButton extends UIControl {

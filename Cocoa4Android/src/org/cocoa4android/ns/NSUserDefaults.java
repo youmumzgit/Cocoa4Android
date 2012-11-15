@@ -15,8 +15,6 @@
  */
 package org.cocoa4android.ns;
 
-import java.util.HashMap;
-
 import org.cocoa4android.ui.UIApplication;
 
 import android.content.SharedPreferences;

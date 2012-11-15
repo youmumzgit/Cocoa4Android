@@ -15,18 +15,16 @@
  */
 package org.cocoa4android.ui;
 
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 import org.cocoa4android.cg.CGRect;
 
 import android.content.Context;
-import android.graphics.Color;
+
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Gravity;
-import android.view.WindowManager.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
