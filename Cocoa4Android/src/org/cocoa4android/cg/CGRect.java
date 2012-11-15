@@ -20,8 +20,8 @@ import org.cocoa4android.ui.UIScreen;
 import android.graphics.Rect;
 
 public class CGRect {
-	private CGPoint origin;
-	private CGSize size;
+	public CGPoint origin;
+	public CGSize size;
 	
 	public CGRect(float x,float y,float width,float height){
 		this.origin = new CGPoint(x,y);
