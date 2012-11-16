@@ -150,10 +150,24 @@ public class NSString extends NSObject {
 		return NSArray.arrayWithArray(pathArray);
 	}
 	
-//	//componentsSeparatedByString
-//	public NSArray componentsSeparatedByString(String string) {
-//
-//	}
+	//stringByAppendingPathComponent
+	public NSString stringByAppendingPathComponent(String string) {
+//		StringBuilder sb = new StringBuilder();
+		String receive=this.getString();
+		NSLog("%s", receive);
+		if (receive.equals("")) {
+			return new NSString(string);
+		}else {
+			int index = this.content.length();
+			String	c = this.content.substring(index-1,index);
+			if (c.equals("")) {
+				receive = this.content;
+			}else {
+				receive = this.content+"/";
+			}
+			return new NSString(receive+string);
+		}
+	}
 	
 	//toCharArray
 //	public char[] toCharArray() {
