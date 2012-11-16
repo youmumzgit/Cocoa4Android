@@ -16,8 +16,8 @@
 package org.cocoa4android.cg;
 
 public class CGPoint {
-	private float x;
-	private float y;
+	public float x;
+	public float y;
 	public CGPoint(float x,float y){
 		this.setX(x);
 		this.setY(y);

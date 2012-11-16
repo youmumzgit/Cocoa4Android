@@ -16,8 +16,8 @@
 package org.cocoa4android.cg;
 
 public class CGSize {
-	private float width;
-	private float height;
+	public float width;
+	public float height;
 	public CGSize(float width,float height){
 		this.setWidth(width);
 		this.setHeight(height);

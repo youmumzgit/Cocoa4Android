@@ -114,7 +114,7 @@ public class UIViewController extends NSObject{
 	
 	public void presentModalViewController(UIViewController viewController,boolean animated){
 		UIView modalView = viewController.getView();
-		modalView.setFrame(UIScreen.getMainScreen().getApplicationFrame());
+		modalView.setFrame(UIScreen.mainScreen().applicationFrame());
 		modalView.setBackgroundColor(UIColor.whiteColor());
 		
 		UIApplication.sharedApplication().delegate().window.addSubView(modalView);
@@ -149,9 +149,9 @@ public class UIViewController extends NSObject{
 		//œ‘ æ
 		this.isPresent = isPresent;
 		
-		float density = UIScreen.getMainScreen().getDensity();
+		float density = UIScreen.mainScreen().getDensity();
 		
-		CGRect applicationFrame = UIScreen.getMainScreen().getApplicationFrame();
+		CGRect applicationFrame = UIScreen.mainScreen().applicationFrame();
 		float applicationheight = applicationFrame.size().height()*density;
 		TranslateAnimation animation = null;
 		if(isPresent){

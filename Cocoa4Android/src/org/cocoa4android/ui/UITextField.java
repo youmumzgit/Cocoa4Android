@@ -61,8 +61,11 @@ public class UITextField extends UIView {
 	public void setText(String text){
 		this.textField.setText(text);
 	}
-	public String getText(){
-		return this.textField.getText().toString();
+	public void setText(NSString text){
+		this.textField.setText(text.getString());
+	}
+	public NSString text(){
+		return new NSString(this.textField.getText().toString());
 	}
 	public void setTextColor(UIColor color){
 		this.textField.setTextColor(color.getColor());
@@ -114,7 +117,7 @@ public class UITextField extends UIView {
 		}
 	}
 	
-	public NSString getPlaceholder() {
+	public NSString placeholder() {
 		return placeholder;
 	}
 	public void setPlaceholder(NSString placeholder) {

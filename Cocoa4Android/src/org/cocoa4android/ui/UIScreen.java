@@ -23,19 +23,19 @@ public class UIScreen extends NSObject{
 	private CGRect applicationFrame;
 	private float density;
 	private static UIScreen mainScreen = null;
-	public static UIScreen getMainScreen(){
+	public static UIScreen mainScreen(){
 		if(mainScreen ==null){
 			mainScreen = new UIScreen();
 		}
 		return mainScreen;
 	}
-	public CGRect getBounds() {
+	public CGRect bounds() {
 		return bounds;
 	}
 	public void setBounds(CGRect bounds) {
 		this.bounds = bounds;
 	}
-	public CGRect getApplicationFrame() {
+	public CGRect applicationFrame() {
 		return applicationFrame;
 	}
 	public void setApplicationFrame(CGRect applicationFrame) {
