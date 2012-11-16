@@ -109,17 +109,21 @@ public class NSString extends NSObject {
 		return new NSString(stringBegin+string+stringEnd);
 	}
 	
-	//pathExtension
+	//pathExtension (ing...)
 	public NSString pathExtension () {
 		NSArray array = this.componentsSeparatedByString(".");
 		String string = "";
 		for (int i =array.count()-1; i>0; i--) {
-			if(!array.objectAtIndex(i).equals("")){
-				if (i!=0) {
+			if(!array.objectAtIndex(i).equals("") && !array.objectAtIndex(i).equals("/")){
+	            int length = array.objectAtIndex(i-1).toString().length()-1;
+	            String sub = array.objectAtIndex(i-1).toString().substring(length);
+	            if (!sub.equals("/")) {
 					string = (String)array.objectAtIndex(i);
-					break;
 				}
-			}
+	            break;
+			}else{
+	            break;
+	        }
 		}
 		return new NSString(string);
 	}
@@ -140,39 +144,36 @@ public class NSString extends NSObject {
 		NSMutableArray pathArray = NSMutableArray.array();
 		String string = "/";
 	    for (int i =0; i<array.count(); i++) {
-	        if (!array.objectAtIndex(i).equals("")) {
-	        	if (i!=0 && i!=array.count()-1) {
-		            string =(String) array.objectAtIndex(i);
+	        if (array.objectAtIndex(i).equals("")) {
+	        	if (i==0 || i==array.count()-1) {
 		            pathArray.add(string);
 				}
-	        }
+	        }else {
+				string =(String) array.objectAtIndex(i);
+				pathArray.add(string);
+			}
 	    }
 		return NSArray.arrayWithArray(pathArray);
 	}
 	
 	//stringByAppendingPathComponent
 	public NSString stringByAppendingPathComponent(String string) {
-//		StringBuilder sb = new StringBuilder();
 		String receive=this.getString();
-		NSLog("%s", receive);
 		if (receive.equals("")) {
 			return new NSString(string);
 		}else {
 			int index = this.content.length();
 			String	c = this.content.substring(index-1,index);
-			if (c.equals("")) {
-				receive = this.content;
+			if (c.equals("/")) {
+				receive = this.content+string;
+
 			}else {
-				receive = this.content+"/";
+				receive = this.content+"/"+string;
+
 			}
-			return new NSString(receive+string);
+			return new NSString(receive);
 		}
 	}
-	
-	//toCharArray
-//	public char[] toCharArray() {
-//		return this.content.toCharArray();	
-//	}
 	
 //int,float,double,bool value
 	public int intValue() {
