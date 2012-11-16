@@ -113,17 +113,19 @@ public class NSString extends NSObject {
 	public NSString pathExtension () {
 		NSArray array = this.componentsSeparatedByString(".");
 		String string = "";
-		for (int i =array.count()-1; i>0; i--) {
-			if(!array.objectAtIndex(i).equals("") && !array.objectAtIndex(i).equals("/")){
-	            int length = array.objectAtIndex(i-1).toString().length()-1;
-	            String sub = array.objectAtIndex(i-1).toString().substring(length);
-	            if (!sub.equals("/")) {
-					string = (String)array.objectAtIndex(i);
-				}
-	            break;
-			}else{
-	            break;
-	        }
+		int i = 0;
+		i = array.count()-1;
+		if(!array.objectAtIndex(i).equals("") && !array.objectAtIndex(i).equals("/")){
+           String sub="";
+			if (array.objectAtIndex(i-1).toString().length()!=0 && i-1>0) {
+				int length = array.objectAtIndex(i-1).toString().length()-1;
+				sub = array.objectAtIndex(i-1).toString().substring(length);
+			}else {
+				sub = "/";
+			}
+            if (!sub.equals("/")) {
+				string = (String)array.objectAtIndex(i);
+			}
 		}
 		return new NSString(string);
 	}
@@ -187,5 +189,9 @@ public class NSString extends NSObject {
 	}
 	public Boolean boolValue() {
 		return Boolean.parseBoolean(this.content);
+	}
+	
+	public String toString() 	{
+		return this.getString();
 	}
 }
