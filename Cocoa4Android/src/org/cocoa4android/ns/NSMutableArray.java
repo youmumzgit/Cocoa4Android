@@ -18,8 +18,6 @@ package org.cocoa4android.ns;
 import java.util.ArrayList;
 
 public class NSMutableArray extends NSArray {
-	ArrayList<Object> list = null;
-	
 	public static NSMutableArray array(){
 		return new NSMutableArray();
 	}
