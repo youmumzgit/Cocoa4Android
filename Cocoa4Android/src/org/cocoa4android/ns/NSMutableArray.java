@@ -58,5 +58,11 @@ public class NSMutableArray extends NSArray {
 	public void addObject(Object anObject){
 		list.add(anObject);
 	}
+	public void removeAllObjects(){
+		list.clear();
+	}
+	public void addObjectsFromArray(NSArray otherArray){
+		list.addAll(otherArray.list);
+	}
 	
 }
