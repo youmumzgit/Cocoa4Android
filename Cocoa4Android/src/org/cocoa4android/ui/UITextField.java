@@ -67,6 +67,9 @@ public class UITextField extends UIView {
 	public NSString text(){
 		return new NSString(this.textField.getText().toString());
 	}
+	public String getText(){
+		return this.textField.getText().toString();
+	}
 	public void setTextColor(UIColor color){
 		this.textField.setTextColor(color.getColor());
 	}
