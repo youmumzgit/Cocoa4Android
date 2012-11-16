@@ -92,6 +92,7 @@ public class SBJsonParser extends NSObject {
 					dic.setObject(null, key);
 				}
 			}
+			return dic;
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
