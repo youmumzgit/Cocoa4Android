@@ -140,7 +140,8 @@ public class NSArray extends NSObject implements Collection<Object>{
 	}
 	
 	public static void main(String args[]) {
-		int i = 1;
-		System.out.println(i);
+		NSString string = NSString.stringWithFormat("/tmp/scratch..tiff");
+//		System.out.print(string.getString());
+		System.out.print(string.pathExtension().getString());
 	}
 }
