@@ -25,8 +25,6 @@ import android.widget.TextView;
 
 public class UILabel extends UIView {
 	private TextView label = null;
-
-	private NSString text = new NSString();
 	
 	public UILabel(){
 		TextView lbl = new TextView(context);
@@ -59,18 +57,10 @@ public class UILabel extends UIView {
 	public void setLabel(TextView label) {
 		this.label = label;
 	}
-	public void setText(NSString text){
-		this.label.setText(text.getString());
-		this.text = text;
-	}
 	public void setText(String text){
 		this.label.setText(text);
-		this.text.setString(text);
 	}
-	public NSString text(){
-		return this.text;
-	}
-	public String getText(){
+	public String text(){
 		return this.label.getText().toString();
 	}
 	public void setTextColor(UIColor color){

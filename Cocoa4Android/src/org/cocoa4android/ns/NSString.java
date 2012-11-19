@@ -15,6 +15,8 @@
  */
 package org.cocoa4android.ns;
 
+import org.cocoa4android.third.sbjson.SBJsonParser;
+
 public class NSString extends NSObject {
 	protected String content = null;
 	
@@ -193,5 +195,13 @@ public class NSString extends NSObject {
 	
 	public String toString() 	{
 		return this.getString();
+	}
+	
+	/**
+	 * Returns the NSDictionary or NSArray represented by the receiver's JSON representation, or nil on error
+	 * @return
+	 */
+	public Object JSONValue(){
+		return SBJsonParser.objectWithString(this.getString());
 	}
 }

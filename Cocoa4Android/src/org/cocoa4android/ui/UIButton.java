@@ -43,9 +43,6 @@ public class UIButton extends UIControl {
 	public Button getButton() {
 		return button;
 	}
-	public void setTitle(NSString title){
-		this.setTitle(title, UIControlState.UIControlStateNormal);
-	}
 	public void setTitle(String title){
 		this.setTitle(title, UIControlState.UIControlStateNormal);
 	}
@@ -53,12 +50,6 @@ public class UIButton extends UIControl {
 		titles.put(state, title);
 		if(this.currentState==state){
 			this.button.setText(title);
-		}
-	}
-	public void setTitle(NSString title,UIControlState state){
-		titles.put(state, title.getString());
-		if(this.currentState==state){
-			this.button.setText(title.getString());
 		}
 	}
 	@Override
