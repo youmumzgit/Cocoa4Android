@@ -16,8 +16,8 @@
 package org.cocoa4android.ns;
 
 public class NSIndexPath extends NSObject implements Comparable<NSIndexPath> {
-	private int section;
-	private int row;
+	public int section;
+	public int row;
 	
 	public static NSIndexPath indexPathForRow(int row,int section){
 		return new NSIndexPath(section,row);
