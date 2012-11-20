@@ -85,7 +85,7 @@ public class UITableView extends UIView {
 				}
 				selectedView = cellsList.get(position);
 				selectedIndexPath = mappingList.get(position);
-				selectedView.setBackgroundColor(UIColor.blueColor());
+				selectedView.setBackgroundColor(new UIColor(0xff0378f0));
 				listView.invalidate();
 				if(delegate != null) {
 					delegate.didSelectRowAtIndexPath(UITableView.this, selectedIndexPath);
