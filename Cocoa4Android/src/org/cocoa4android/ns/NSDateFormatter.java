@@ -10,22 +10,22 @@ public class NSDateFormatter extends NSObject {
 		_dateFormat = new SimpleDateFormat();
 	}
 	
-	public NSString dateFormat() {
-		return new NSString(_dateFormat.toPattern());
+	public String dateFormat() {
+		return _dateFormat.toPattern();
 	}
 	
 	public void setDateFormat(NSString string) {
 		_dateFormat.applyPattern(string.getString());
 	}
 	
-	public NSString stringFromDate(NSDate date) {
-		return new NSString(_dateFormat.format(date.getDate()));
+	public String stringFromDate(NSDate date) {
+		return _dateFormat.format(date.getDate());
 	}
 	
-	public NSDate dateFromString(NSString string) {
+	public NSDate dateFromString(String string) {
 		NSDate date;
 		try {
-			date = NSDate.dateWithDate(_dateFormat.parse(string.getString()));
+			date = NSDate.dateWithDate(_dateFormat.parse(string));
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

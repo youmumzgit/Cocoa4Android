@@ -18,7 +18,6 @@ package org.cocoa4android.ui;
 import org.cocoa4android.cg.CGRect;
 
 
-import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 public class UIImageView extends UIView {

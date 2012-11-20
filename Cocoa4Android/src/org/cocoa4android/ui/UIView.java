@@ -22,7 +22,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
@@ -35,7 +34,7 @@ public class UIView extends NSObject{
 	private boolean isHidden;
 	protected CGRect frame;
 	private UIColor backgroundColor;
-	protected float density = UIScreen.getMainScreen().getDensity();
+	protected float density = UIScreen.mainScreen().getDensity();
 	protected Context context = UIApplication.sharedApplication().getContext();
 	protected LayoutInflater inflater;
 	private int tag;

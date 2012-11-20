@@ -15,15 +15,13 @@
  */
 package org.cocoa4android.ui;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 
 import org.cocoa4android.cg.CGRect;
-import org.cocoa4android.util.CAObjectMethod;
+import org.cocoa4android.ns.NSString;
 
 import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class UIButton extends UIControl {
@@ -46,17 +44,17 @@ public class UIButton extends UIControl {
 		return button;
 	}
 	public void setTitle(String title){
-		this.setTitleForState(title, UIControlState.UIControlStateNormal);
+		this.setTitle(title, UIControlState.UIControlStateNormal);
 	}
-	@Override
-	public void setBackgroundImage(UIImage backgroundImage){
-		this.setBackgroundImageForState(backgroundImage, UIControlState.UIControlStateNormal);
-	}
-	public void setTitleForState(String title,UIControlState state){
+	public void setTitle(String title,UIControlState state){
 		titles.put(state, title);
 		if(this.currentState==state){
 			this.button.setText(title);
 		}
+	}
+	@Override
+	public void setBackgroundImage(UIImage backgroundImage){
+		this.setBackgroundImageForState(backgroundImage, UIControlState.UIControlStateNormal);
 	}
 	public void setBackgroundImageForState(UIImage backgroundImage,UIControlState state){
 		backgroundImages.put(state, backgroundImage);

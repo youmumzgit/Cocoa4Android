@@ -15,18 +15,16 @@
  */
 package org.cocoa4android.ui;
 
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 import org.cocoa4android.cg.CGRect;
 
 import android.content.Context;
-import android.graphics.Color;
+
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Gravity;
-import android.view.WindowManager.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -63,7 +61,8 @@ public class UITextField extends UIView {
 	public void setText(String text){
 		this.textField.setText(text);
 	}
-	public String getText(){
+
+	public String text(){
 		return this.textField.getText().toString();
 	}
 	public void setTextColor(UIColor color){
@@ -82,6 +81,10 @@ public class UITextField extends UIView {
 			break;
 		}
 		
+	}
+	public void setFont(UIFont font) {
+		this.textField.setTextSize(font.fontSize());
+		this.textField.setTypeface(font.getFont());
 	}
 	public void setFontSize(float fontSize){
 		this.textField.setTextSize(fontSize);
@@ -112,7 +115,7 @@ public class UITextField extends UIView {
 		}
 	}
 	
-	public NSString getPlaceholder() {
+	public NSString placeholder() {
 		return placeholder;
 	}
 	public void setPlaceholder(NSString placeholder) {

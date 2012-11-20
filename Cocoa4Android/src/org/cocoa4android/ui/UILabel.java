@@ -16,6 +16,7 @@
 package org.cocoa4android.ui;
 
 import org.cocoa4android.cg.CGRect;
+import org.cocoa4android.ns.NSString;
 import org.cocoa4android.ns.NSTextAlignment;
 
 import android.view.Gravity;
@@ -24,7 +25,7 @@ import android.widget.TextView;
 
 public class UILabel extends UIView {
 	private TextView label = null;
-
+	
 	public UILabel(){
 		TextView lbl = new TextView(context);
 		this.setLabel(lbl);
@@ -59,8 +60,8 @@ public class UILabel extends UIView {
 	public void setText(String text){
 		this.label.setText(text);
 	}
-	public String getText(){
-		return (String) this.label.getText();
+	public String text(){
+		return this.label.getText().toString();
 	}
 	public void setTextColor(UIColor color){
 		this.label.setTextColor(color.getColor());
