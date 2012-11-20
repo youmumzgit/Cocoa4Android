@@ -24,7 +24,7 @@ public class UITabBarController extends UIViewController {
 	private UIView container;
 	
 	private int selectedIndex=-1;
-	private int previousSelectedIndex = -1;
+	//private int previousSelectedIndex = -1;
 	
 	public UITabBarController(){
 		super();
@@ -83,7 +83,7 @@ public class UITabBarController extends UIViewController {
 				if(this.selectedIndex!=-1){
 					this.viewControllers[this.selectedIndex].getView().setHidden(YES);
 				}
-				previousSelectedIndex = this.selectedIndex;
+				//previousSelectedIndex = this.selectedIndex;
 				this.selectedIndex = selectedIndex;
 			}
 		}

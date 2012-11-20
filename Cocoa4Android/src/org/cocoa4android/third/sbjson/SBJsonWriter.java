@@ -13,7 +13,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.cocoa4android.ns.NSObject;
-import org.cocoa4android.ns.NSString;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;

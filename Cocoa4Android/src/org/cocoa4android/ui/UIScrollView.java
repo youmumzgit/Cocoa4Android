@@ -28,7 +28,6 @@ import android.widget.FrameLayout;
 public class UIScrollView extends UIView {
 	private HVScrollView scrollView = null;
 	private UIView contentView = null;
-	private CGPoint contentOffSet;
 	private CGSize contentSize;
 	private UIScrollViewDelegate delegate;
 	private boolean moveBegan = false;
@@ -41,7 +40,6 @@ public class UIScrollView extends UIView {
 		contentView = new UIView();
 		scrollView.addView(contentView.getView());
 		this.setView(scrollView);
-		contentOffSet = new CGPoint(0,0);
 		contentSize = new CGSize(0,0);
 		
 		scrollView.setOnTouchListener(new OnTouchListener(){
