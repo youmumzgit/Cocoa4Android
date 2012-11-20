@@ -19,19 +19,19 @@ import org.json.JSONObject;
 import org.json.JSONStringer;
 
 public class SBJsonWriter extends NSObject {
-	public NSString stringWithObject(NSObject value){
+	public static String stringWithObject(Object value){
 		String contentString ="";
 		JSONStringer js = new JSONStringer();
 		serialize(js, value);
 		contentString = js.toString();
-		return new NSString(contentString);
+		return contentString;
 	}
 	/**
 	 * 序列化为JSON
 	 * @param js json对象
 	 * @param o	待需序列化的对象
 	 */
-	private void serialize(JSONStringer js, Object o) {
+	private static void serialize(JSONStringer js, Object o) {
 		if (isNull(o)) {
 			try {
 				js.value(null);
@@ -66,7 +66,7 @@ public class SBJsonWriter extends NSObject {
 	 * @param js	json对象
 	 * @param array	数组
 	 */
-	private void serializeArray(JSONStringer js, Object array) {
+	private static void serializeArray(JSONStringer js, Object array) {
 		try {
 			js.array();
 			for (int i = 0; i < Array.getLength(array); ++i) {
@@ -83,7 +83,7 @@ public class SBJsonWriter extends NSObject {
 	 * @param js	json对象
 	 * @param collection	集合
 	 */
-	private void serializeCollect(JSONStringer js, Collection<?> collection) {
+	private static void serializeCollect(JSONStringer js, Collection<?> collection) {
 		try {
 			js.array();
 			for (Object o : collection) {
@@ -100,7 +100,7 @@ public class SBJsonWriter extends NSObject {
 	 * @param js	json对象
 	 * @param map	map对象
 	 */
-	private void serializeMap(JSONStringer js, Map<?,?> map) {
+	private static void serializeMap(JSONStringer js, Map<?,?> map) {
 		try {
 			js.object();
 			@SuppressWarnings("unchecked")
@@ -122,7 +122,7 @@ public class SBJsonWriter extends NSObject {
 	 * @param js	json对象
 	 * @param obj	待序列化对象
 	 */
-	private void serializeObject(JSONStringer js, Object obj) {
+	private static void serializeObject(JSONStringer js, Object obj) {
 		try {
 			js.object();
 			Class<? extends Object> objClazz = obj.getClass();
@@ -165,7 +165,7 @@ public class SBJsonWriter extends NSObject {
 	 * @param fieldMethod	方法名称
 	 * @return true或者false
 	 */
-	public boolean haveMethod(Method[] methods, String fieldMethod) {
+	public static boolean haveMethod(Method[] methods, String fieldMethod) {
 		for (Method met : methods) {
 			if (fieldMethod.equals(met.getName())) {
 				return true;
@@ -180,7 +180,7 @@ public class SBJsonWriter extends NSObject {
 	 * @param methodType	方法类型
 	 * @return 方法名称
 	 */
-	public String parseMethodName(String fieldName,String methodType) {
+	public static String parseMethodName(String fieldName,String methodType) {
 		if (null == fieldName || "".equals(fieldName)) {
 			return null;
 		}
@@ -191,7 +191,7 @@ public class SBJsonWriter extends NSObject {
 	 * @param obj	实例
 	 * @return
 	 */
-	private boolean isNull(Object obj) {
+	private static boolean isNull(Object obj) {
 		if (obj instanceof JSONObject) {
 			return JSONObject.NULL.equals(obj);
 		}
@@ -203,7 +203,7 @@ public class SBJsonWriter extends NSObject {
 	 * @param clazz	
 	 * @return
 	 */
-	private boolean isSingle(Class<?> clazz) {
+	private static boolean isSingle(Class<?> clazz) {
 		return isBoolean(clazz) || isNumber(clazz) || isString(clazz);
 	}
 
@@ -212,7 +212,7 @@ public class SBJsonWriter extends NSObject {
 	 * @param clazz	
 	 * @return
 	 */
-	public boolean isBoolean(Class<?> clazz) {
+	public static boolean isBoolean(Class<?> clazz) {
 		return (clazz != null)
 				&& ((Boolean.TYPE.isAssignableFrom(clazz)) || (Boolean.class
 						.isAssignableFrom(clazz)));
@@ -223,7 +223,7 @@ public class SBJsonWriter extends NSObject {
 	 * @param clazz	
 	 * @return
 	 */
-	public boolean isNumber(Class<?> clazz) {
+	public static boolean isNumber(Class<?> clazz) {
 		return (clazz != null)
 				&& ((Byte.TYPE.isAssignableFrom(clazz)) || (Short.TYPE.isAssignableFrom(clazz))
 						|| (Integer.TYPE.isAssignableFrom(clazz))
@@ -238,7 +238,7 @@ public class SBJsonWriter extends NSObject {
 	 * @param clazz	
 	 * @return
 	 */
-	public boolean isString(Class<?> clazz) {
+	public static boolean isString(Class<?> clazz) {
 		return (clazz != null)
 				&& ((String.class.isAssignableFrom(clazz))
 						|| (Character.TYPE.isAssignableFrom(clazz)) || (Character.class
@@ -250,7 +250,7 @@ public class SBJsonWriter extends NSObject {
 	 * @param clazz	
 	 * @return
 	 */
-	private boolean isObject(Class<?> clazz) {
+	private static boolean isObject(Class<?> clazz) {
 		return clazz != null && !isSingle(clazz) && !isArray(clazz) && !isCollection(clazz) && !isMap(clazz);
 	}
 
@@ -259,7 +259,7 @@ public class SBJsonWriter extends NSObject {
 	 * @param clazz
 	 * @return
 	 */
-	public boolean isArray(Class<?> clazz) {
+	public static boolean isArray(Class<?> clazz) {
 		return clazz != null && clazz.isArray();
 	}
 
@@ -268,7 +268,7 @@ public class SBJsonWriter extends NSObject {
 	 * @param clazz
 	 * @return
 	 */
-	public boolean isCollection(Class<?> clazz) {
+	public static boolean isCollection(Class<?> clazz) {
 		return clazz != null && Collection.class.isAssignableFrom(clazz);
 	}
 		
@@ -277,7 +277,7 @@ public class SBJsonWriter extends NSObject {
 	 * @param clazz
 	 * @return
 	 */
-	public boolean isMap(Class<?> clazz) {
+	public static boolean isMap(Class<?> clazz) {
 		return clazz != null && Map.class.isAssignableFrom(clazz);
 	}
 	
@@ -286,7 +286,7 @@ public class SBJsonWriter extends NSObject {
 	 * @param clazz
 	 * @return
 	 */
-	public boolean isList(Class<?> clazz) {
+	public static boolean isList(Class<?> clazz) {
 		return clazz != null && List.class.isAssignableFrom(clazz);
 	}
 }

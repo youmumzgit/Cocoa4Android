@@ -16,13 +16,8 @@
 package org.cocoa4android.ns;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
-
-import android.R.array;
-import android.R.integer;
 
 public class NSArray extends NSObject implements Collection<Object>{
 	ArrayList<Object> list = null;

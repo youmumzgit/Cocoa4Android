@@ -54,9 +54,6 @@ public class UIWebView extends UIView {
 		params.topMargin = (int)(frame.origin().y()*density);
 		this.getView().setLayoutParams(params);
 	}
-	public void loadHTMLString(NSString string,NSString baseUrl){
-		webView.loadDataWithBaseURL(baseUrl.getString(), string.getString(), "text/html", "utf-8", null);
-	}
 	public void loadHTMLString(String string,String baseUrl){
 		webView.loadDataWithBaseURL(baseUrl, string, "text/html", "utf-8", null);
 	}

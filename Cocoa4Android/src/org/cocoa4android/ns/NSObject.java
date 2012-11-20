@@ -39,9 +39,8 @@ public class NSObject {
 	public String description() {
 		return this.toString();
 	}
-	public NSString JSONRepresentation(){
-		SBJsonWriter writer = new SBJsonWriter();
-		return writer.stringWithObject(this);
+	public String JSONRepresentation(){
+		return SBJsonWriter.stringWithObject(this);
 	}
 	public boolean isArray(){
 		return NSArray.class.isInstance(this);

@@ -20,27 +20,26 @@ import java.util.Iterator;
 import org.cocoa4android.ns.NSMutableArray;
 import org.cocoa4android.ns.NSMutableDictionary;
 import org.cocoa4android.ns.NSObject;
-import org.cocoa4android.ns.NSString;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SBJsonParser extends NSObject {
 	
-	public NSObject objectWithString(NSString repr){
-		String content = repr.getString();
+	public static Object objectWithString(String repr){
+		String content = repr;
 		content = content.trim();
 		if(content.startsWith("[")){
 			//NSArray
-			return this.parseArray(content);
+			return SBJsonParser.parseArray(content);
 		}else if(content.startsWith("{")){
-			return this.parseDictionary(content);
+			return SBJsonParser.parseDictionary(content);
 		}else if(!content.toLowerCase().equals("null")){
 			return repr;
 		}
 		return null;
 	}
-	private NSObject parseArray(String content){
+	private static NSObject parseArray(String content){
 		try {
 			JSONArray arJsonArray = new JSONArray(content);
 			NSMutableArray array = NSMutableArray.array();
@@ -48,13 +47,13 @@ public class SBJsonParser extends NSObject {
 			for (int i = 0; i < arJsonArray.length(); i++) {
 				String value = arJsonArray.getString(i).trim();
 				if(value.startsWith("[")){
-					NSObject nsArray = this.parseArray(value);
+					NSObject nsArray = SBJsonParser.parseArray(value);
 					array.add(nsArray);
 				}else if(value.startsWith("{")){
-					NSObject nsDictionary = this.parseDictionary(value);
+					NSObject nsDictionary = SBJsonParser.parseDictionary(value);
 					array.add(nsDictionary);
 				}else if(!content.toLowerCase().equals("null")){
-					array.add(new NSString(value));
+					array.add(value);
 				}else{
 					array.add(null);
 				}
@@ -69,7 +68,7 @@ public class SBJsonParser extends NSObject {
 		
 		return null;
 	}
-	private NSObject parseDictionary(String content){
+	private static NSObject parseDictionary(String content){
 		try {
 			JSONObject jsonObject = new JSONObject(content);
 			@SuppressWarnings("unchecked")
@@ -81,13 +80,13 @@ public class SBJsonParser extends NSObject {
 				String value = jsonObject.getString(key).trim();
 				
 				if(value.startsWith("[")){
-					NSObject array = this.parseArray(content);
+					NSObject array = SBJsonParser.parseArray(content);
 					dic.setObject(array, key);
 				}else if(value.startsWith("{")){
-					NSObject object = this.parseDictionary(content);
+					NSObject object = SBJsonParser.parseDictionary(content);
 					dic.setObject(object, key);
 				}else if(!value.toLowerCase().equals("null")){
-					dic.setObject(new NSString(value), key);
+					dic.setObject(value, key);
 				}else{
 					dic.setObject(null, key);
 				}

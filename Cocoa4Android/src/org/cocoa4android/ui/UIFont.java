@@ -1,7 +1,6 @@
 package org.cocoa4android.ui;
 
 import org.cocoa4android.ns.NSObject;
-import org.cocoa4android.ns.NSString;
 
 import android.graphics.Typeface;
 
@@ -14,16 +13,16 @@ public class UIFont extends NSObject {
 		font = Typeface.DEFAULT;
 	}
 	
-	public UIFont(NSString fontName,float fontSize) {
+	public UIFont(String fontName,float fontSize) {
 		this.fontSize = fontSize;
-		font = Typeface.create(fontName.getString(), Typeface.NORMAL);
+		font = Typeface.create(fontName, Typeface.NORMAL);
 	}
 	
-	public UIFont(NSString fontName) {
+	public UIFont(String fontName) {
 		this(fontName, 21);
 	}
 
-	public static UIFont fontWithName(NSString fontName,float fontSize) {
+	public static UIFont fontWithName(String fontName,float fontSize) {
 		return new UIFont(fontName, fontSize);
 	}
 	
