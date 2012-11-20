@@ -43,8 +43,8 @@ public class NSString extends NSObject {
 		return new NSString(string, args);
 	}
 	//stringByAppendingString
-	public  NSString stringByAppendingString(String string){
-		return  new NSString(this.content = string) ;
+	public  String stringByAppendingString(String string){
+		return this.content+string;
 	}
 	
 	//ContentsOfFile
@@ -59,13 +59,13 @@ public class NSString extends NSObject {
 	}
 
 	//subStringFromIndex
-	public NSString subStringFromIndex(int start){
-		return new NSString(this.content.substring(start)) ;
+	public String subStringFromIndex(int start){
+		return this.content.substring(start);
 	}
 	//subStringFromIndexToIndex
-	public NSString subStringToIndex(int end) {
+	public String subStringToIndex(int end) {
 		int start = 0;
-		return new NSString(this.content.substring(start, end)) ;
+		return this.content.substring(start, end) ;
 	}
 	//length
 	public int length(){
@@ -90,90 +90,132 @@ public class NSString extends NSObject {
 	}
 	
 	//substringWithRange
-	public NSString substringWithRange(NSRange range) {
-		 return new NSString(this.content.substring(range.start, range.end));
+	public String substringWithRange(NSRange range) {
+		 return this.content.substring(range.start, range.end);
 	}
 	
 	//×Ö·û½ØÈ¡×Ö·û´®
 	public NSArray componentsSeparatedByString (String string) {
-		String[] c = this.content.split(string);
+		String  c[] = this.content.split(string);
 		NSArray array = NSArray.arrayWithObjects((Object[])c);
 		return array;
 	}
 	
 	//stringByReplacingCharactersInRange
-	public NSString stringByReplacingCharactersInRange (NSRange range,String string) {
+	public String stringByReplacingCharactersInRange (NSRange range,String string) {
 		int length =this.length();
 		String	stringBegin = this.content.substring(0,range.start);
 		String	stringEnd = this.content.substring(range.end+1,length);
-		return new NSString(stringBegin+string+stringEnd);
+		return stringBegin+string+stringEnd;
 	}
 	
-	//pathExtension (ing...)
-	public NSString pathExtension () {
-		NSArray array = this.componentsSeparatedByString(".");
+	//pathExtension (ok)
+	public String pathExtension () {
 		String string = "";
-		int i = 0;
-		i = array.count()-1;
-		if(!array.objectAtIndex(i).equals("") && !array.objectAtIndex(i).equals("/")){
-           String sub="";
-			if (array.objectAtIndex(i-1).toString().length()!=0 && i-1>0) {
-				int length = array.objectAtIndex(i-1).toString().length()-1;
-				sub = array.objectAtIndex(i-1).toString().substring(length);
-			}else {
-				sub = "/";
+		//ÅÐ¶Ï×Ö·û´®ÖÐÊÇ·ñÓÐ ¡£ £¨£­1Ã»ÓÐ£©
+		if (this.content.lastIndexOf(".")>0) {
+			int length = this.content.length();
+			int index = this.content.lastIndexOf(".");
+			string = this.content.substring(index+1, length);
+		} 
+		/*
+//		NSArray array = this.componentsSeparatedByString("\\.");
+//		String string = "";
+//		System.out.print(array.count());
+//		int i = 0;
+//		if (array.count()>1) {
+//			i = array.count()-1;
+//			if(!array.objectAtIndex(i).equals("") && !array.objectAtIndex(i).equals("/")){
+//		           String sub="/";
+//					if (array.objectAtIndex(i).toString().length()!=0 && i-1>0) {
+//						sub = array.objectAtIndex(i).toString().substring(0, 1);
+//					}
+//		            if (!sub.equals("/")) {
+//						string = (String)array.objectAtIndex(i);
+//					}
+//				}
+//		}
+ */
+		return string;
+	}
+	//lastPathComponent (ok)
+	public String lastPathComponent () {
+//		NSArray array = this.componentsSeparatedByString("/");
+//		String string = "/";
+//	    for (int i =0; i<array.count(); i++) {
+//	        if (!array.objectAtIndex(i).equals("")) {
+//	            string =(String) array.objectAtIndex(i);
+//	        }
+//	    }
+		int start = -1,end = -1;
+		for (int i = content.length()-1; i >= 0; i--) {
+			if (end == -1) {
+				if (content.charAt(i) != '/') {
+					end = i;
+				}
 			}
-            if (!sub.equals("/")) {
-				string = (String)array.objectAtIndex(i);
+			else {
+				if (content.charAt(i) == '/') {
+					start = i;
+					break;
+				}
 			}
 		}
-		return new NSString(string);
+		if (end == -1) {
+			return "/";
+		}
+		return content.substring(start + 1, end +1);
+//		return new NSString(string);
 	}
-	//lastPathComponent
-	public NSString lastPathComponent () {
-		NSArray array = this.componentsSeparatedByString("/");
-		String string = "/";
-	    for (int i =0; i<array.count(); i++) {
-	        if (!array.objectAtIndex(i).equals("")) {
-	            string =(String) array.objectAtIndex(i);
-	        }
-	    }
-		return new NSString(string);
-	}
-	//pathComponents
+	//pathComponents (you hua)
 	public NSArray pathComponents() {
-		NSArray array = this.componentsSeparatedByString("/");
+//		NSArray array = this.componentsSeparatedByString("/");
 		NSMutableArray pathArray = NSMutableArray.array();
-		String string = "/";
-	    for (int i =0; i<array.count(); i++) {
-	        if (array.objectAtIndex(i).equals("")) {
-	        	if (i==0 || i==array.count()-1) {
-		            pathArray.add(string);
-				}
-	        }else {
-				string =(String) array.objectAtIndex(i);
-				pathArray.add(string);
+		String string ;
+//	    for (int i =0; i<array.count(); i++) {
+//	        if (array.objectAtIndex(i).equals("")) {
+//	        	if (i==0 || i==array.count()-1) {
+//		            pathArray.add(string);
+//				}
+//	        }else {
+//				string =(String) array.objectAtIndex(i);
+//				pathArray.add(string);
+//			}
+//	    }
+//		return pathArray;
+		int start = 0,end = 0 ;
+		for (int i = 0; i < content.length(); i++) {
+			if (content.charAt(i)=='/' || i==length()-1) {
+				end = i;
+				string= content.substring(start,end+1);
+				if (string.equals("/")) {
+					if (start==0 || end==content.length()-1) {
+						pathArray.add('/');
+					}
+				}else {
+					pathArray.add(string);
+				} 
+				start = i+1;
 			}
-	    }
-		return NSArray.arrayWithArray(pathArray);
+		}
+		System.out.print(pathArray.count());
+		return pathArray;
 	}
 	
-	//stringByAppendingPathComponent
-	public NSString stringByAppendingPathComponent(String string) {
+	//stringByAppendingPathComponent (ok)
+	public String stringByAppendingPathComponent(String string) {
 		String receive=this.getString();
 		if (receive.equals("")) {
-			return new NSString(string);
+			return string;
 		}else {
 			int index = this.content.length();
-			String	c = this.content.substring(index-1,index);
-			if (c.equals("/")) {
+			int c = this.content.lastIndexOf("/");
+			if (c==index-1) {
 				receive = this.content+string;
-
 			}else {
 				receive = this.content+"/"+string;
-
 			}
-			return new NSString(receive);
+			return receive;
 		}
 	}
 	
@@ -190,7 +232,7 @@ public class NSString extends NSObject {
 	public Boolean boolValue() {
 		return Boolean.parseBoolean(this.content);
 	}
-	
+	//toString
 	public String toString() 	{
 		return this.getString();
 	}
