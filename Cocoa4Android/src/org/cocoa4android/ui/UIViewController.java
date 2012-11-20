@@ -110,6 +110,7 @@ public class UIViewController extends NSObject{
 	private UIViewController parentViewController;
 	
 	private UIViewController presentingViewController;
+	
 	private UIViewController presentedViewController;
 	
 	public void presentModalViewController(UIViewController viewController,boolean animated){
@@ -118,14 +119,12 @@ public class UIViewController extends NSObject{
 		modalView.setBackgroundColor(UIColor.whiteColor());
 		
 		UIApplication.sharedApplication().delegate().window.addSubView(modalView);
+		this.setPresentedViewController(viewController);
 		
 		if(animated){
-			this.setPresentingViewController(viewController);
 			this.translateBetweenViews(viewController.getView(), true);
 		}else{
 			this.getView().setHidden(true);
-			this.setPresentedViewController(viewController);
-			
 		}
 		viewController.setParentViewController(this);
 	}
@@ -133,12 +132,12 @@ public class UIViewController extends NSObject{
 		this.dismissModalViewController(animated, true);
 	}
 	protected void dismissModalViewController(boolean animated,boolean checkParent){
-		if(this.getPresentedViewController()!=null){
+		if(this.presentedViewController()!=null){
 			this.getView().setHidden(false);
 			if(animated){
-				this.translateBetweenViews(this.getPresentedViewController().getView(), false);
+				this.translateBetweenViews(this.presentedViewController().getView(), false);
 			}else{
-				this.getPresentedViewController().getView().removeFromSuperView();
+				this.presentedViewController().getView().removeFromSuperView();
 				this.setPresentedViewController(null);
 			}
 		}else if(checkParent&&this.parentViewController()!=null){
@@ -176,10 +175,8 @@ public class UIViewController extends NSObject{
 				//UINavigationController.this.getView().setHidden(true);
 				if(UIViewController.this.isPresent){
 					UIViewController.this.getView().setHidden(true);
-					UIViewController.this.setPresentedViewController(UIViewController.this.getPresentingViewController());
-					UIViewController.this.setPresentingViewController(null);
 				}else{
-					UIViewController.this.getPresentedViewController().getView().removeFromSuperView();
+					UIViewController.this.presentedViewController().getView().removeFromSuperView();
 					UIViewController.this.setPresentedViewController(null);
 				}
 			}
@@ -199,17 +196,22 @@ public class UIViewController extends NSObject{
 		});
 	}
 
-	public UIViewController getPresentedViewController() {
+	public UIViewController presentedViewController() {
 		return presentedViewController;
 	}
 
 	public void setPresentedViewController(UIViewController presentedViewController) {
+		if(this.presentedViewController!=null){
+			this.presentedViewController.setPresentingViewController(null);
+		}
 		this.presentedViewController = presentedViewController;
+		presentedViewController.setPresentingViewController(this);
 	}
 
-	public UIViewController getPresentingViewController() {
+	public UIViewController presentingViewController() {
 		return presentingViewController;
 	}
+
 
 	public void setPresentingViewController(UIViewController presentingViewController) {
 		this.presentingViewController = presentingViewController;

@@ -16,7 +16,6 @@
 package org.cocoa4android.ui;
 
 import org.cocoa4android.cg.CGRect;
-import org.cocoa4android.ns.NSString;
 import org.cocoa4android.ns.NSTextAlignment;
 
 import android.view.Gravity;

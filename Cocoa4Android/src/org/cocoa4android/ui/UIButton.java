@@ -19,7 +19,6 @@ package org.cocoa4android.ui;
 import java.util.HashMap;
 
 import org.cocoa4android.cg.CGRect;
-import org.cocoa4android.ns.NSString;
 
 import android.view.MotionEvent;
 import android.widget.Button;

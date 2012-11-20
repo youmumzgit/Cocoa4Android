@@ -16,7 +16,6 @@
 package org.cocoa4android.ui;
 
 import org.cocoa4android.cg.CGRect;
-import org.cocoa4android.ns.NSString;
 
 import android.content.Context;
 import android.webkit.WebView;
