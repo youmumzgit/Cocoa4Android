@@ -28,13 +28,12 @@ import android.view.Gravity;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import org.cocoa4android.ns.NSString;
 import org.cocoa4android.ns.NSTextAlignment;
 
 
 public class UITextField extends UIView {
 	private EditText textField = null;
-	public NSString placeholder;
+	public String placeholder;
 	
 	public UITextField(){
 		textField = new EditText(context);
@@ -115,11 +114,12 @@ public class UITextField extends UIView {
 		}
 	}
 	
-	public NSString placeholder() {
+	public String placeholder() {
 		return placeholder;
 	}
-	public void setPlaceholder(NSString placeholder) {
+	public void setPlaceholder(String placeholder) {
 		this.placeholder = placeholder;
-		this.textField.setHint(placeholder.getString());
+		this.textField.setHintTextColor(UIColor.lightGrayColor().getColor());
+		this.textField.setHint(placeholder);
 	}
 }

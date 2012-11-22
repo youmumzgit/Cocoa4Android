@@ -205,7 +205,9 @@ public class UIViewController extends NSObject{
 			this.presentedViewController.setPresentingViewController(null);
 		}
 		this.presentedViewController = presentedViewController;
-		presentedViewController.setPresentingViewController(this);
+		if(presentedViewController!=null){
+			presentedViewController.setPresentingViewController(this);
+		}
 	}
 
 	public UIViewController presentingViewController() {
