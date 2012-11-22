@@ -1,6 +1,5 @@
 package org.cocoa4android.util;
 
-import java.net.URL;
 
 import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.extend.urlimage.UrlImageViewCallback;

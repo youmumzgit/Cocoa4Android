@@ -11,8 +11,6 @@ import android.widget.Button;
 public class CAAsyncImageButton extends UIButton implements UrlImageButtonCallback{
 	private CAAsyncImageButtonCallback imageButtonCallback;
 	
-	private CAAsyncImageView imageView;
-	
 	public CAAsyncImageButton(){
 		super();
 	}
