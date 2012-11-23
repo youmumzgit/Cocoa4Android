@@ -174,7 +174,7 @@ public class UIView extends NSObject{
 	public void setTag(int tag) {
 		this.tag = tag;
 	}
-	public void setBackgroundImage(UIImage backgroundImage){
+	public void setImage(UIImage backgroundImage){
 		this.view.setBackgroundResource(backgroundImage.getResId());
 	}
 	public void bringSubviewToFront(UIView view){

@@ -33,6 +33,7 @@ public class UIButton extends UIControl {
 	public UIButton(){
 		Button btn = new Button(context);
 		this.setButton(btn);
+		btn.setFocusable(NO);
 		this.setView(button);
 	}
 	public UIButton(CGRect frame){
@@ -51,11 +52,10 @@ public class UIButton extends UIControl {
 			this.button.setText(title);
 		}
 	}
-	@Override
-	public void setBackgroundImage(UIImage backgroundImage){
-		this.setBackgroundImageForState(backgroundImage, UIControlState.UIControlStateNormal);
+	public void setImage(UIImage backgroundImage){
+		this.setImageForState(backgroundImage, UIControlState.UIControlStateNormal);
 	}
-	public void setBackgroundImageForState(UIImage backgroundImage,UIControlState state){
+	public void setImageForState(UIImage backgroundImage,UIControlState state){
 		backgroundImages.put(state, backgroundImage);
 		if(this.currentState==state){
 			if(backgroundImage.getResId()!=0){
@@ -88,28 +88,6 @@ public class UIButton extends UIControl {
 	
 	public void setButton(Button button) {
 		this.button = button;
-		/*
-		if(button!=null){
-			button.setOnClickListener(new OnClickListener(){
-				@Override
-				public void onClick(View v) {
-					if(UIButton.this.enable){
-						// TODO Auto-generated method stub
-						//click on
-						ArrayList<CAObjectMethod> oms = callbacks.get(UIControlEvent.UIControlEventTouchUpInside);
-						if(oms!=null){
-							for(int i=0;i<oms.size();i++){
-								//loop to call the callbacks
-								CAObjectMethod om = oms.get(i);
-								om.invoke(UIButton.this);
-							}
-						}
-					}
-				}
-				
-			});
-		}
-		*/
 	}
 	public boolean isEnable() {
 		return enable;

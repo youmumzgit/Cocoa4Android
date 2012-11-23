@@ -70,7 +70,7 @@ public class UITableView extends UIView {
 		}
 		adapter = new refreshableAdapter(mappingList);
 		listView.setAdapter(adapter);
-		
+		listView.setFocusable(NO);
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
