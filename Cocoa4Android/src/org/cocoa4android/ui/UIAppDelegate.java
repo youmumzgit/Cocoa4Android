@@ -48,14 +48,14 @@ public abstract class UIAppDelegate extends Activity {
         
         DisplayMetrics dm = new DisplayMetrics();   
         getWindowManager().getDefaultDisplay().getMetrics(dm); 
-        float statusBarHeight = 25;
         float density = dm.density;
-        float width = dm.widthPixels/density;
-        float height = dm.heightPixels/density;
-        
         UIScreen.mainScreen().setDensity(density);
+        UIScreen.mainScreen().setDensityDpi(dm.densityDpi);
+        
+        float width = dm.widthPixels;
+        float height = dm.heightPixels;
+        
         UIScreen.mainScreen().setBounds(new CGRect(0,0,width,height));
-        UIScreen.mainScreen().setApplicationFrame(new CGRect(0,0,width,height-statusBarHeight));
         this.window = new UIWindow();
         this.setContentView(this.window.getView());
         //this.setContentView(this.window.getView());

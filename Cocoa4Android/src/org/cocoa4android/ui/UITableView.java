@@ -66,7 +66,7 @@ public class UITableView extends UIView {
 		this.setView(listView);
 		isGrouped = (style == UITableViewStyle.UITableViewStyleGrouped) ? true : false;
 		if(isGrouped) {
-			listView.setPadding((int)(10*density), (int)(10*density), (int)(10*density), (int)(25*density));
+			listView.setPadding((int)(10*densityX), (int)(10*densityY), (int)(10*densityX), (int)(25*densityY));
 		}
 		adapter = new refreshableAdapter(mappingList);
 		listView.setAdapter(adapter);
@@ -306,7 +306,7 @@ public class UITableView extends UIView {
 						view = new UIView();
 					}
 					view.setBackgroundColor(UIColor.clearColor());
-					AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.FILL_PARENT, (int)(height*density));
+					AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.FILL_PARENT, (int)(height*densityY));
 					view.getView().setLayoutParams(params);
 					return view.getView();
 				}
@@ -317,7 +317,7 @@ public class UITableView extends UIView {
 						view = new UIView();
 					}
 					view.setBackgroundColor(UIColor.clearColor());
-					AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.FILL_PARENT, (int)(height*density));
+					AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.FILL_PARENT, (int)(height*densityY));
 					view.getView().setLayoutParams(params);
 					return view.getView();
 				}

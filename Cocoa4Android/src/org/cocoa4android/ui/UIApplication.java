@@ -23,7 +23,8 @@ public class UIApplication extends NSObject{
 	private UIAppDelegate delegate;
 	
 	private static UIApplication sharedApplication = null;
-
+	
+	
 	public static UIApplication sharedApplication() {
 		if(sharedApplication==null){
 			sharedApplication = new UIApplication();

@@ -15,14 +15,18 @@
  */
 package org.cocoa4android.ui;
 
+import org.cocoa4android.cg.CGAffineTransform;
 import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.ns.NSObject;
 
 import android.content.Context;
+import android.graphics.Matrix;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
@@ -33,8 +37,12 @@ public class UIView extends NSObject{
 	private View view;
 	private boolean isHidden;
 	protected CGRect frame;
+	protected CGAffineTransform transform;
+	
 	private UIColor backgroundColor;
-	protected float density = UIScreen.mainScreen().getDensity();
+	protected float densityX = UIScreen.mainScreen().getDensityX();
+	protected float densityY = UIScreen.mainScreen().getDensityY();
+	
 	protected Context context = UIApplication.sharedApplication().getContext();
 	protected LayoutInflater inflater;
 	private int tag;
@@ -135,14 +143,14 @@ public class UIView extends NSObject{
 	}
 	public CGRect frame() {
 		if(frame==null){
-			float width = this.getView().getWidth()/density;
-			float height = this.getView().getHeight()/density;
+			float width = this.getView().getWidth()/densityX;
+			float height = this.getView().getHeight()/densityY;
 			LayoutParams params = (LayoutParams) this.getView().getLayoutParams();
 			float x = 0;
 			float y = 0;
 			if(params!=null){
-				x = params.leftMargin/density;
-				y = params.topMargin/density;
+				x = params.leftMargin/densityX;
+				y = params.topMargin/densityY;
 			}
 			frame = new CGRect(x,y,width,height);
 		}
@@ -150,14 +158,30 @@ public class UIView extends NSObject{
 	}
 	public void setFrame(CGRect frame) {
 		this.frame = frame;
-		LayoutParams params = new LayoutParams((int)(frame.size().width()*density), (int)(frame.size().height()*density));
+		LayoutParams params = new LayoutParams((int)(frame.size().width()*densityX), (int)(frame.size().height()*densityY));
 		params.alignWithParent = true;
 		params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 		params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-		params.leftMargin = (int)(frame.origin().x()*density);
-		params.topMargin = (int)(frame.origin().y()*density);
+		params.leftMargin = (int)(frame.origin().x()*densityX);
+		params.topMargin = (int)(frame.origin().y()*densityY);
 		this.view.setLayoutParams(params);
 	}
+	
+	public CGAffineTransform getTransform() {
+		return transform;
+	}
+	/**
+	 * change the size and position of the shape
+	 * @param transform 
+	 */
+	public void setTransform(CGAffineTransform transform) {
+		this.transform = transform;
+		//make a animation to scale
+		TransformAnimation transformAnimation = new TransformAnimation(transform);
+		this.view.startAnimation(transformAnimation);
+		transformAnimation.start();
+	}
+	
 	public UIColor backgroundColor() {
 		return backgroundColor;
 	}
@@ -192,5 +216,24 @@ public class UIView extends NSObject{
 	}
 	public void touchesMoved(UITouch[] touches,MotionEvent event){
 		
+	}
+	
+	public class TransformAnimation extends Animation{
+		private CGAffineTransform trans;
+		private boolean isChanged =NO;
+		public TransformAnimation(CGAffineTransform transform)
+	    {
+			this.setDuration(0);
+			this.trans = transform;
+	    }
+		@Override
+	    protected void applyTransformation(float interpolatedTime, Transformation t) {
+			if (!isChanged) {
+				final Matrix matrix = t.getMatrix();
+				matrix.setValues(new float[]{trans.a,trans.b,trans.tx,trans.c,trans.d,trans.ty,0,0,1});
+				isChanged = YES;
+			}
+			
+	    }
 	}
 }

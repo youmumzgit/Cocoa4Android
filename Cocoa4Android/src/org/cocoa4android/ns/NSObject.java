@@ -15,6 +15,10 @@
  */
 package org.cocoa4android.ns;
 
+import org.cocoa4android.cg.CGAffineTransform;
+import org.cocoa4android.cg.CGPoint;
+import org.cocoa4android.cg.CGRect;
+import org.cocoa4android.cg.CGSize;
 import org.cocoa4android.third.sbjson.SBJsonWriter;
 
 import android.util.Log;
@@ -22,7 +26,6 @@ import android.util.Log;
 public class NSObject {
 	public static final boolean YES = true;
 	public static final boolean NO = false;
-	
 	public static void NSLog(String format,Object...args){
 		Log.i("Cocoa4Android",NSString.stringWithFormat(format, args).getString());
 	}
@@ -44,5 +47,41 @@ public class NSObject {
 	}
 	public boolean isArray(){
 		return NSArray.class.isInstance(this);
+	}
+	
+	
+	
+	/*
+	 * CG MAKE Method
+	 */
+	protected CGRect CGRectMake(float x,float y,float width,float height){
+		return new CGRect(x,y,width,height);
+	}
+	protected CGSize CGSizeMake(float width,float height){
+		return new CGSize(width, height);
+	}
+	protected CGPoint CGPoint(float x,float y){
+		return new CGPoint(x, y);
+	}
+	protected CGAffineTransform CGAffineTransformMake(float a, float b,
+			float c, float d, float tx, float ty){
+		return new CGAffineTransform(a,b,c,d,tx,ty);
+	}
+	protected CGAffineTransform CGAffineTransformMakeTranslation(float tx,float ty){
+		return new CGAffineTransform(tx,ty);
+	}
+	protected CGAffineTransform CGAffineTransformMakeScale(float sx,float sy){
+		CGAffineTransform transform = new CGAffineTransform();
+		transform.a = sx;
+		transform.d = sy;
+		return transform;
+	}
+	protected CGAffineTransform CGAffineTransformMakeRotation(float angle) {
+		CGAffineTransform transform = new CGAffineTransform();
+		transform.a = (float) Math.cos(angle);
+		transform.b = (float) Math.sin(angle);
+		transform.c = (float) -Math.sin(angle);
+		transform.d = (float) Math.cos(angle);
+		return transform;
 	}
 }

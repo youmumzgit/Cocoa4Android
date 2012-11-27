@@ -44,13 +44,13 @@ public class UIWebView extends UIView {
 	}
 	public void setFrame(CGRect frame){
 		this.frame = frame;
-		LayoutParams params = new LayoutParams((int)(frame.size().width()*density), LayoutParams.WRAP_CONTENT);
+		LayoutParams params = new LayoutParams((int)(frame.size().width()*densityX), LayoutParams.WRAP_CONTENT);
 		//LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
 		params.alignWithParent = true;
 		params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 		params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-		params.leftMargin = (int)(frame.origin().x()*density);
-		params.topMargin = (int)(frame.origin().y()*density);
+		params.leftMargin = (int)(frame.origin().x()*densityX);
+		params.topMargin = (int)(frame.origin().y()*densityY);
 		this.getView().setLayoutParams(params);
 	}
 	public void loadHTMLString(String string,String baseUrl){
@@ -66,7 +66,7 @@ public class UIWebView extends UIView {
 		protected void onSizeChanged(int xNew, int yNew, int xOld, int yOld){
 			super.onSizeChanged(xNew, yNew, xOld, yOld);
 			if(webViewSizeChangeLisener!=null){
-				webViewSizeChangeLisener.webViewDidChangeSize(xNew/density, yNew/density);
+				webViewSizeChangeLisener.webViewDidChangeSize(xNew/densityX, yNew/densityY);
 			}
 		}
 	}

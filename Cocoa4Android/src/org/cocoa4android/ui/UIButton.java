@@ -53,9 +53,9 @@ public class UIButton extends UIControl {
 		}
 	}
 	public void setImage(UIImage backgroundImage){
-		this.setImageForState(backgroundImage, UIControlState.UIControlStateNormal);
+		this.setImage(backgroundImage, UIControlState.UIControlStateNormal);
 	}
-	public void setImageForState(UIImage backgroundImage,UIControlState state){
+	public void setImage(UIImage backgroundImage,UIControlState state){
 		backgroundImages.put(state, backgroundImage);
 		if(this.currentState==state){
 			if(backgroundImage.getResId()!=0){

@@ -82,17 +82,17 @@ public class UIScrollView extends UIView {
 	}
 	
 	public void setContentOffSet(CGPoint contentOffSet) {
-		this.scrollView.scrollTo((int)(contentOffSet.x()*density), (int)(contentOffSet.y()*density));
+		this.scrollView.scrollTo((int)(contentOffSet.x()*densityX), (int)(contentOffSet.y()*densityY));
 	}
 	public CGPoint contentOffSet() {
-		return new CGPoint(scrollView.getScrollX()/density,scrollView.getScrollY()/density);
+		return new CGPoint(scrollView.getScrollX()/densityX,scrollView.getScrollY()/densityY);
 	}
 	
 	public void setContentSize(CGSize contentSize) {
 		this.contentSize = contentSize;
 		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-				(int)(contentSize.width()*density),
-				(int)(contentSize.height()*density)
+				(int)(contentSize.width()*densityX),
+				(int)(contentSize.height()*densityY)
 			);
 		
 		this.contentView.getView().setLayoutParams(params);
@@ -161,8 +161,8 @@ public class UIScrollView extends UIView {
 				//ajust to page
 				
 				CGRect frame = this.frame();
-				int x  =  (int) (scrollView.getScrollX()/density);
-				int y  =  (int) (scrollView.getScrollY()/density);
+				int x  =  (int) (scrollView.getScrollX()/densityX);
+				int y  =  (int) (scrollView.getScrollY()/densityY);
 				
 				float pageWidth = this.frame().size().width();
 				int pagew = (int) (Math.floor((this.contentOffSet().x()-pageWidth/2)/pageWidth)+1);
@@ -174,7 +174,7 @@ public class UIScrollView extends UIView {
 				int towardX = (int) (frame.size().width()*pagew);
 				int towardY = (int) (frame.size().height()*pageh);
 				
-				scrollView.smoothScrollTo((int)(towardX*density), (int)(towardY*density));
+				scrollView.smoothScrollTo((int)(towardX*densityX), (int)(towardY*densityY));
 				//scrollView.scrollTo((int)(towardX*density), (int)(towardY*density));
 			}
 		}

@@ -66,7 +66,7 @@ public class UILabel extends UIView {
 		this.label.setTextColor(color.getColor());
 	}
 	public void setFontSize(int size){
-		this.label.setTextSize(size);
+		this.label.setTextSize(size*UIScreen.mainScreen().getDensityY());
 	}
 	public void setNumberOfLines(int numberOfLines){
 		this.label.setLines(numberOfLines);
