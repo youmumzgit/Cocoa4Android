@@ -86,7 +86,7 @@ public class UITextField extends UIView {
 		this.textField.setTypeface(font.getFont());
 	}
 	public void setFontSize(float fontSize){
-		this.textField.setTextSize(fontSize*UIScreen.mainScreen().getDensityY());
+		this.textField.setTextSize(fontSize*UIScreen.mainScreen().getDensityText());
 	}
 	public void setSecureTextEntry(boolean secureTextEntry){
 		if(secureTextEntry){

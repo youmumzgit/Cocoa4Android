@@ -56,6 +56,9 @@ public abstract class UIAppDelegate extends Activity {
         float height = dm.heightPixels;
         
         UIScreen.mainScreen().setBounds(new CGRect(0,0,width,height));
+        UIScreen.mainScreen().setDensityText(dm.scaledDensity);
+        
+        
         this.window = new UIWindow();
         this.setContentView(this.window.getView());
         //this.setContentView(this.window.getView());

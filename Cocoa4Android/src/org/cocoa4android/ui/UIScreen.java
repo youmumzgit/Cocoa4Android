@@ -15,8 +15,6 @@
  */
 package org.cocoa4android.ui;
 
-import java.security.PublicKey;
-
 import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.cg.CGSize;
 import org.cocoa4android.ns.NSObject;
@@ -27,6 +25,8 @@ public class UIScreen extends NSObject{
 	private static final int LOW_DPI_STATUS_BAR_HEIGHT = 19;
 	private static final int MEDIUM_DPI_STATUS_BAR_HEIGHT = 25;
 	private static final int HIGH_DPI_STATUS_BAR_HEIGHT = 38;
+	
+	private static final boolean AUTOSIZE = YES;
 	
 	private static UIScreen mainScreen = null;
 	public static UIScreen mainScreen(){
@@ -49,6 +49,8 @@ public class UIScreen extends NSObject{
 	
 	private float density;
 	private int densityDpi;
+	
+	private float densityText;
 	
 	private boolean useDip = false;
 
@@ -96,7 +98,7 @@ public class UIScreen extends NSObject{
 		if(this.useDip){
 			value = density;
 		}
-		if(standardScreenSize!=null){
+		if(standardScreenSize!=null&&AUTOSIZE){
 			value *= applicationFrame.size.width/standardApplicationFrame.size.width;
 		}
 		return value;
@@ -106,7 +108,7 @@ public class UIScreen extends NSObject{
 		if(this.useDip){
 			value = density;
 		}
-		if(standardScreenSize!=null){
+		if(standardScreenSize!=null&&AUTOSIZE){
 			value *= applicationFrame.size.height/standardApplicationFrame.size.height;
 		}
 		return value;
@@ -154,5 +156,18 @@ public class UIScreen extends NSObject{
 	    default:
 	        statusBarHeight = MEDIUM_DPI_STATUS_BAR_HEIGHT;
 		}
+	}
+	public float getDensityText() {
+		float value = 1.0f;
+		if(this.useDip){
+			value = densityText;
+		}
+		if(standardScreenSize!=null&&AUTOSIZE){
+			value *= applicationFrame.size.height/standardApplicationFrame.size.height;
+		}
+		return value;
+	}
+	public void setDensityText(float densityText) {
+		this.densityText = densityText;
 	}
 }

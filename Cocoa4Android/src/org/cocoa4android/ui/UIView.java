@@ -176,10 +176,6 @@ public class UIView extends NSObject{
 	 */
 	public void setTransform(CGAffineTransform transform) {
 		this.transform = transform;
-		//make a animation to scale
-		TransformAnimation transformAnimation = new TransformAnimation(transform);
-		this.view.startAnimation(transformAnimation);
-		transformAnimation.start();
 	}
 	
 	public UIColor backgroundColor() {
@@ -198,7 +194,7 @@ public class UIView extends NSObject{
 	public void setTag(int tag) {
 		this.tag = tag;
 	}
-	public void setImage(UIImage backgroundImage){
+	public void setBackgroundImage(UIImage backgroundImage){
 		this.view.setBackgroundResource(backgroundImage.getResId());
 	}
 	public void bringSubviewToFront(UIView view){
@@ -216,24 +212,5 @@ public class UIView extends NSObject{
 	}
 	public void touchesMoved(UITouch[] touches,MotionEvent event){
 		
-	}
-	
-	public class TransformAnimation extends Animation{
-		private CGAffineTransform trans;
-		private boolean isChanged =NO;
-		public TransformAnimation(CGAffineTransform transform)
-	    {
-			this.setDuration(0);
-			this.trans = transform;
-	    }
-		@Override
-	    protected void applyTransformation(float interpolatedTime, Transformation t) {
-			if (!isChanged) {
-				final Matrix matrix = t.getMatrix();
-				matrix.setValues(new float[]{trans.a,trans.b,trans.tx,trans.c,trans.d,trans.ty,0,0,1});
-				isChanged = YES;
-			}
-			
-	    }
 	}
 }
