@@ -29,7 +29,7 @@ public class UITabBarController extends UIViewController {
 	public UITabBarController(){
 		super();
 		//add two part of view					 
-		int tabBarHeight = 49;
+		int tabBarHeight = 40;
 		CGRect frame = UIScreen.mainScreen().applicationFrame();
 		container = new UIView(new CGRect(0,0,frame.size().width(),frame.size().height()-tabBarHeight));
 		this.view.addSubView(container);

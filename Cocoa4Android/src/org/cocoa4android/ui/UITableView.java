@@ -44,6 +44,7 @@ public class UITableView extends UIView {
 	private UITableViewDelegate delegate = null;
 	
 	private UITableViewStyle style;
+	UITableViewCellSeparatorStyle cellSeparatorStyle;
 	private boolean isGrouped;
 	
 	private List<NSIndexPath> mappingList = null;//mapping position to indexPath
@@ -104,6 +105,18 @@ public class UITableView extends UIView {
 	public UITableViewStyle style() {
 		return style;
 	}
+	
+	
+	@Override
+	public void setBackgroundColor(UIColor backgroundColor){
+		super.setBackgroundColor(backgroundColor);
+		listView.setDivider(new ColorDrawable(backgroundColor.getColor()));
+		listView.setDividerHeight(1);
+		if (cellSeparatorStyle!=null) {
+			this.setSeparatorStyle(cellSeparatorStyle);
+		}
+	}
+	
 	private ArrayList<NSIndexPath> initMapping() {
 		if(dataSource != null && delegate != null) {
 			mappingList = new ArrayList<NSIndexPath>();
@@ -173,6 +186,7 @@ public class UITableView extends UIView {
 		case UITableViewCellSeparatorStyleSingleLineEtched:
 			break;
 		}
+		this.cellSeparatorStyle = style;
 	}
 	
 	public void insertRowsAtIndexPaths(NSArray indexPaths,UITableViewRowAnimation animation) {
