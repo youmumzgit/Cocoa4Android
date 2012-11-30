@@ -15,7 +15,11 @@
  */
 package org.cocoa4android.ns;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+
+import android.R.layout;
 
 public class NSDictionary extends NSObject {
 	protected HashMap<Object, Object> hashMap;
@@ -40,9 +44,15 @@ public class NSDictionary extends NSObject {
 	public Object objectForKey(Object akey){
 		return hashMap.get(akey);
 	}
-	
+	/*
 	public Object[] allKeys(){
 		return hashMap.keySet().toArray();
+	}
+	*/
+	
+	public NSArray allKeys(){
+		Object[] objects = hashMap.keySet().toArray();
+		return new NSArray(objects);
 	}
 	public int cout(){
 		return hashMap.size();

@@ -16,7 +16,9 @@
 package org.cocoa4android.ns;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 
 public class NSArray extends NSObject implements Collection<Object>{
@@ -31,8 +33,10 @@ public class NSArray extends NSObject implements Collection<Object>{
 	public static NSArray arrayWithArray(NSArray array){
 		return new NSArray(array);
 	}
+	
+	@SuppressWarnings("unchecked")
 	public NSArray(NSArray array){
-		this.list = array.list;
+		this.list = (ArrayList<Object>) this.list.clone();
 	}
 	public NSArray(){
 		list = new ArrayList<Object>();
@@ -57,6 +61,12 @@ public class NSArray extends NSObject implements Collection<Object>{
 	
 	public int indexOfObject(Object anObject){
 		return list.indexOf(anObject);
+	}
+	
+	public NSArray sortedArrayUsingComparator(NSComparator cmptr){
+		NSArray array = NSArray.arrayWithArray(this);
+		Collections.sort(array.list, cmptr);
+		return array;
 	}
 	
 	

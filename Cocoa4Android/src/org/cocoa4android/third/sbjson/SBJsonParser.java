@@ -80,10 +80,10 @@ public class SBJsonParser extends NSObject {
 				String value = jsonObject.getString(key).trim();
 				
 				if(value.startsWith("[")){
-					NSObject array = SBJsonParser.parseArray(content);
+					NSObject array = SBJsonParser.parseArray(value);
 					dic.setObject(array, key);
 				}else if(value.startsWith("{")){
-					NSObject object = SBJsonParser.parseDictionary(content);
+					NSObject object = SBJsonParser.parseDictionary(value);
 					dic.setObject(object, key);
 				}else if(!value.toLowerCase().equals("null")){
 					dic.setObject(value, key);
