@@ -110,10 +110,12 @@ public class UITableView extends UIView {
 	@Override
 	public void setBackgroundColor(UIColor backgroundColor){
 		super.setBackgroundColor(backgroundColor);
-		listView.setDivider(new ColorDrawable(backgroundColor.getColor()));
-		listView.setDividerHeight(1);
-		if (cellSeparatorStyle!=null) {
-			this.setSeparatorStyle(cellSeparatorStyle);
+		if (style==UITableViewStyle.UITableViewStyleGrouped) {
+			listView.setDivider(new ColorDrawable(backgroundColor.getColor()));
+			listView.setDividerHeight(1);
+			if (cellSeparatorStyle!=null) {
+				this.setSeparatorStyle(cellSeparatorStyle);
+			}
 		}
 	}
 	
