@@ -43,7 +43,7 @@ public class UINavigationController extends UIViewController {
 		}
 		viewController.setNavigationController(this);
 		UIView view = viewController.getView();
-		this.getView().addSubView(view);
+		this.getView().addSubview(view);
 		
 		if(animated&&lastView!=null){
 			this.translateBetweenViews(lastView, view,true);

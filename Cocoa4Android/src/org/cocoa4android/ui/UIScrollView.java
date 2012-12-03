@@ -101,8 +101,8 @@ public class UIScrollView extends UIView {
 		return this.contentSize;
 	}
 	@Override
-	public void addSubView(UIView child) {
-		contentView.addSubView(child);
+	public void addSubview(UIView child) {
+		contentView.addSubview(child);
 	}
 	@Override
 	public void removeSubView(UIView child) {

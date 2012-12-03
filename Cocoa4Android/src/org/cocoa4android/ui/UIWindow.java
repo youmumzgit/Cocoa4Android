@@ -39,6 +39,6 @@ public class UIWindow extends UIView {
 	}
 	public void setRootViewController(UIViewController rootViewController) {
 		this.rootViewController = rootViewController;
-		this.addSubView(rootViewController.getView());
+		this.addSubview(rootViewController.getView());
 	}
 }

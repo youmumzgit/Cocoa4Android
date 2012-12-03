@@ -91,13 +91,13 @@ public class UITableViewCell extends UIView {
 	private void initDefaultTableViewCell(){
 		
 		imageView = new UIImageView();
-		this.addSubView(imageView);
+		this.addSubview(imageView);
 		
 		textLabel = new UILabel();
-		this.addSubView(textLabel);
+		this.addSubview(textLabel);
 		
 		detailTextLabel = new UILabel();
-		this.addSubView(detailTextLabel);
+		this.addSubview(detailTextLabel);
 	}
 	private void initValue1TableViewCell(){
 		

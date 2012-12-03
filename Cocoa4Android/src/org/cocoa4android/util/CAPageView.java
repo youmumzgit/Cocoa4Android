@@ -32,7 +32,7 @@ public class CAPageView extends UIView implements UIScrollViewDelegate{
     	scrollView = new UIScrollView(new CGRect(0,0,frame.size().width(),frame.size().height()));
     	scrollView.setShowsHorizontalScrollIndicator(false);
     	scrollView.setShowsVerticalScrollIndicator(false);
-    	this.addSubView(scrollView);
+    	this.addSubview(scrollView);
     	
     	pageControl = new UIPageControl();
     	
@@ -108,10 +108,10 @@ public class CAPageView extends UIView implements UIScrollViewDelegate{
 	    	float x = frame.size().width()*page + (frame.size().width()-viewFrame.size().width())/2;
 	    	float y = (frame.size().height()-viewFrame.size().height())/2;
 	    	view.setFrame(new CGRect(x,y,viewFrame.size().width(),viewFrame.size().height()));
-	    	scrollView.addSubView(view);
+	    	scrollView.addSubview(view);
 	    }
 	    if (isTouchMaskEnabled&&page==0&&mask.superView()==null) {
-	    	scrollView.addSubView(mask);
+	    	scrollView.addSubview(mask);
 	    }
 	}
 

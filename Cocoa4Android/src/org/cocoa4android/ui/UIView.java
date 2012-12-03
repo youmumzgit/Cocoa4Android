@@ -68,7 +68,7 @@ public class UIView extends NSObject{
 	public UIView(View view){
 		this.setView(view);
 	}
-	public void addSubView(UIView child){
+	public void addSubview(UIView child){
 		if(this.isViewGroup()){
 			ViewGroup vg = (ViewGroup)this.view;
 			vg.addView(child.getView());

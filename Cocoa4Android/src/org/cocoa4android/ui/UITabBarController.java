@@ -32,12 +32,12 @@ public class UITabBarController extends UIViewController {
 		int tabBarHeight = 40;
 		CGRect frame = UIScreen.mainScreen().applicationFrame();
 		container = new UIView(new CGRect(0,0,frame.size().width(),frame.size().height()-tabBarHeight));
-		this.view.addSubView(container);
+		this.view.addSubview(container);
 		
 		//default set tabBar 49
 		tabBar = new UIView(new CGRect(0,frame.size().height()-tabBarHeight,frame.size().width(),tabBarHeight));
 		tabBar.setBackgroundColor(UIColor.blackColor());
-		this.view.addSubView(tabBar);
+		this.view.addSubview(tabBar);
 	}
 	
 	public UIViewController[] getViewControllers() {
@@ -63,7 +63,7 @@ public class UITabBarController extends UIViewController {
 			UIViewController viewController = viewControllers[index];
 			UIView view = viewController.getView();
 			if(view.superView()==null){
-				container.addSubView(view);
+				container.addSubview(view);
 			}
 			if(view.isHidden()){
 				view.setHidden(NO);

@@ -29,7 +29,7 @@ public class UIViewController extends NSObject{
 	
 	protected UIView otherViews;
 	
-	private String title;
+	protected String title;
 	
 	
 	private boolean isPresent;
@@ -105,20 +105,20 @@ public class UIViewController extends NSObject{
 
 
 
-	private UITabBarController tabBarController;
-	private UINavigationController navigationController;
-	private UIViewController parentViewController;
+	protected UITabBarController tabBarController;
+	protected UINavigationController navigationController;
+	protected UIViewController parentViewController;
 	
-	private UIViewController presentingViewController;
+	protected UIViewController presentingViewController;
 	
-	private UIViewController presentedViewController;
+	protected UIViewController presentedViewController;
 	
 	public void presentModalViewController(UIViewController viewController,boolean animated){
 		UIView modalView = viewController.getView();
 		modalView.setFrame(UIScreen.mainScreen().applicationFrame());
 		modalView.setBackgroundColor(UIColor.whiteColor());
 		
-		UIApplication.sharedApplication().delegate().window.addSubView(modalView);
+		UIApplication.sharedApplication().delegate().window.addSubview(modalView);
 		this.setPresentedViewController(viewController);
 		
 		if(animated){
