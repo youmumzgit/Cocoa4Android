@@ -161,8 +161,8 @@ public class UIScrollView extends UIView {
 				//ajust to page
 				
 				CGRect frame = this.frame();
-				int x  =  (int) (scrollView.getScrollX()/densityX);
-				int y  =  (int) (scrollView.getScrollY()/densityY);
+				//int x  =  (int) (scrollView.getScrollX()/densityX);
+				//int y  =  (int) (scrollView.getScrollY()/densityY);
 				
 				float pageWidth = this.frame().size().width();
 				int pagew = (int) (Math.floor((this.contentOffSet().x()-pageWidth/2)/pageWidth)+1);

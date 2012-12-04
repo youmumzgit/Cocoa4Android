@@ -24,7 +24,6 @@ import org.cocoa4android.util.CAObjectMethod;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 
 
 public class UIControl extends UIView {

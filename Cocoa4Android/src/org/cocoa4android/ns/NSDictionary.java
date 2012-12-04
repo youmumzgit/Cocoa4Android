@@ -15,11 +15,8 @@
  */
 package org.cocoa4android.ns;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 
-import android.R.layout;
+import java.util.HashMap;
 
 public class NSDictionary extends NSObject {
 	protected HashMap<Object, Object> hashMap;
