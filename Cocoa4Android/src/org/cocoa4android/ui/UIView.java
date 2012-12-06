@@ -20,13 +20,10 @@ import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.ns.NSObject;
 
 import android.content.Context;
-import android.graphics.Matrix;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
@@ -92,6 +89,7 @@ public class UIView extends NSObject{
 	}
 	public void setView(View view){
 		this.view = view;
+		view.setTag(this);
 		/*
 		if(view!=null){
 			this.view.setOnTouchListener(new OnTouchListener(){

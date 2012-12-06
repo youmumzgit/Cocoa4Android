@@ -28,7 +28,15 @@ public class UITableViewCell extends UIView {
 	private UILabel textLabel;
 	private UILabel detailTextLabel;
 	private UIImageView imageView;
-	
+	private String reuseIdentifier;
+	public String reuseIdentifier() {
+		return reuseIdentifier;
+	}
+
+	public void setReuseIdentifier(String reuseIdentifier) {
+		this.reuseIdentifier = reuseIdentifier;
+	}
+
 	private ShapeDrawable background = null;
 	
 	
@@ -42,10 +50,10 @@ public class UITableViewCell extends UIView {
 		background.getPaint().setColor(UIColor.whiteColor().getColor());
 		this.getView().setBackgroundDrawable(background);
 	}
-	
-	public UITableViewCell(UITableViewCellStyle style) {
+
+	public UITableViewCell(UITableViewCellStyle style,String reuseIdentifier) {
 		super();
-		
+		this.setReuseIdentifier(reuseIdentifier);
 		switch(style){
 			case UITableViewCellStyleDefault:initDefaultTableViewCell();break;
 			case UITableViewCellStyleValue1:initValue1TableViewCell();break;
@@ -89,15 +97,6 @@ public class UITableViewCell extends UIView {
 		}
 	}
 	private void initDefaultTableViewCell(){
-		
-		imageView = new UIImageView();
-		this.addSubview(imageView);
-		
-		textLabel = new UILabel();
-		this.addSubview(textLabel);
-		
-		detailTextLabel = new UILabel();
-		this.addSubview(detailTextLabel);
 	}
 	private void initValue1TableViewCell(){
 		
