@@ -38,43 +38,54 @@ public class UINavigationController extends UIViewController {
 		super(resId);
 	}
 	public void pushViewController(UIViewController viewController,boolean animated){
-		UIView lastView = null;
-		if(stack.size()>0){
-			lastView =stack.peek().getView();
-		}
-		viewController.setNavigationController(this);
-		UIView view = viewController.getView();
-		this.getView().addSubview(view);
-		
-		if(animated&&lastView!=null){
-			this.translateBetweenViews(lastView, view,true);
-		}else{
-			if(lastView!=null){
-				lastView.setHidden(true);
+		if (!isTransition) {
+			isTransition = YES;
+			UIView lastView = null;
+			if(stack.size()>0){
+				lastView =stack.peek().getView();
 			}
-			viewController.viewDidAppear(NO);
+			viewController.setNavigationController(this);
+			UIView view = viewController.getView();
+			this.getView().addSubview(view);
+			
+			if(animated&&lastView!=null){
+				this.translateBetweenViews(lastView, view,true);
+			}else{
+				if(lastView!=null){
+					lastView.setHidden(true);
+				}
+				viewController.viewDidAppear(NO);
+				isTransition = NO;
+			}
+			toViewController = viewController;
+			
+			stack.push(viewController);
 		}
-		toViewController = viewController;
 		
-		stack.push(viewController);
 	}
 
 	public void popViewController(boolean animated){
-		if(stack.size()>1){
-			UIViewController fromViewController =  stack.pop();
-			toViewController = stack.peek();
-			if(animated){
-				this.translateBetweenViews(fromViewController.getView(), toViewController.getView(),false);
-			}else{
-				CGRect frame = UIScreen.mainScreen().applicationFrame();
-				toViewController.getView().setFrame(new CGRect(0,0,frame.size().width(),frame.size().height()));
-				toViewController.getView().setHidden(false);
-				
-				toViewController.viewDidAppear(NO);
-				
-				fromViewController.getView().removeFromSuperView();
+		if (!isTransition) {
+			isTransition = YES;
+			if(stack.size()>1){
+				UIViewController fromViewController =  stack.pop();
+				toViewController = stack.peek();
+				if(animated){
+					this.translateBetweenViews(fromViewController.getView(), toViewController.getView(),false);
+				}else{
+					CGRect frame = UIScreen.mainScreen().applicationFrame();
+					toViewController.getView().setFrame(new CGRect(0,0,frame.size().width(),frame.size().height()));
+					toViewController.getView().setHidden(false);
+					
+					toViewController.viewDidAppear(NO);
+					isTransition = NO;
+					
+					fromViewController.getView().removeFromSuperView();
+					
+				}
 			}
 		}
+		
 		
 	}
 	public void popToRootViewController(boolean animated){
@@ -128,7 +139,7 @@ public class UINavigationController extends UIViewController {
 					UINavigationController.this.toViewController.viewDidAppear(YES);
 					UINavigationController.this.toViewController = null;
 				}
-				
+				isTransition = NO;
 			}
 
 			@Override

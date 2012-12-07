@@ -26,6 +26,8 @@ import android.view.animation.TranslateAnimation;
 import android.view.animation.Animation.AnimationListener;
 
 public class UIViewController extends NSObject{
+	protected static boolean isTransition = false;
+	
 	protected UIView view;
 	
 	protected UIView otherViews;
@@ -121,37 +123,49 @@ public class UIViewController extends NSObject{
 	protected UIViewController presentedViewController;
 	
 	public void presentModalViewController(UIViewController viewController,boolean animated){
-		UIView modalView = viewController.getView();
-		modalView.setFrame(UIScreen.mainScreen().applicationFrame());
-		modalView.setBackgroundColor(UIColor.whiteColor());
-		
-		UIApplication.sharedApplication().delegate().window.addSubview(modalView);
-		this.setPresentedViewController(viewController);
-		
-		if(animated){
-			this.translateBetweenViews(viewController.getView(), true);
-		}else{
-			this.getView().setHidden(true);
-			viewController.viewDidAppear(NO);
+		if (!isTransition) {
+			isTransition = YES;
+			UIView modalView = viewController.getView();
+			modalView.setFrame(UIScreen.mainScreen().applicationFrame());
+			modalView.setBackgroundColor(UIColor.whiteColor());
+			
+			UIApplication.sharedApplication().delegate().window.addSubview(modalView);
+			this.setPresentedViewController(viewController);
+			
+			if(animated){
+				this.translateBetweenViews(viewController.getView(), true);
+			}else{
+				this.getView().setHidden(true);
+				viewController.viewDidAppear(NO);
+				isTransition = NO;
+			}
+			viewController.setParentViewController(this);
+			
 		}
-		viewController.setParentViewController(this);
+		
 	}
 	public void dismissModalViewController(boolean animated){
 		this.dismissModalViewController(animated, true);
 	}
 	protected void dismissModalViewController(boolean animated,boolean checkParent){
-		if(this.presentedViewController()!=null){
-			this.getView().setHidden(false);
-			if(animated){
-				this.translateBetweenViews(this.presentedViewController().getView(), false);
-			}else{
-				this.presentedViewController().getView().removeFromSuperView();
-				this.setPresentedViewController(null);
-				this.viewDidAppear(NO);
+		if (!isTransition) {
+			isTransition = YES;
+			if(this.presentedViewController()!=null){
+				this.getView().setHidden(false);
+				if(animated){
+					this.translateBetweenViews(this.presentedViewController().getView(), false);
+				}else{
+					this.presentedViewController().getView().removeFromSuperView();
+					this.setPresentedViewController(null);
+					this.viewDidAppear(NO);
+					isTransition = NO;
+				}
+			}else if(checkParent&&this.parentViewController()!=null){
+				isTransition = NO;
+				this.parentViewController().dismissModalViewController(animated,false);
 			}
-		}else if(checkParent&&this.parentViewController()!=null){
-			this.parentViewController().dismissModalViewController(animated,false);
 		}
+		
 	}
 	private void translateBetweenViews(UIView modalView ,boolean isPresent){
 		//œ‘ æ
@@ -190,6 +204,7 @@ public class UIViewController extends NSObject{
 					UIViewController.this.setPresentedViewController(null);
 					UIViewController.this.viewDidAppear(YES);
 				}
+				isTransition = NO;
 			}
 
 			@Override

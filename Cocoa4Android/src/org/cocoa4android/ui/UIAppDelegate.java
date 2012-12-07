@@ -26,9 +26,9 @@ import android.util.Log;
 import android.view.KeyEvent;
 
 public abstract class UIAppDelegate extends Activity {
-	public static final boolean YES = true;
-	public static final boolean NO = false;
-	public static void NSLog(String format,Object...args){
+	protected static final boolean YES = true;
+	protected static final boolean NO = false;
+	protected static void NSLog(String format,Object...args){
 		Log.i("Cocoa4Android",NSString.stringWithFormat(format, args).getString());
 	}
 	
