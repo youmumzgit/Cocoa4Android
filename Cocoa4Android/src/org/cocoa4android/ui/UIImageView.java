@@ -19,6 +19,8 @@ import org.cocoa4android.cg.CGRect;
 
 
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 
 public class UIImageView extends UIView {
 	
@@ -33,6 +35,15 @@ public class UIImageView extends UIView {
 		imageView = new ImageView(this.context);
 		//fix me
 		imageView.setScaleType(ImageView.ScaleType.FIT_XY); 
+		
+		LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+		params.alignWithParent = true;
+		params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+		params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+		params.leftMargin = 0;
+		params.topMargin = 0;
+		imageView.setLayoutParams(params);
+		
 		this.setView(imageView);
 	}
 	public UIImageView(CGRect frame){

@@ -15,6 +15,10 @@
  */
 package org.cocoa4android.ui;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import org.cocoa4android.R;
 import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.ns.NSString;
 
@@ -61,8 +65,24 @@ public abstract class UIAppDelegate extends Activity {
         
         this.window = new UIWindow();
         this.setContentView(this.window.getView());
-        //this.setContentView(this.window.getView());
-        this.applicationDidFinishLaunching();
+        
+        final UIImageView imageView = new UIImageView();
+        imageView.setImage(new UIImage(R.drawable.c4a_default));
+        this.window.addSubview(imageView);
+        new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				UIAppDelegate.this.runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						imageView.removeFromSuperView();
+						UIAppDelegate.this.applicationDidFinishLaunching();
+					}
+				});
+			}
+		}, 3000);
     }
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -77,5 +97,6 @@ public abstract class UIAppDelegate extends Activity {
         }
         return false;
     }
+	
 	public abstract void applicationDidFinishLaunching();
 }
