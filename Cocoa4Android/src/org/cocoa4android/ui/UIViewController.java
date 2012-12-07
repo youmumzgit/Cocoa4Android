@@ -18,6 +18,7 @@ package org.cocoa4android.ui;
 import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.ns.NSObject;
 
+import android.R.bool;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -33,6 +34,8 @@ public class UIViewController extends NSObject{
 	
 	
 	private boolean isPresent;
+	
+	
 	
 	public UIView getView() {
 		return view;
@@ -54,6 +57,10 @@ public class UIViewController extends NSObject{
 	protected void viewDidLoad(){
 		
 	}
+	protected void viewDidAppear(Boolean animated){
+		
+	}
+	
 	protected int viewid;
 	protected LayoutInflater inflater;
 	
@@ -125,6 +132,7 @@ public class UIViewController extends NSObject{
 			this.translateBetweenViews(viewController.getView(), true);
 		}else{
 			this.getView().setHidden(true);
+			viewController.viewDidAppear(NO);
 		}
 		viewController.setParentViewController(this);
 	}
@@ -139,6 +147,7 @@ public class UIViewController extends NSObject{
 			}else{
 				this.presentedViewController().getView().removeFromSuperView();
 				this.setPresentedViewController(null);
+				this.viewDidAppear(NO);
 			}
 		}else if(checkParent&&this.parentViewController()!=null){
 			this.parentViewController().dismissModalViewController(animated,false);
@@ -175,9 +184,11 @@ public class UIViewController extends NSObject{
 				//UINavigationController.this.getView().setHidden(true);
 				if(UIViewController.this.isPresent){
 					UIViewController.this.getView().setHidden(true);
+					UIViewController.this.presentedViewController.viewDidAppear(YES);
 				}else{
 					UIViewController.this.presentedViewController().getView().removeFromSuperView();
 					UIViewController.this.setPresentedViewController(null);
+					UIViewController.this.viewDidAppear(YES);
 				}
 			}
 

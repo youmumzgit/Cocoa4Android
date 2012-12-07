@@ -27,6 +27,7 @@ import android.view.animation.TranslateAnimation;
 public class UINavigationController extends UIViewController {
 	private Stack<UIViewController> stack = new Stack<UIViewController>();
 	private UIView fromView;
+	private UIViewController toViewController;
 	private boolean isPush;
 	
 	private boolean navigationBarHidden;
@@ -51,7 +52,9 @@ public class UINavigationController extends UIViewController {
 			if(lastView!=null){
 				lastView.setHidden(true);
 			}
+			viewController.viewDidAppear(NO);
 		}
+		toViewController = viewController;
 		
 		stack.push(viewController);
 	}
@@ -59,13 +62,16 @@ public class UINavigationController extends UIViewController {
 	public void popViewController(boolean animated){
 		if(stack.size()>1){
 			UIViewController fromViewController =  stack.pop();
-			UIViewController toViewController = stack.peek();
+			toViewController = stack.peek();
 			if(animated){
 				this.translateBetweenViews(fromViewController.getView(), toViewController.getView(),false);
 			}else{
 				CGRect frame = UIScreen.mainScreen().applicationFrame();
 				toViewController.getView().setFrame(new CGRect(0,0,frame.size().width(),frame.size().height()));
 				toViewController.getView().setHidden(false);
+				
+				toViewController.viewDidAppear(NO);
+				
 				fromViewController.getView().removeFromSuperView();
 			}
 		}
@@ -117,6 +123,10 @@ public class UINavigationController extends UIViewController {
 					UINavigationController.this.fromView.setHidden(true);
 				}else{
 					UINavigationController.this.fromView.removeFromSuperView();
+				}
+				if (UINavigationController.this.toViewController!=null) {
+					UINavigationController.this.toViewController.viewDidAppear(YES);
+					UINavigationController.this.toViewController = null;
 				}
 				
 			}

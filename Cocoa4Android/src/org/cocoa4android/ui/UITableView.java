@@ -367,29 +367,32 @@ public class UITableView extends UIView {
 					return view.getView();
 				}
 				else {
-					if (convertView!=null&&UITableViewCell.class.isInstance(convertView.getTag())) {
-						reuseCell = (UITableViewCell) convertView.getTag();
-					}	
-					UITableViewCell cell = dataSource.cellForRowAtIndexPath(UITableView.this, indexPath);
-					float height = delegate.heightForRowAtIndexPath(UITableView.this, indexPath);
-					cell.setHeight(height);
-					int section = indexPath.section();
-					int row = indexPath.row();
-					int numberOfRowsInSection = dataSource.numberOfRowsInSection(UITableView.this, section);
-					if (row == 0 && row == numberOfRowsInSection-1) {
-						cell.setShapeType(UITableViewCellShapeType.UITableViewCellShapeAllRound);
-					}
-					else if (row == 0) {
-						cell.setShapeType(UITableViewCellShapeType.UITableViewCellShapeTopRound);
-					}
-					else if (row == numberOfRowsInSection-1) {
-						cell.setShapeType(UITableViewCellShapeType.UITableViewCellShapeBottomRound);
-					}
-					else {
-						cell.setShapeType(UITableViewCellShapeType.UITableViewCellShapeNoRound);
+					//UITableViewCell cell = (UITableViewCell) cellsList.get(position);
+					UITableViewCell cell = null;
+					if (cell==null) {
+						if (convertView!=null&&UITableViewCell.class.isInstance(convertView.getTag())) {
+							reuseCell = (UITableViewCell) convertView.getTag();
+						}	
+						cell = dataSource.cellForRowAtIndexPath(UITableView.this, indexPath);
+						float height = delegate.heightForRowAtIndexPath(UITableView.this, indexPath);
+						cell.setHeight(height);
+						int section = indexPath.section();
+						int row = indexPath.row();
+						int numberOfRowsInSection = dataSource.numberOfRowsInSection(UITableView.this, section);
+						if (row == 0 && row == numberOfRowsInSection-1) {
+							cell.setShapeType(UITableViewCellShapeType.UITableViewCellShapeAllRound);
+						}
+						else if (row == 0) {
+							cell.setShapeType(UITableViewCellShapeType.UITableViewCellShapeTopRound);
+						}
+						else if (row == numberOfRowsInSection-1) {
+							cell.setShapeType(UITableViewCellShapeType.UITableViewCellShapeBottomRound);
+						}
+						else {
+							cell.setShapeType(UITableViewCellShapeType.UITableViewCellShapeNoRound);
+						}
 					}
 					delegate.willDisplayCellForRowAtIndexPath(UITableView.this, cell, indexPath);
-
 					view = cell;
 					
 					reuseCell = null;
