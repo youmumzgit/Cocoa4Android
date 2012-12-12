@@ -21,7 +21,14 @@ public class CAPageView extends UIView implements UIScrollViewDelegate{
     UIControl mask;
     
     private UIPageControl pageControl;
-    private PGPageViewDatasouce datasource;
+    public UIPageControl pageControl() {
+		return pageControl;
+	}
+
+	public void setPageControl(UIPageControl pageControl) {
+		this.pageControl = pageControl;
+	}
+	private PGPageViewDatasouce datasource;
     private PGPageViewDelegate delegate;
     private boolean showPageControl;
     private boolean isTouchMaskEnabled;

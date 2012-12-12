@@ -16,7 +16,10 @@
 package org.cocoa4android.ui;
 
 import org.cocoa4android.cg.CGAffineTransform;
+import org.cocoa4android.cg.CGPoint;
 import org.cocoa4android.cg.CGRect;
+import org.cocoa4android.ns.NSArray;
+import org.cocoa4android.ns.NSMutableArray;
 import org.cocoa4android.ns.NSObject;
 
 import android.content.Context;
@@ -43,6 +46,27 @@ public class UIView extends NSObject{
 	protected Context context = UIApplication.sharedApplication().getContext();
 	protected LayoutInflater inflater;
 	private int tag;
+	
+	private CGPoint center = null;
+	
+	public CGPoint center() {
+		if (this.frame==null&&center!=null) {
+			return center;
+		}
+		CGRect frame = this.frame();
+		return CGPointMake(frame.size.width/2+frame.origin.x, frame.size.height/2+frame.origin.y);
+	}
+	/**
+	 * !!FIX ME fail if UIImageView without setting frame
+	 * @param center
+	 */
+	public void setCenter(CGPoint center) {
+		CGRect frame = this.frame();
+		frame.origin.x = (int) (center.x-frame.size.width/2);
+		frame.origin.y = (int) (center.y-frame.size.height/2);
+		this.setFrame(frame);
+		this.center = center;
+	}
 	public UIView(){
 		//if no setting fill the parent
 		this.setView(new RelativeLayout(context));
@@ -126,6 +150,17 @@ public class UIView extends NSObject{
 		}
 		*/
 	}
+	public NSArray subViews(){
+		NSMutableArray subViews = null;
+		if(this.isViewGroup()){
+			ViewGroup vg = (ViewGroup)this.view;
+			subViews = NSMutableArray.array(vg.getChildCount());
+			for (int i = 0; i < vg.getChildCount(); i++) {
+				subViews.addObject(new UIView(vg.getChildAt(i)));
+			}
+		}
+		return subViews;
+	}
 	public UIView superView() {
 		return superView;
 	}
@@ -156,6 +191,7 @@ public class UIView extends NSObject{
 	}
 	public void setFrame(CGRect frame) {
 		this.frame = frame;
+		
 		LayoutParams params = new LayoutParams((int)(frame.size().width()*densityX), (int)(frame.size().height()*densityY));
 		params.alignWithParent = true;
 		params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
@@ -163,6 +199,7 @@ public class UIView extends NSObject{
 		params.leftMargin = (int)(frame.origin().x()*densityX);
 		params.topMargin = (int)(frame.origin().y()*densityY);
 		this.view.setLayoutParams(params);
+		this.center = null;
 	}
 	
 	public CGAffineTransform getTransform() {

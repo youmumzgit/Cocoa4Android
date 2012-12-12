@@ -73,6 +73,7 @@ public class UIScrollView extends UIView {
 			}
 			
 		});
+		
 		//this.setShowsVerticalScrollIndicator(true);
 		
 	}

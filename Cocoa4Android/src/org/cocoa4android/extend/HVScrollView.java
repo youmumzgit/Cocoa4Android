@@ -231,7 +231,7 @@ public class HVScrollView extends FrameLayout {
 	 * @return Returns true this ScrollView can be scrolled 
 	 */  
 	private boolean canScrollV() {  
-		View child = getChildAt(0);  
+		View child = getChildAt(0);
 		if (child != null) {  
 			int childHeight = child.getHeight();  
 			return getHeight() < childHeight + getPaddingTop() + getPaddingBottom();  

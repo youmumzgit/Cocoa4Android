@@ -63,7 +63,7 @@ public class NSObject {
 	protected CGSize CGSizeMake(float width,float height){
 		return new CGSize(width, height);
 	}
-	protected CGPoint CGPoint(float x,float y){
+	protected CGPoint CGPointMake(float x,float y){
 		return new CGPoint(x, y);
 	}
 	protected CGAffineTransform CGAffineTransformMake(float a, float b,
