@@ -20,6 +20,7 @@ import org.cocoa4android.cg.CGRect;
 import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
@@ -37,14 +38,6 @@ public class UIWebView extends UIView {
 	}
 	public UIWebView(){
 		webView = new ResizableWebView(context);
-		webView.setOnTouchListener(new OnTouchListener() {
-			
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-		});
 		this.setView(webView);
 		
 	}
@@ -67,11 +60,6 @@ public class UIWebView extends UIView {
 		webView.loadDataWithBaseURL(baseUrl, string, "text/html", "utf-8", null);
 	}
 	public class ResizableWebView extends WebView{
-		/** 
-		 * Position of the last motion event. 
-		 */  
-		private float mLastMotionY;  
-		private float mLastMotionX; 
 		
 		public ResizableWebView(Context context) {
 			super(context);
@@ -85,19 +73,10 @@ public class UIWebView extends UIView {
 			}
 		}
 		@Override
-	    public boolean onTouchEvent(MotionEvent ev) {
-			super.onTouchEvent(ev);
-			
-			if (ev.getAction() == MotionEvent.ACTION_MOVE||ev.getAction() == MotionEvent.ACTION_UP){
-				//device when to disable 
-				this.requestDisallowInterceptTouchEvent(true);
-			}else{
-				this.requestDisallowInterceptTouchEvent(false);
-			}
-			
-			
-			return true;
-		}
+	    public boolean onTouchEvent(MotionEvent event){
+	        requestDisallowInterceptTouchEvent(true);
+	        return super.onTouchEvent(event);
+	    }  
 	}
 	public interface WebViewSizeChangeLisener{
 		public void webViewDidChangeSize(float width,float height);

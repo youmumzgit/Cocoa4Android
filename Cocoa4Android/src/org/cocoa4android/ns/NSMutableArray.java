@@ -17,6 +17,8 @@ package org.cocoa4android.ns;
 
 import java.util.ArrayList;
 
+import android.R.integer;
+
 public class NSMutableArray extends NSArray {
 	public static NSMutableArray array(){
 		return new NSMutableArray();
@@ -64,5 +66,7 @@ public class NSMutableArray extends NSArray {
 	public void addObjectsFromArray(NSArray otherArray){
 		list.addAll(otherArray.list);
 	}
-	
+	public void replaceObject(int index,Object anObject){
+		list.set(index, anObject);
+	}
 }

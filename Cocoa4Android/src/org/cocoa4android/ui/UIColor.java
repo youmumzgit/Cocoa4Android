@@ -22,6 +22,12 @@ public class UIColor {
 	public UIColor(int color){
 		this.color = color;
 	}
+	public UIColor(float red,float green,float blue,float alpha){
+		this.color = (int) (alpha*255);
+		color = color<<8|((int) (red*255));
+		color = color<<8|((int) (green*255));
+		color = color<<8|((int) (blue*255));
+	}
 	public int getColor() {
 		return color;
 	}

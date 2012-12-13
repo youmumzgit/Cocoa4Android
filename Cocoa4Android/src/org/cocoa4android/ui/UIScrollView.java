@@ -162,8 +162,6 @@ public class UIScrollView extends UIView {
 				//ajust to page
 				
 				CGRect frame = this.frame();
-				//int x  =  (int) (scrollView.getScrollX()/densityX);
-				//int y  =  (int) (scrollView.getScrollY()/densityY);
 				
 				float pageWidth = this.frame().size().width();
 				int pagew = (int) (Math.floor((this.contentOffSet().x()-pageWidth/2)/pageWidth)+1);
@@ -176,7 +174,7 @@ public class UIScrollView extends UIView {
 				int towardY = (int) (frame.size().height()*pageh);
 				
 				scrollView.smoothScrollTo((int)(towardX*densityX), (int)(towardY*densityY));
-				//scrollView.scrollTo((int)(towardX*density), (int)(towardY*density));
+				
 			}
 		}
 		moveBegan = false;

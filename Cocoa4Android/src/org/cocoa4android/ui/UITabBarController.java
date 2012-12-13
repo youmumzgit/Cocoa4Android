@@ -16,11 +16,12 @@
 package org.cocoa4android.ui;
 
 import org.cocoa4android.cg.CGRect;
+import org.cocoa4android.ns.NSArray;
 
 public class UITabBarController extends UIViewController {
 
-	private UIViewController[] viewControllers;
-	private UIView tabBar;
+	private NSArray viewControllers;
+	protected UIView tabBar;
 	private UIView container;
 	
 	private int selectedIndex=-1;
@@ -40,16 +41,16 @@ public class UITabBarController extends UIViewController {
 		this.view.addSubview(tabBar);
 	}
 	
-	public UIViewController[] getViewControllers() {
+	public NSArray getViewControllers() {
 		return viewControllers;
 	}
 
-	public void setViewControllers(UIViewController[] viewControllers) {
-		if(viewControllers!=null&&viewControllers.length > 0){
+	public void setViewControllers(NSArray viewControllers) {
+		if(viewControllers!=null&&viewControllers.count() > 0){
 			this.viewControllers = viewControllers;
 			
-			for(int i = 0;i<viewControllers.length;i++){
-				UIViewController viewController = viewControllers[i];
+			for(int i = 0;i<viewControllers.count();i++){
+				UIViewController viewController = (UIViewController) viewControllers.objectAtIndex(i);
 				viewController.setTabBarController(this);
 			}
 			this.loadViewController(0);
@@ -59,8 +60,8 @@ public class UITabBarController extends UIViewController {
 		}
 	}
 	private boolean loadViewController(int index){
-		if(index<this.viewControllers.length){
-			UIViewController viewController = viewControllers[index];
+		if(index<this.viewControllers.count()){
+			UIViewController viewController = (UIViewController) viewControllers.objectAtIndex(index);
 			UIView view = viewController.getView();
 			if(view.superView()==null){
 				container.addSubview(view);
@@ -81,14 +82,15 @@ public class UITabBarController extends UIViewController {
 		if(selectedIndex!=this.selectedIndex){
 			if(this.viewControllers!=null&&this.loadViewController(selectedIndex)){
 				if(this.selectedIndex!=-1){
-					this.viewControllers[this.selectedIndex].getView().setHidden(YES);
+					UIViewController viewController = (UIViewController) this.viewControllers.objectAtIndex(this.selectedIndex);
+					viewController.getView().setHidden(YES);
 				}
 				//previousSelectedIndex = this.selectedIndex;
 				this.selectedIndex = selectedIndex;
 			}
 		}
 	}
-	public UIView getTabBar() {
+	public UIView tabBar() {
 		return tabBar;
 	}
 	
@@ -98,9 +100,9 @@ public class UITabBarController extends UIViewController {
 			return false;
 		}
 		//current node
-		if(this.viewControllers!=null&&this.viewControllers.length>0){
+		if(this.viewControllers!=null&&this.viewControllers.count()>0){
 			//current node
-			UIViewController viewController = this.viewControllers[this.selectedIndex];
+			UIViewController viewController = (UIViewController) this.viewControllers.objectAtIndex(this.selectedIndex);
 			if(!viewController.backKeyDidClicked()){
 				return false;
 			}

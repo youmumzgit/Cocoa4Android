@@ -82,7 +82,7 @@ public class UIPageControl extends UIView{
 		}
 	}
 
-	public int getCurrentPage() {
+	public int currentPage() {
 		return currentPage;
 	}
 
@@ -91,6 +91,10 @@ public class UIPageControl extends UIView{
 			//invalid
 			return;
 		}
+		if (this.currentPage==currentPage) {
+			return;
+		}
+		NSLog("currentPage:"+currentPage);
 		UIImageView currentImageView = (UIImageView) dots.objectAtIndex(this.currentPage);
 		UIImageView nextImageView = (UIImageView) dots.objectAtIndex(currentPage);
 		
@@ -98,6 +102,8 @@ public class UIPageControl extends UIView{
 		CGRect nextFrame = nextImageView.frame();
 		currentImageView.setFrame(nextFrame);
 		nextImageView.setFrame(currentFrame);
+		dots.replaceObject(this.currentPage, nextImageView);
+		dots.replaceObject(currentPage, currentImageView);
 		
 		this.currentPage = currentPage;
 		

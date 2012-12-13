@@ -68,7 +68,7 @@ public class CAPageView extends UIView implements UIScrollViewDelegate{
     
     public void didSelectOnView(){
     	if(delegate!=null){
-    		delegate.didSelectAtPage(this, pageControl.getCurrentPage());
+    		delegate.didSelectAtPage(this, pageControl.currentPage());
     	}
     }
     
@@ -135,18 +135,6 @@ public class CAPageView extends UIView implements UIScrollViewDelegate{
 
 	@Override
 	public void scrollViewDidScroll(UIScrollView scrollView) {
-		// TODO Auto-generated method stub
-		if (pageControlUsed)
-	    {
-	        // do nothing - the scroll was initiated from the page control, not the user dragging
-	        return;
-	    }
-		float pageWidth = scrollView.frame().size().width();
-		int page = (int) (Math.floor((scrollView.contentOffSet().x()-pageWidth/2)/pageWidth)+1);
-		pageControl.setCurrentPage(page);
-		this.loadScrollViewWithPage(page-1);
-        this.loadScrollViewWithPage(page);
-        this.loadScrollViewWithPage(page+1);
 	}
 
 	@Override
@@ -161,13 +149,23 @@ public class CAPageView extends UIView implements UIScrollViewDelegate{
 		pageControlUsed = false;
 		
 		CGRect frame = mask.frame();
-	    frame.origin().setX(pageControl.getCurrentPage()*this.frame().size().width());
+		
+		float pageWidth = scrollView.frame().size().width();
+		int page = (int) (Math.floor((scrollView.contentOffSet().x()-pageWidth/2)/pageWidth)+1);
+		pageControl.setCurrentPage(page);
+		
+		frame.origin().setX(page*this.frame().size().width());
 	    mask.setFrame(frame);
+	    
+	    
+	    
 	    scrollView.bringSubviewToFront(mask);
 		if(delegate!=null){
-			delegate.didScrollToPage(this, pageControl.getCurrentPage());
+			delegate.didScrollToPage(this, pageControl.currentPage());
 		}
-		
+		this.loadScrollViewWithPage(page-1);
+        this.loadScrollViewWithPage(page);
+        this.loadScrollViewWithPage(page+1);
 	}
 
 	public boolean isTouchMaskEnabled() {
