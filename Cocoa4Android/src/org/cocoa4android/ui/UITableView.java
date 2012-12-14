@@ -330,11 +330,6 @@ public class UITableView extends UIView {
 		private int prevX;
 		private int prevY;
 		
-		private int ocurrX;
-		private int ocurrY;
-		private int oprevX;
-		private int oprevY;
-		
 		protected void onSizeChanged(int xNew, int yNew, int xOld, int yOld){
 			super.onSizeChanged(xNew, yNew, xOld, yOld);
 		}
@@ -347,7 +342,6 @@ public class UITableView extends UIView {
 		@Override
 	    public boolean onTouchEvent(MotionEvent event){
 			if (enableMutipleScroll) {
-				
 				prevY = currY;
 				prevX = currX;
 				currY = (int) event.getY();
@@ -362,7 +356,6 @@ public class UITableView extends UIView {
 					//if it is moved
 					//decide if the listview can scroll
 					boolean cannotScroll = YES;
-					NSLog("deltaX:"+deltaX+"deltaY:"+deltaY);
 					if (Math.abs(deltaX)<Math.abs(deltaY)) {
 						cannotScroll = ((this.getCount()==this.getLastVisiblePosition()+1)&&deltaY<0)||(this.getFirstVisiblePosition()==0&&deltaY>0);
 					}
@@ -372,7 +365,6 @@ public class UITableView extends UIView {
 					
 				}
 				requestDisallowInterceptTouchEvent(blockTouch);
-				NSLog("touch blockTouch:"+blockTouch);
 			}
 			return super.onTouchEvent(event);
 	    } 
