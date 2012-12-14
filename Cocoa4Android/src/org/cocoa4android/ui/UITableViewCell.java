@@ -66,6 +66,7 @@ public class UITableViewCell extends UIView {
 		background.getPaint().setColor(UIColor.whiteColor().getColor());
 		this.getView().setBackgroundDrawable(background);
 	}
+	
 	@Override
 	public void setFrame(CGRect frame) {
 		AbsListView.LayoutParams params = new AbsListView.LayoutParams(
@@ -74,6 +75,17 @@ public class UITableViewCell extends UIView {
 			);
 		this.getView().setLayoutParams(params);
 	}
+	
+	@Override
+	public void addSubview(UIView child) {
+		super.addSubview(child);
+		if (UIWebView.class.isInstance(child)) {
+			((UIWebView)child).setEnableMutipleScroll(YES);
+		}else if(UITableView.class.isInstance(child)){
+			((UITableView)child).setEnableMutipleScroll(YES);
+		}
+	}
+	
 	public void setBackgroundColor(UIColor color) {
 		background.getPaint().setColor(color.getColor());
 	}

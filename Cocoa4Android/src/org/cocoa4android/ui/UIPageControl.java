@@ -94,7 +94,6 @@ public class UIPageControl extends UIView{
 		if (this.currentPage==currentPage) {
 			return;
 		}
-		NSLog("currentPage:"+currentPage);
 		UIImageView currentImageView = (UIImageView) dots.objectAtIndex(this.currentPage);
 		UIImageView nextImageView = (UIImageView) dots.objectAtIndex(currentPage);
 		

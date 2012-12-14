@@ -104,6 +104,11 @@ public class UIScrollView extends UIView {
 	@Override
 	public void addSubview(UIView child) {
 		contentView.addSubview(child);
+		if (UIWebView.class.isInstance(child)) {
+			((UIWebView)child).setEnableMutipleScroll(YES);
+		}else if(UITableView.class.isInstance(child)){
+			((UITableView)child).setEnableMutipleScroll(YES);
+		}
 	}
 	@Override
 	public void removeSubView(UIView child) {
