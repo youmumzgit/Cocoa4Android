@@ -83,17 +83,17 @@ public class UIScrollView extends UIView {
 	}
 	
 	public void setContentOffSet(CGPoint contentOffSet) {
-		this.scrollView.scrollTo((int)(contentOffSet.x()*densityX), (int)(contentOffSet.y()*densityY));
+		this.scrollView.scrollTo((int)(contentOffSet.x()*scaleDensityX), (int)(contentOffSet.y()*scaleDensityY));
 	}
 	public CGPoint contentOffSet() {
-		return new CGPoint(scrollView.getScrollX()/densityX,scrollView.getScrollY()/densityY);
+		return new CGPoint(scrollView.getScrollX()/scaleDensityX,scrollView.getScrollY()/scaleDensityY);
 	}
 	
 	public void setContentSize(CGSize contentSize) {
 		this.contentSize = contentSize;
 		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-				(int)(contentSize.width()*densityX),
-				(int)(contentSize.height()*densityY)
+				(int)(contentSize.width()*scaleDensityX),
+				(int)(contentSize.height()*scaleDensityY)
 			);
 		
 		this.contentView.getView().setLayoutParams(params);
@@ -121,18 +121,6 @@ public class UIScrollView extends UIView {
 				delegate.scrollViewDidEndDecelerating(this);
 			}
 		}
-		/*
-		if(animated){
-			scrollView.smoothScrollTo((int)frame.getOrigin().getX(), (int)frame.getOrigin().getY());
-			scrollView.smoothScrollTo((int)frame.getOrigin().getX(), (int)frame.getOrigin().getY());
-		}else{
-			scrollView.scrollTo((int)frame.getOrigin().getX(), (int)frame.getOrigin().getY());
-			scrollView.scrollTo((int)frame.getOrigin().getX(), (int)frame.getOrigin().getY());
-			if(delegate!=null){
-				delegate.scrollViewDidEndDecelerating(this);
-			}
-		}
-		*/
 	}
 	public UIScrollViewDelegate getDelegate() {
 		return delegate;
@@ -178,7 +166,7 @@ public class UIScrollView extends UIView {
 				int towardX = (int) (frame.size().width()*pagew);
 				int towardY = (int) (frame.size().height()*pageh);
 				
-				scrollView.smoothScrollTo((int)(towardX*densityX), (int)(towardY*densityY));
+				scrollView.smoothScrollTo((int)(towardX*scaleDensityX), (int)(towardY*scaleDensityY));
 				
 			}
 		}

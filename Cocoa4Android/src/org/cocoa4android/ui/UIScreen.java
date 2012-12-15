@@ -28,6 +28,8 @@ public class UIScreen extends NSObject{
 	
 	private static final boolean AUTOSIZE = YES;
 	
+	
+	
 	private static UIScreen mainScreen = null;
 	public static UIScreen mainScreen(){
 		if(mainScreen ==null){
@@ -37,8 +39,8 @@ public class UIScreen extends NSObject{
 	}
 	
 	
-	private CGRect bounds;
-	private CGRect applicationFrame;
+	CGRect bounds;
+	CGRect applicationFrame;
 	
 	private CGSize standardScreenSize = null;
 	private CGRect standardBounds;
@@ -64,6 +66,7 @@ public class UIScreen extends NSObject{
 				this.bounds.size.width /=this.density;
 				this.bounds.size.height /=this.density;
 				this.setBounds(bounds);
+				this.setStandardScreenSize(null);
 			}
 			this.useDip = useDip;
 		}
@@ -93,7 +96,7 @@ public class UIScreen extends NSObject{
 		this.applicationFrame = applicationFrame;
 	}
 	
-	public float getDensityX() {
+	public float getDensityXM() {
 		float value = 1.0f;
 		if(this.useDip){
 			value = density;
@@ -103,7 +106,7 @@ public class UIScreen extends NSObject{
 		}
 		return value;
 	}
-	public float getDensityY() {
+	public float getDensityYM() {
 		float value = 1.0f;
 		if(this.useDip){
 			value = density;
@@ -116,6 +119,24 @@ public class UIScreen extends NSObject{
 	public void setDensity(float density) {
 		this.density = density;
 	}
+	public float getDensity(){
+		return this.density;
+	}
+	public float getScaleFactorX(){
+		float value = 1.0f;
+		if(standardScreenSize!=null&&AUTOSIZE){
+			value *= applicationFrame.size.width/standardApplicationFrame.size.width;
+		}
+		return value;
+	}
+	public float getScaleFactorY(){
+		float value = 1.0f;
+		if(standardScreenSize!=null&&AUTOSIZE){
+			value *= applicationFrame.size.height/standardApplicationFrame.size.height;
+		}
+		return value;
+	}
+	
 	public float getStatusBarHeight(){
 		if(this.useDip){
 			return this.statusBarHeight/this.density;
@@ -131,11 +152,14 @@ public class UIScreen extends NSObject{
 	 */
 	public void setStandardScreenSize(CGSize standardScreenSize) {
 		this.standardScreenSize = standardScreenSize;
+		if (standardScreenSize!=null) {
+			this.standardBounds = new CGRect(0,0,standardScreenSize.width,standardScreenSize.height);
+			this.standardApplicationFrame = new CGRect(0,0,standardScreenSize.width,standardScreenSize.height-statusBarHeight);
+		}else{
+			this.standardBounds = null;
+			this.standardApplicationFrame = null;
+		}
 		
-		this.standardBounds = new CGRect(0,0,standardScreenSize.width,standardScreenSize.height);
-		this.standardApplicationFrame = new CGRect(0,0,standardScreenSize.width,standardScreenSize.height-statusBarHeight);
-		UIWindow window = UIApplication.sharedApplication().delegate().window;
-		window.setTransform(CGAffineTransformMakeScale(this.applicationFrame.size.width/this.standardApplicationFrame.size.width, this.applicationFrame.size.height/this.standardApplicationFrame.size.height));
 	}
 	
 	public float getDensityDpi() {

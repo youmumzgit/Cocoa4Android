@@ -34,8 +34,6 @@ import org.cocoa4android.ns.NSTextAlignment;
 public class UITextField extends UIView {
 	private EditText textField = null;
 	public String placeholder;
-	private float densityX = UIScreen.mainScreen().getDensityX();
-	private float densityY = UIScreen.mainScreen().getDensityY();
 	
 	public UITextField(){
 		textField = new EditText(context);
@@ -43,11 +41,11 @@ public class UITextField extends UIView {
 		this.setTextField(textField);
 		this.setView(textField);
 		
-		ShapeDrawable background = new ShapeDrawable(new RoundRectShape(new float[] {8*densityX,8*densityY, 8*densityX,8*densityY, 8*densityX,8*densityY, 8*densityX,8*densityY},null,null));
+		ShapeDrawable background = new ShapeDrawable(new RoundRectShape(new float[] {8*scaleFactorX,8*scaleFactorY, 8*scaleFactorX,8*scaleFactorY, 8*scaleFactorX,8*scaleFactorY, 8*scaleFactorX,8*scaleFactorY},null,null));
 		background.getPaint().setColor(UIColor.whiteColor().getColor());
 		background.getPaint().setStrokeWidth(1);
 		this.textField.setBackgroundDrawable(background);
-		this.textField.setPadding((int)(8*densityX), 0, (int)(8*densityX), 0);
+		this.textField.setPadding((int)(8*scaleDensityX), 0, (int)(8*scaleDensityY), 0);
 	}
 	public UITextField(CGRect frame){
 		this();

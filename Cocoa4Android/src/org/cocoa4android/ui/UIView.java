@@ -40,13 +40,32 @@ public class UIView extends NSObject{
 	protected CGAffineTransform transform;
 	
 	private UIColor backgroundColor;
-	protected float densityX = UIScreen.mainScreen().getDensityX();
-	protected float densityY = UIScreen.mainScreen().getDensityY();
+	
+	
+	protected float density = UIScreen.mainScreen().getDensity();
+	
+	protected float scaleFactorX = UIScreen.mainScreen().getScaleFactorX();
+	protected float scaleFactorY = UIScreen.mainScreen().getScaleFactorY();
+	
+	protected float scaleDensityX = density*scaleFactorX;
+	protected float scaleDensityY = density*scaleFactorY;
 	
 	protected Context context = UIApplication.sharedApplication().getContext();
 	protected LayoutInflater inflater;
 	private int tag;
+	private boolean keepAspectRatio = NO;
 	
+	public boolean isKeepAspectRatio() {
+		return keepAspectRatio;
+	}
+	public void setKeepAspectRatio(boolean keepAspectRatio) {
+		if (keepAspectRatio) {
+			
+		}
+		
+		this.keepAspectRatio = keepAspectRatio;
+		
+	}
 	private CGPoint center = null;
 	
 	public CGPoint center() {
@@ -176,14 +195,14 @@ public class UIView extends NSObject{
 	}
 	public CGRect frame() {
 		if(frame==null){
-			float width = this.getView().getWidth()/densityX;
-			float height = this.getView().getHeight()/densityY;
+			float width = this.getView().getWidth()/scaleDensityX;
+			float height = this.getView().getHeight()/scaleDensityY;
 			LayoutParams params = (LayoutParams) this.getView().getLayoutParams();
 			float x = 0;
 			float y = 0;
 			if(params!=null){
-				x = params.leftMargin/densityX;
-				y = params.topMargin/densityY;
+				x = params.leftMargin/scaleDensityX;
+				y = params.topMargin/scaleDensityY;
 			}
 			frame = new CGRect(x,y,width,height);
 		}
@@ -192,14 +211,15 @@ public class UIView extends NSObject{
 	public void setFrame(CGRect frame) {
 		this.frame = frame;
 		
-		LayoutParams params = new LayoutParams((int)(frame.size().width()*densityX), (int)(frame.size().height()*densityY));
+		LayoutParams params = new LayoutParams((int)(frame.size().width()*scaleDensityX), (int)(frame.size().height()*scaleDensityY));
 		params.alignWithParent = true;
 		params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 		params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-		params.leftMargin = (int)(frame.origin().x()*densityX);
-		params.topMargin = (int)(frame.origin().y()*densityY);
+		params.leftMargin = (int)(frame.origin().x()*scaleDensityX);
+		params.topMargin = (int)(frame.origin().y()*scaleDensityY);
 		this.view.setLayoutParams(params);
 		this.center = null;
+		this.setKeepAspectRatio(this.keepAspectRatio);
 	}
 	
 	public CGAffineTransform getTransform() {

@@ -60,7 +60,7 @@ public class UITableViewCell extends UIView {
 			case UITableViewCellStyleValue2:initValue2TableViewCell();break;
 			case UITableViewCellStyleSubtitle:initSubtitleViewCell();break;
 		}
-		AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.FILL_PARENT, (int)(44*densityY));
+		AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.FILL_PARENT, (int)(44*scaleDensityY));
 		this.getView().setLayoutParams(params);
 		background = new ShapeDrawable(UITableViewCellShape.UITableViewCellShapeNoRound);
 		background.getPaint().setColor(UIColor.whiteColor().getColor());
@@ -70,8 +70,8 @@ public class UITableViewCell extends UIView {
 	@Override
 	public void setFrame(CGRect frame) {
 		AbsListView.LayoutParams params = new AbsListView.LayoutParams(
-				(int)(frame.size().width()*densityX), 
-				(int)(frame.size().height()*densityY)
+				(int)(frame.size().width()*scaleDensityX), 
+				(int)(frame.size().height()*scaleDensityY)
 			);
 		this.getView().setLayoutParams(params);
 	}
@@ -130,7 +130,7 @@ public class UITableViewCell extends UIView {
 	}
 	
 	public void setHeight(float height) {
-		AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.FILL_PARENT, (int)(height*densityY));
+		AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.FILL_PARENT, (int)(height*scaleDensityY));
 		this.getView().setLayoutParams(params);
 	}
 	

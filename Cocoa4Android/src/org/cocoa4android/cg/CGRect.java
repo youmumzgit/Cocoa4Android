@@ -28,10 +28,16 @@ public class CGRect {
 		this.size = new CGSize(width,height);
 	}
 	public CGRect(Rect r){
-		float densityX = UIScreen.mainScreen().getDensityX();
-		float densityY = UIScreen.mainScreen().getDensityY();
-		this.origin = new CGPoint(r.left/densityX,r.top/densityY);
-		this.size = new CGSize((r.right-r.left)/densityX,(r.bottom - r.top)/densityY);
+		float density = UIScreen.mainScreen().getDensity();
+		
+		float scaleFactorX = UIScreen.mainScreen().getScaleFactorX();
+		float scaleFactorY = UIScreen.mainScreen().getScaleFactorY();
+		
+		float scaleDensityX = density*scaleFactorX;
+		float scaleDensityY = density*scaleFactorY;
+		
+		this.origin = new CGPoint(r.left/scaleDensityX,r.top/scaleDensityY);
+		this.size = new CGSize((r.right-r.left)/scaleDensityX,(r.bottom - r.top)/scaleDensityY);
 	}
 	public CGPoint origin() {
 		return origin;
@@ -45,9 +51,16 @@ public class CGRect {
 	public void setSize(CGSize size) {
 		this.size = size;
 	}
+	
 	public Rect getRect(){
-		float densityX = UIScreen.mainScreen().getDensityX();
-		float densityY = UIScreen.mainScreen().getDensityY();
-		return new Rect((int)(this.origin.x()*densityX),(int)(this.origin.y()*densityY),(int)((this.origin.x()+this.size.width())*densityX),(int)((this.origin.y()+this.size.height())*densityY));
+		float density = UIScreen.mainScreen().getDensity();
+		
+		float scaleFactorX = UIScreen.mainScreen().getScaleFactorX();
+		float scaleFactorY = UIScreen.mainScreen().getScaleFactorY();
+		
+		float scaleDensityX = density*scaleFactorX;
+		float scaleDensityY = density*scaleFactorY;
+		return new Rect((int)(this.origin.x()*scaleDensityX),(int)(this.origin.y()*scaleDensityY),(int)((this.origin.x()+this.size.width())*scaleDensityX),(int)((this.origin.y()+this.size.height())*scaleDensityY));
 	}
+	
 }

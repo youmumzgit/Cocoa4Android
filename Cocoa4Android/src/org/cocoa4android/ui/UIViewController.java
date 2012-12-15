@@ -171,10 +171,9 @@ public class UIViewController extends NSObject{
 		//œ‘ æ
 		this.isPresent = isPresent;
 		
-		float densityY = UIScreen.mainScreen().getDensityY();
 		
-		CGRect applicationFrame = UIScreen.mainScreen().applicationFrame();
-		float applicationheight = applicationFrame.size().height()*densityY;
+		CGRect applicationFrame = UIScreen.mainScreen().applicationFrame;
+		float applicationheight = applicationFrame.size().height();
 		TranslateAnimation animation = null;
 		if(isPresent){
 			animation = new TranslateAnimation(0,0,applicationheight,0);

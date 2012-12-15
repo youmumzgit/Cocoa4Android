@@ -94,19 +94,18 @@ public class UINavigationController extends UIViewController {
 		
 	}
 	private void translateBetweenViews(UIView fromView ,UIView toView ,boolean isPush){
-		//œ‘ æ
+		//show
 		toView.setHidden(false);
-		float densityX = UIScreen.mainScreen().getDensityX();
 		
 		this.fromView = fromView;
 		this.isPush = isPush;
 		
-		CGRect applicationFrame = UIScreen.mainScreen().applicationFrame();
-		float applicationWidth = applicationFrame.size().width()*densityX;
+		//get the real application frame
+		CGRect applicationFrame = UIScreen.mainScreen().applicationFrame;
+		float applicationWidth = applicationFrame.size().width();
 		TranslateAnimation animation1 = null;
 		TranslateAnimation animation2 = null;
 		if(isPush){
-		//TranslateAnimation animation1 = new TranslateAnimation(frame.getOrigin().getX(),);
 			animation1 = new TranslateAnimation(0,-applicationWidth,0,0);
 			animation2 = new TranslateAnimation(applicationWidth,0,0,0);
 		}else{
