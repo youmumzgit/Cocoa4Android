@@ -79,7 +79,7 @@ public class UIView extends NSObject{
 	public UIView(){
 		//if no setting fill the parent
 		this.setView(new RelativeLayout(context));
-		LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+		params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
 		params.alignWithParent = true;
 		params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 		params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
@@ -198,30 +198,68 @@ public class UIView extends NSObject{
 		}
 		return frame;
 	}
+	private LayoutParams params;
 	public void setFrame(CGRect frame) {
 		this.frame = frame;
-		
-		LayoutParams params = new LayoutParams((int)(frame.size().width()*scaleDensityX), (int)(frame.size().height()*scaleDensityY));
-		params.alignWithParent = true;
-		params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-		params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-		params.leftMargin = (int)(frame.origin().x()*scaleDensityX);
-		params.topMargin = (int)(frame.origin().y()*scaleDensityY);
-		this.view.setLayoutParams(params);
+		if (this.keepAspectRatio) {
+			this.validateAspectRatio();
+		}else{
+			if (params==null) {
+				params = new LayoutParams((int)(frame.size.width*scaleDensityX), (int)(frame.size.height*scaleDensityY));
+				params.alignWithParent = true;
+				params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+				params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+			}else{
+				params.width = (int)(frame.size.width*scaleDensityX);
+				params.height =  (int)(frame.size.height*scaleDensityY);
+			}
+			params.leftMargin = (int)(frame.origin.x*scaleDensityX);
+			params.topMargin = (int)(frame.origin.y*scaleDensityY);
+			this.view.setLayoutParams(params);
+		}
 		this.center = null;
-		this.setKeepAspectRatio(this.keepAspectRatio);
 	}
 	public boolean isKeepAspectRatio() {
 		return keepAspectRatio;
 	}
 	public void setKeepAspectRatio(boolean keepAspectRatio) {
-		if (keepAspectRatio&&this.frame!=null) {
+		if (keepAspectRatio!=this.keepAspectRatio) {
+			this.keepAspectRatio = keepAspectRatio;
+			this.setFrame(frame);
 		}
-		
-		this.keepAspectRatio = keepAspectRatio;
-		
 	}
-	
+	protected void validateAspectRatio() {
+		if (keepAspectRatio&&this.frame!=null) {
+			float width = frame.size.width*scaleDensityX;
+			float height = frame.size.height*scaleDensityY;
+			float x = frame.origin.x*scaleDensityX;
+			float y = frame.origin.y*scaleDensityY;
+			
+			if (scaleFactorX>scaleFactorY) {
+				float newWidth = frame.size.width*scaleDensityY;
+				float deltaWidth = width - newWidth;
+				x += deltaWidth/2;
+				width = newWidth;
+			}else{
+				float newHeight = frame.size.height*scaleDensityX;
+				float deltaHeight = height - newHeight;
+				y += deltaHeight/2;
+				height = newHeight;
+			}
+			if (params==null) {
+				params = new LayoutParams((int)(width), (int)(height));
+				params.alignWithParent = true;
+				params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+				params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+			}else{
+				params.width = (int)(x);
+				params.height =  (int)(y);
+			}
+			params.leftMargin = (int)(frame.origin.x*scaleDensityX);
+			params.topMargin = (int)(frame.origin.y*scaleDensityY);
+			this.view.setLayoutParams(params);
+		}
+	}
 	public CGAffineTransform getTransform() {
 		return transform;
 	}
