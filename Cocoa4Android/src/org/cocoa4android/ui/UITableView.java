@@ -26,9 +26,11 @@ import org.cocoa4android.ui.UITableViewCell.UITableViewCellSeparatorStyle;
 import org.cocoa4android.ui.UITableViewCell.UITableViewCellShapeType;
 
 
+import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView.LayoutParams;
@@ -45,6 +47,14 @@ public class UITableView extends UIView {
 	private UITableViewDataSource dataSource = null;
 	private UITableViewDelegate delegate = null;
 	
+	private boolean enableMutipleScroll = NO;
+	
+	public boolean isEnableMutipleScroll() {
+		return enableMutipleScroll;
+	}
+	public void setEnableMutipleScroll(boolean enableMutipleScroll) {
+		this.enableMutipleScroll = enableMutipleScroll;
+	}
 	private UITableViewStyle style;
 	UITableViewCellSeparatorStyle cellSeparatorStyle;
 	private boolean isGrouped;
@@ -63,7 +73,7 @@ public class UITableView extends UIView {
 	public UITableView(UITableViewStyle style) {
 		
 		this.style = style;
-		listView = new ListView(context);
+		listView = new CAListView(context);
 		listView.setBackgroundColor(Color.GRAY);
 		listView.setDrawingCacheBackgroundColor(Color.WHITE);
 		listView.setCacheColorHint(0);
@@ -316,7 +326,63 @@ public class UITableView extends UIView {
 	    UITableViewRowAnimationMiddle,          // available in iOS 3.2.  attempts to keep cell centered in the space it will/did occupy
 	    UITableViewRowAnimationAutomatic        // available in iOS 5.0.  chooses an appropriate animation style for you
 	}
-	
+	public class CAListView extends ListView{
+		public CAListView(Context context) {
+			super(context);
+			// TODO Auto-generated constructor stub
+		}
+		private int currX;
+		private int currY;
+		private int prevX;
+		private int prevY;
+		
+		private int ocurrX;
+		private int ocurrY;
+		private int oprevX;
+		private int oprevY;
+		
+		protected void onSizeChanged(int xNew, int yNew, int xOld, int yOld){
+			super.onSizeChanged(xNew, yNew, xOld, yOld);
+		}
+		public boolean onInterceptTouchEvent(MotionEvent event) {
+			if (enableMutipleScroll) {
+				return true;
+			}
+			return super.onInterceptTouchEvent(event);
+		}
+		@Override
+	    public boolean onTouchEvent(MotionEvent event){
+			if (enableMutipleScroll) {
+				
+				prevY = currY;
+				prevX = currX;
+				currY = (int) event.getY();
+				currX = (int)event.getX();
+				
+				int deltaX = currX-prevX;
+				int deltaY = currY-prevY;
+				
+				
+				boolean blockTouch = true;
+				if (event.getAction()==MotionEvent.ACTION_MOVE) {
+					//if it is moved
+					//decide if the listview can scroll
+					boolean cannotScroll = YES;
+					NSLog("deltaX:"+deltaX+"deltaY:"+deltaY);
+					if (Math.abs(deltaX)<Math.abs(deltaY)) {
+						cannotScroll = ((this.getCount()==this.getLastVisiblePosition()+1)&&deltaY<0)||(this.getFirstVisiblePosition()==0&&deltaY>0);
+					}
+					if(cannotScroll&&(deltaX!=0||deltaY!=0)){
+						blockTouch = false;
+					}
+					
+				}
+				requestDisallowInterceptTouchEvent(blockTouch);
+				NSLog("touch blockTouch:"+blockTouch);
+			}
+			return super.onTouchEvent(event);
+	    } 
+	}
 	public class refreshableAdapter extends BaseAdapter{
 		public List<NSIndexPath> mappingList;
 		public refreshableAdapter(List<NSIndexPath> mappingList){
