@@ -18,7 +18,6 @@ package org.cocoa4android.ui;
 import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.ns.NSObject;
 
-import android.R.bool;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;

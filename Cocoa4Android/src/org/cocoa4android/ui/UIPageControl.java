@@ -18,10 +18,8 @@ package org.cocoa4android.ui;
 import org.cocoa4android.R;
 import org.cocoa4android.cg.CGPoint;
 import org.cocoa4android.cg.CGRect;
-import org.cocoa4android.ns.NSArray;
 import org.cocoa4android.ns.NSMutableArray;
 
-import android.R.integer;
 import android.view.ViewGroup;
 
 public class UIPageControl extends UIView{

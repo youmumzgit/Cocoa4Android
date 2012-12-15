@@ -55,17 +55,7 @@ public class UIView extends NSObject{
 	private int tag;
 	private boolean keepAspectRatio = NO;
 	
-	public boolean isKeepAspectRatio() {
-		return keepAspectRatio;
-	}
-	public void setKeepAspectRatio(boolean keepAspectRatio) {
-		if (keepAspectRatio) {
-			
-		}
-		
-		this.keepAspectRatio = keepAspectRatio;
-		
-	}
+	
 	private CGPoint center = null;
 	
 	public CGPoint center() {
@@ -76,7 +66,7 @@ public class UIView extends NSObject{
 		return CGPointMake(frame.size.width/2+frame.origin.x, frame.size.height/2+frame.origin.y);
 	}
 	/**
-	 * !!FIX ME fail if UIImageView without setting frame
+	 * FIXME fail if UIImageView without setting frame
 	 * @param center
 	 */
 	public void setCenter(CGPoint center) {
@@ -221,12 +211,22 @@ public class UIView extends NSObject{
 		this.center = null;
 		this.setKeepAspectRatio(this.keepAspectRatio);
 	}
+	public boolean isKeepAspectRatio() {
+		return keepAspectRatio;
+	}
+	public void setKeepAspectRatio(boolean keepAspectRatio) {
+		if (keepAspectRatio&&this.frame!=null) {
+		}
+		
+		this.keepAspectRatio = keepAspectRatio;
+		
+	}
 	
 	public CGAffineTransform getTransform() {
 		return transform;
 	}
 	/**
-	 * change the size and position of the shape
+	 * Change the size and position of the shape
 	 * @param transform 
 	 */
 	public void setTransform(CGAffineTransform transform) {

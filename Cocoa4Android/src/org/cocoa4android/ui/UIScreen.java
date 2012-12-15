@@ -120,7 +120,11 @@ public class UIScreen extends NSObject{
 		this.density = density;
 	}
 	public float getDensity(){
-		return this.density;
+		float value = 1.0f;
+		if(this.useDip){
+			value = density;
+		}
+		return value;
 	}
 	public float getScaleFactorX(){
 		float value = 1.0f;

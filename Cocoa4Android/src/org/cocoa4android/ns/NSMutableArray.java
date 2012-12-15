@@ -17,7 +17,6 @@ package org.cocoa4android.ns;
 
 import java.util.ArrayList;
 
-import android.R.integer;
 
 public class NSMutableArray extends NSArray {
 	public static NSMutableArray array(){
