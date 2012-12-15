@@ -206,7 +206,13 @@ public class UITableView extends UIView {
 		}
 		this.cellSeparatorStyle = style;
 	}
-	
+	public void setSeparatorColor(UIColor color){
+		listView.setDivider(new ColorDrawable(color.getColor()));
+		listView.setDividerHeight(1);
+		if (cellSeparatorStyle!=null) {
+			this.setSeparatorStyle(cellSeparatorStyle);
+		}
+	}
 	public void insertRowsAtIndexPaths(NSArray indexPaths,UITableViewRowAnimation animation) {
 		NSIndexPath indexPath = null;
 		NSIndexPath tmpIndexPath = null;
