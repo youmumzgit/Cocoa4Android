@@ -252,11 +252,11 @@ public class UIView extends NSObject{
 				params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 				params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
 			}else{
-				params.width = (int)(x);
-				params.height =  (int)(y);
+				params.width = (int)(width);
+				params.height =  (int)(height);
 			}
-			params.leftMargin = (int)(frame.origin.x*scaleDensityX);
-			params.topMargin = (int)(frame.origin.y*scaleDensityY);
+			params.leftMargin = (int)(x);
+			params.topMargin = (int)(y);
 			this.view.setLayoutParams(params);
 		}
 	}
