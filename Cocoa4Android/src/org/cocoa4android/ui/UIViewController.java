@@ -38,7 +38,7 @@ public class UIViewController extends NSObject{
 	
 	
 	
-	public UIView getView() {
+	public UIView view() {
 		return view;
 	}
 
@@ -124,7 +124,7 @@ public class UIViewController extends NSObject{
 	public void presentModalViewController(UIViewController viewController,boolean animated){
 		if (!isTransition) {
 			isTransition = YES;
-			UIView modalView = viewController.getView();
+			UIView modalView = viewController.view();
 			modalView.setFrame(UIScreen.mainScreen().applicationFrame());
 			modalView.setBackgroundColor(UIColor.whiteColor());
 			
@@ -132,9 +132,9 @@ public class UIViewController extends NSObject{
 			this.setPresentedViewController(viewController);
 			
 			if(animated){
-				this.translateBetweenViews(viewController.getView(), true);
+				this.translateBetweenViews(viewController.view(), true);
 			}else{
-				this.getView().setHidden(true);
+				this.view().setHidden(true);
 				viewController.viewDidAppear(NO);
 				isTransition = NO;
 			}
@@ -150,11 +150,11 @@ public class UIViewController extends NSObject{
 		if (!isTransition) {
 			isTransition = YES;
 			if(this.presentedViewController()!=null){
-				this.getView().setHidden(false);
+				this.view().setHidden(false);
 				if(animated){
-					this.translateBetweenViews(this.presentedViewController().getView(), false);
+					this.translateBetweenViews(this.presentedViewController().view(), false);
 				}else{
-					this.presentedViewController().getView().removeFromSuperView();
+					this.presentedViewController().view().removeFromSuperView();
 					this.setPresentedViewController(null);
 					this.viewDidAppear(NO);
 					isTransition = NO;
@@ -195,10 +195,10 @@ public class UIViewController extends NSObject{
 				//HIDE
 				//UINavigationController.this.getView().setHidden(true);
 				if(UIViewController.this.isPresent){
-					UIViewController.this.getView().setHidden(true);
+					UIViewController.this.view().setHidden(true);
 					UIViewController.this.presentedViewController.viewDidAppear(YES);
 				}else{
-					UIViewController.this.presentedViewController().getView().removeFromSuperView();
+					UIViewController.this.presentedViewController().view().removeFromSuperView();
 					UIViewController.this.setPresentedViewController(null);
 					UIViewController.this.viewDidAppear(YES);
 				}

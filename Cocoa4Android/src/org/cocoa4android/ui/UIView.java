@@ -22,6 +22,7 @@ import org.cocoa4android.ns.NSArray;
 import org.cocoa4android.ns.NSMutableArray;
 import org.cocoa4android.ns.NSObject;
 
+import android.R.integer;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -53,7 +54,7 @@ public class UIView extends NSObject{
 	protected Context context = UIApplication.sharedApplication().getContext();
 	protected LayoutInflater inflater;
 	private int tag;
-	private boolean keepAspectRatio = NO;
+	protected boolean keepAspectRatio = NO;
 	
 	
 	private CGPoint center = null;
@@ -201,40 +202,21 @@ public class UIView extends NSObject{
 	private LayoutParams params;
 	public void setFrame(CGRect frame) {
 		this.frame = frame;
-		if (this.keepAspectRatio) {
-			this.validateAspectRatio();
-		}else{
-			if (params==null) {
-				params = new LayoutParams((int)(frame.size.width*scaleDensityX), (int)(frame.size.height*scaleDensityY));
-				params.alignWithParent = true;
-				params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-				params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-			}else{
-				params.width = (int)(frame.size.width*scaleDensityX);
-				params.height =  (int)(frame.size.height*scaleDensityY);
-			}
-			params.leftMargin = (int)(frame.origin.x*scaleDensityX);
-			params.topMargin = (int)(frame.origin.y*scaleDensityY);
-			this.view.setLayoutParams(params);
-		}
-		this.center = null;
-	}
-	public boolean isKeepAspectRatio() {
-		return keepAspectRatio;
-	}
-	public void setKeepAspectRatio(boolean keepAspectRatio) {
-		if (keepAspectRatio!=this.keepAspectRatio) {
-			this.keepAspectRatio = keepAspectRatio;
-			this.setFrame(frame);
-		}
-	}
-	protected void validateAspectRatio() {
+		float width = frame.size.width*scaleDensityX;
+		float height = frame.size.height*scaleDensityY;
+		float x = frame.origin.x*scaleDensityX;
+		float y = frame.origin.y*scaleDensityY;
+		//boolean isWidthFlexible = this.isAutoresizing(UIViewAutoresizing.UIViewAutoresizingFlexibleWidth);
+		//boolean isHeightFlexible = this.isAutoresizing(UIViewAutoresizing.UIViewAutoresizingFlexibleHeight);
+		boolean isLeftFlexible = this.isAutoresizing(UIViewAutoresizing.UIViewAutoresizingFlexibleLeftMargin);
+		boolean isTopFlexible = this.isAutoresizing(UIViewAutoresizing.UIViewAutoresizingFlexibleTopMargin);
+		/*
+		boolean isRightFlexible = this.isAutoresizing(UIViewAutoresizing.UIViewAutoresizingFlexibleRightMargin);
+		boolean isBottomFlexible = this.isAutoresizing(UIViewAutoresizing.UIViewAutoresizingFlexibleBottomMargin);
+		*/
+		
+		
 		if (keepAspectRatio&&this.frame!=null) {
-			float width = frame.size.width*scaleDensityX;
-			float height = frame.size.height*scaleDensityY;
-			float x = frame.origin.x*scaleDensityX;
-			float y = frame.origin.y*scaleDensityY;
-			
 			if (scaleFactorX>scaleFactorY) {
 				float newWidth = frame.size.width*scaleDensityY;
 				float deltaWidth = width - newWidth;
@@ -246,18 +228,43 @@ public class UIView extends NSObject{
 				y += deltaHeight/2;
 				height = newHeight;
 			}
-			if (params==null) {
-				params = new LayoutParams((int)(width), (int)(height));
-				params.alignWithParent = true;
-				params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-				params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-			}else{
-				params.width = (int)(width);
-				params.height =  (int)(height);
+		}
+		
+		if (isLeftFlexible) {
+			x = frame.origin.x*scaleDensityX;
+		}
+		
+		if (isTopFlexible) {
+			y = frame.origin.y*scaleDensityY;
+		}
+		this.setViewFrame(x, y, width, height);
+		this.center = null;
+	}
+	
+	private void setViewFrame(float x,float y,float width,float height){
+		if (params==null) {
+			params = new LayoutParams((int)(width), (int)(height));
+			params.alignWithParent = true;
+			params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+			params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+		}else{
+			params.width = (int)(width);
+			params.height =  (int)(height);
+		}
+		params.leftMargin = (int)(x);
+		params.topMargin = (int)(y);
+		this.view.setLayoutParams(params);
+	}
+	public boolean isKeepAspectRatio() {
+		return keepAspectRatio;
+	}
+	public void setKeepAspectRatio(boolean keepAspectRatio) {
+		if (keepAspectRatio!=this.keepAspectRatio) {
+			this.keepAspectRatio = keepAspectRatio;
+			if (this.frame!=null) {
+				this.setFrame(frame);
 			}
-			params.leftMargin = (int)(x);
-			params.topMargin = (int)(y);
-			this.view.setLayoutParams(params);
+			
 		}
 	}
 	public CGAffineTransform getTransform() {
@@ -305,5 +312,35 @@ public class UIView extends NSObject{
 	}
 	public void touchesMoved(UITouch[] touches,MotionEvent event){
 		
+	}
+	
+	
+	private int autoresizingMask;
+	
+	public int autoresizingMask() {
+		return autoresizingMask;
+	}
+	//FIXME  cannot realize the whole function because the super views' frame changes
+	public void setAutoresizingMask(int autoresizingMask) {
+		if (autoresizingMask!=this.autoresizingMask) {
+			this.autoresizingMask = autoresizingMask;
+			if (this.frame!=null) {
+				this.setFrame(frame);
+			}
+		}
+		
+	}
+
+	public class UIViewAutoresizing{
+		public static final int UIViewAutoresizingNone = 0x00;
+		public static final int UIViewAutoresizingFlexibleLeftMargin = 0x01;
+		public static final int UIViewAutoresizingFlexibleWidth = 0x02;
+		public static final int UIViewAutoresizingFlexibleRightMargin = 0x04;
+		public static final int UIViewAutoresizingFlexibleTopMargin = 0x08;
+		public static final int UIViewAutoresizingFlexibleHeight = 0x10;
+		public static final int UIViewAutoresizingFlexibleBottomMargin = 0x20;
+	}
+	private boolean isAutoresizing(int autoresizing){
+		return (this.autoresizingMask&autoresizing)>0;
 	}
 }

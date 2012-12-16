@@ -42,11 +42,11 @@ public class UINavigationController extends UIViewController {
 			isTransition = YES;
 			UIView lastView = null;
 			if(stack.size()>0){
-				lastView =stack.peek().getView();
+				lastView =stack.peek().view();
 			}
 			viewController.setNavigationController(this);
-			UIView view = viewController.getView();
-			this.getView().addSubview(view);
+			UIView view = viewController.view();
+			this.view().addSubview(view);
 			
 			if(animated&&lastView!=null){
 				this.translateBetweenViews(lastView, view,true);
@@ -71,16 +71,16 @@ public class UINavigationController extends UIViewController {
 				UIViewController fromViewController =  stack.pop();
 				toViewController = stack.peek();
 				if(animated){
-					this.translateBetweenViews(fromViewController.getView(), toViewController.getView(),false);
+					this.translateBetweenViews(fromViewController.view(), toViewController.view(),false);
 				}else{
 					CGRect frame = UIScreen.mainScreen().applicationFrame();
-					toViewController.getView().setFrame(new CGRect(0,0,frame.size().width(),frame.size().height()));
-					toViewController.getView().setHidden(false);
+					toViewController.view().setFrame(new CGRect(0,0,frame.size().width(),frame.size().height()));
+					toViewController.view().setHidden(false);
 					
 					toViewController.viewDidAppear(NO);
 					isTransition = NO;
 					
-					fromViewController.getView().removeFromSuperView();
+					fromViewController.view().removeFromSuperView();
 					
 				}
 			}

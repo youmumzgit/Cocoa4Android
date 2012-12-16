@@ -62,7 +62,7 @@ public class UITabBarController extends UIViewController {
 	private boolean loadViewController(int index){
 		if(index<this.viewControllers.count()){
 			UIViewController viewController = (UIViewController) viewControllers.objectAtIndex(index);
-			UIView view = viewController.getView();
+			UIView view = viewController.view();
 			if(view.superView()==null){
 				container.addSubview(view);
 			}
@@ -83,7 +83,7 @@ public class UITabBarController extends UIViewController {
 			if(this.viewControllers!=null&&this.loadViewController(selectedIndex)){
 				if(this.selectedIndex!=-1){
 					UIViewController viewController = (UIViewController) this.viewControllers.objectAtIndex(this.selectedIndex);
-					viewController.getView().setHidden(YES);
+					viewController.view().setHidden(YES);
 				}
 				//previousSelectedIndex = this.selectedIndex;
 				this.selectedIndex = selectedIndex;

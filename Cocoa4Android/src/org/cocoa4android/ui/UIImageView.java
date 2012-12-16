@@ -45,6 +45,8 @@ public class UIImageView extends UIView {
 		imageView.setLayoutParams(params);
 		
 		this.setView(imageView);
+		//FIXME the imageView suppose to keepAspectRatio but the position will be moved and leave gaps
+		//this.keepAspectRatio = YES;
 	}
 	public UIImageView(CGRect frame){
 		this();
