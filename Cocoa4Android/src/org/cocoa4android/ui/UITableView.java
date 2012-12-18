@@ -293,6 +293,28 @@ public class UITableView extends UIView {
 		}
 		return null;
 	}
+	private UIView headerView = null;
+	private UIView footerView = null;
+	
+	public void setTableHeaderView(UIView view){
+		if (headerView!=null) {
+			listView.removeHeaderView(headerView.getView());
+		}
+		if (view!=null) {
+			listView.addHeaderView(view.getView());
+		}
+		headerView = view;
+	}
+	public void setTableFooterView(UIView view){
+		if (footerView!=null) {
+			listView.removeFooterView(footerView.getView());
+		}
+		if (view!=null) {
+			listView.addFooterView(view.getView());
+		}
+		footerView = view;
+	}
+	
 	public interface UITableViewDataSource {
 		int numberOfRowsInSection(UITableView tableView,int section);
 		UITableViewCell cellForRowAtIndexPath(UITableView tableView,NSIndexPath indexPath);
