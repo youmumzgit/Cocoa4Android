@@ -157,7 +157,7 @@ public class UIView extends NSObject{
 						UIView.this.touchesEnded(touches,ev);
 					}
 					
-					return false;
+					return true;
 				}
 				
 			});
