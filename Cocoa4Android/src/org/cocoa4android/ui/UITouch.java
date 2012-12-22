@@ -25,6 +25,7 @@ public class UITouch extends NSObject{
 	private float previousY;
 	private UIView view;
 	
+	
 	public UITouch(float x,float y,float previousX,float previousY,UIView view){
 		this.x = x;
 		this.y = y;
@@ -34,7 +35,13 @@ public class UITouch extends NSObject{
 	}
 	//fix me
 	public CGPoint locationInView(UIView view){
-		return new CGPoint(x,y);
+		float density = UIScreen.mainScreen().getDensity();
+		float scaleFactorX = UIScreen.mainScreen().getScaleFactorX();
+		float scaleFactorY = UIScreen.mainScreen().getScaleFactorY();
+		float scaleDensityX = density*scaleFactorX;
+		float scaleDensityY = density*scaleFactorY;
+		
+		return new CGPoint(x/scaleDensityX,y/scaleDensityY);
 	}
 	public CGPoint previousLocationInView(UIView view){
 		if(previousY!=0){
