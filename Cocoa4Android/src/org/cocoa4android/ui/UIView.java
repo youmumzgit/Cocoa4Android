@@ -27,6 +27,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
@@ -124,10 +125,10 @@ public class UIView extends NSObject{
 	public void setView(View view){
 		this.view = view;
 		view.setTag(this);
-		/*
+		
+		//check if this has a method called touchesBegan
 		if(view!=null){
 			this.view.setOnTouchListener(new OnTouchListener(){
-
 				@Override
 				public boolean onTouch(View v, MotionEvent event) {
 					if(UIView.this.getView().equals(v)){
@@ -158,7 +159,6 @@ public class UIView extends NSObject{
 				
 			});
 		}
-		*/
 	}
 	public NSArray subViews(){
 		NSMutableArray subViews = null;
