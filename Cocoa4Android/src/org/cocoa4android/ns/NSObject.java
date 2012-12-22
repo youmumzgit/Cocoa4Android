@@ -87,4 +87,36 @@ public class NSObject {
 		transform.d = (float) Math.cos(angle);
 		return transform;
 	}
+	
+	protected boolean CGRectContainsPoint(CGRect rect,CGPoint point){
+		boolean xIn = point.x>=rect.origin.x&&point.x<=rect.origin.x+rect.size.width;
+		boolean yIn = point.y>=rect.origin.y&&point.y<=rect.origin.y+rect.size.height;
+		return xIn&&yIn;
+	}
+	protected boolean CGRectContainsRect(CGRect rect1,CGRect rect2){
+		boolean leftTopIn = CGRectContainsPoint(rect1,rect2.origin);
+		CGPoint point = CGPointMake(rect2.origin.x+rect2.size.width, rect2.origin.y+rect2.size.height);
+		boolean rightBottomIn = CGRectContainsPoint(rect1,point);
+		return leftTopIn&&rightBottomIn;
+	}
+	protected boolean CGRectIntersectsRect(CGRect rect1,CGRect rect2) {
+		float minx1 = rect1.origin.x;
+		float miny1 = rect1.origin.y;
+		float maxx1 = rect1.origin.x+rect1.size.width;
+		float maxy1 = rect1.origin.y+rect1.size.height;
+		
+		float minx2 = rect2.origin.x;
+		float miny2 = rect2.origin.y;
+		float maxx2 = rect2.origin.x+rect2.size.width;
+		float maxy2 = rect2.origin.y+rect2.size.height;
+		
+		
+		float minx   =   Math.max(minx1,   minx2);
+		float miny   =   Math.max(miny1,   miny2);
+		float maxx   =   Math.min(maxx1,   maxx2);
+		float maxy   =   Math.min(maxy1,   maxy2);
+		
+		
+		return minx<=maxx&&miny<=maxy;
+	}
 }
