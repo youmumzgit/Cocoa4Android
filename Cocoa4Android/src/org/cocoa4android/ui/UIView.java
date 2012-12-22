@@ -132,31 +132,31 @@ public class UIView extends NSObject{
 			this.view.setOnTouchListener(new OnTouchListener(){
 				@Override
 				public boolean onTouch(View v, MotionEvent event) {
-					if(UIView.this.getView().equals(v)){
-						UITouch[] toucheArray = new UITouch[event.getPointerCount()];
-						
-						for(int i=0;i<toucheArray.length;i++){
-							float x = event.getX(i);
-							float y = event.getY(i);
-							float prevX = 0;
-							float prevY = 0;
-							if(event.getHistorySize()>0){
-								prevX = event.getHistoricalX(i, 0);
-								prevY = event.getHistoricalY(i, 0);
-							}
-							toucheArray[i] = new UITouch(x,y,prevX,prevY,new UIView(v));
+					
+					UITouch[] toucheArray = new UITouch[event.getPointerCount()];
+					
+					for(int i=0;i<toucheArray.length;i++){
+						float x = event.getX(i);
+						float y = event.getY(i);
+						float prevX = 0;
+						float prevY = 0;
+						if(event.getHistorySize()>0){
+							prevX = event.getHistoricalX(i, 0);
+							prevY = event.getHistoricalY(i, 0);
 						}
-						NSSet touches = new NSSet(toucheArray);
-						UIEvent ev = new UIEvent(event);
-						// TODO Auto-generated method stub
-						if(event.getAction()==MotionEvent.ACTION_DOWN){
-							UIView.this.touchesBegan(touches,ev);
-						}else if(event.getAction()==MotionEvent.ACTION_MOVE){
-							UIView.this.touchesMoved(touches,ev);
-						}else if(event.getAction()==MotionEvent.ACTION_UP){
-							UIView.this.touchesEnded(touches,ev);
-						}
+						toucheArray[i] = new UITouch(x,y,prevX,prevY,new UIView(v));
 					}
+					NSSet touches = new NSSet(toucheArray);
+					UIEvent ev = new UIEvent(event);
+					// TODO Auto-generated method stub
+					if(event.getAction()==MotionEvent.ACTION_DOWN){
+						UIView.this.touchesBegan(touches,ev);
+					}else if(event.getAction()==MotionEvent.ACTION_MOVE){
+						UIView.this.touchesMoved(touches,ev);
+					}else if(event.getAction()==MotionEvent.ACTION_UP){
+						UIView.this.touchesEnded(touches,ev);
+					}
+					
 					return false;
 				}
 				
