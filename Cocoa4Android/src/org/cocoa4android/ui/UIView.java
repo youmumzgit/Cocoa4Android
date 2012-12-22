@@ -21,6 +21,7 @@ import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.ns.NSArray;
 import org.cocoa4android.ns.NSMutableArray;
 import org.cocoa4android.ns.NSObject;
+import org.cocoa4android.ns.NSSet;
 
 import android.R.integer;
 import android.content.Context;
@@ -132,8 +133,9 @@ public class UIView extends NSObject{
 				@Override
 				public boolean onTouch(View v, MotionEvent event) {
 					if(UIView.this.getView().equals(v)){
-						UITouch[] touches = new UITouch[event.getPointerCount()];
-						for(int i=0;i<touches.length;i++){
+						UITouch[] toucheArray = new UITouch[event.getPointerCount()];
+						
+						for(int i=0;i<toucheArray.length;i++){
 							float x = event.getX(i);
 							float y = event.getY(i);
 							float prevX = 0;
@@ -142,16 +144,17 @@ public class UIView extends NSObject{
 								prevX = event.getHistoricalX(i, 0);
 								prevY = event.getHistoricalY(i, 0);
 							}
-							touches[i] = new UITouch(x,y,prevX,prevY,new UIView(v));
+							toucheArray[i] = new UITouch(x,y,prevX,prevY,new UIView(v));
 						}
-					
+						NSSet touches = new NSSet(toucheArray);
+						UIEvent ev = new UIEvent(event);
 						// TODO Auto-generated method stub
 						if(event.getAction()==MotionEvent.ACTION_DOWN){
-							UIView.this.touchesBegan(touches,event);
+							UIView.this.touchesBegan(touches,ev);
 						}else if(event.getAction()==MotionEvent.ACTION_MOVE){
-							UIView.this.touchesMoved(touches,event);
+							UIView.this.touchesMoved(touches,ev);
 						}else if(event.getAction()==MotionEvent.ACTION_UP){
-							UIView.this.touchesEnded(touches,event);
+							UIView.this.touchesEnded(touches,ev);
 						}
 					}
 					return false;
@@ -304,13 +307,13 @@ public class UIView extends NSObject{
 		}
 		//view.getView().bringToFront();
 	}
-	public void touchesBegan(UITouch[] touches,MotionEvent event){
+	public void touchesBegan(NSSet touches,UIEvent event){
 		
 	}
-	public void touchesEnded(UITouch[] touches,MotionEvent event){
+	public void touchesEnded(NSSet touches,UIEvent event){
 		
 	}
-	public void touchesMoved(UITouch[] touches,MotionEvent event){
+	public void touchesMoved(NSSet touches,UIEvent event){
 		
 	}
 	

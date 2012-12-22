@@ -19,6 +19,7 @@ import org.cocoa4android.cg.CGPoint;
 import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.cg.CGSize;
 import org.cocoa4android.extend.HVScrollView;
+import org.cocoa4android.ns.NSSet;
 
 import android.view.MotionEvent;
 import android.view.View;
@@ -41,14 +42,13 @@ public class UIScrollView extends UIView {
 		scrollView.addView(contentView.getView());
 		this.setView(scrollView);
 		contentSize = new CGSize(0,0);
-		
+		/*
 		scrollView.setOnTouchListener(new OnTouchListener(){
-
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
+				UITouch[] toucheArray = new UITouch[event.getPointerCount()];
 				
-				UITouch[] touches = new UITouch[event.getPointerCount()];
-				for(int i=0;i<touches.length;i++){
+				for(int i=0;i<toucheArray.length;i++){
 					float x = event.getX(i);
 					float y = event.getY(i);
 					float prevX = 0;
@@ -57,9 +57,9 @@ public class UIScrollView extends UIView {
 						prevX = event.getHistoricalX(i, 0);
 						prevY = event.getHistoricalY(i, 0);
 					}
-					touches[i] = new UITouch(x,y,prevX,prevY,new UIView(v));
+					toucheArray[i] = new UITouch(x,y,prevX,prevY,new UIView(v));
 				}
-			
+				NSSet touches = new NSSet(toucheArray);
 				// TODO Auto-generated method stub
 				if(event.getAction()==MotionEvent.ACTION_DOWN){
 					UIScrollView.this.touchesBegan(touches,event);
@@ -68,12 +68,11 @@ public class UIScrollView extends UIView {
 				}else if(event.getAction()==MotionEvent.ACTION_UP){
 					UIScrollView.this.touchesEnded(touches,event);
 				}
-				
 				return false;
 			}
 			
 		});
-		
+		*/
 		//this.setShowsVerticalScrollIndicator(true);
 		
 	}
@@ -129,11 +128,11 @@ public class UIScrollView extends UIView {
 		this.delegate = delegate;
 	}
 	@Override
-	public void touchesBegan(UITouch[] touches,MotionEvent event){
+	public void touchesBegan(NSSet touches,UIEvent event){
 		moveBegan = true;
 	}
 	@Override
-	public void touchesMoved(UITouch[] touches,MotionEvent event){
+	public void touchesMoved(NSSet touches,UIEvent event){
 		if(moveBegan){
 			if(delegate!=null){
 				delegate.scrollViewWillBeginDragging(this);
@@ -146,14 +145,12 @@ public class UIScrollView extends UIView {
 	}
 	
 	@Override
-	public void touchesEnded(UITouch[] touches,MotionEvent event){
+	public void touchesEnded(NSSet touches,UIEvent event){
 		if(!moveBegan){
 			if(delegate!=null){
 				delegate.scrollViewDidEndDecelerating(this);
 			}
 			if(this.pageEnabled){
-				//ajust to page
-				
 				CGRect frame = this.frame();
 				
 				float pageWidth = this.frame().size().width();
