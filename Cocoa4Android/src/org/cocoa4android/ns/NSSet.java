@@ -8,7 +8,7 @@ public class NSSet {
 	public NSSet(Object[] objects) {
 		set.addAll(Arrays.asList(objects));
 	}
-	public Object anyoObject() {
+	public Object anyObject() {
 		if (set.size()>0) {
 			return set.get(0);
 		}
