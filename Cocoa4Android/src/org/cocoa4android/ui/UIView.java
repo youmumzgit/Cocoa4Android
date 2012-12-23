@@ -15,6 +15,8 @@
  */
 package org.cocoa4android.ui;
 
+import java.lang.reflect.Method;
+
 import org.cocoa4android.cg.CGAffineTransform;
 import org.cocoa4android.cg.CGPoint;
 import org.cocoa4android.cg.CGRect;
@@ -23,7 +25,6 @@ import org.cocoa4android.ns.NSMutableArray;
 import org.cocoa4android.ns.NSObject;
 import org.cocoa4android.ns.NSSet;
 
-import android.R.integer;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -123,12 +124,30 @@ public class UIView extends NSObject{
 	public View getView(){
 		return this.view;
 	}
+	private boolean hasTouchesBegan = NO;
+	protected boolean canConsumeTouch = YES;
 	public void setView(View view){
 		this.view = view;
 		view.setTag(this);
 		
-		//check if this has a method called touchesBegan
-		if(view!=null){
+		//check if the class override the method called touchesBegan
+		
+		
+		try {
+			Method began = this.getClass().getDeclaredMethod("touchesBegan", new Class[]{NSSet.class,UIEvent.class});
+			if (began!=null) {
+				hasTouchesBegan = YES;
+			}
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		boolean isUIView = this.getClass().equals(UIView.class);
+		if(view!=null&&hasTouchesBegan&&!isUIView){
 			this.view.setOnTouchListener(new OnTouchListener(){
 				@Override
 				public boolean onTouch(View v, MotionEvent event) {
@@ -157,7 +176,7 @@ public class UIView extends NSObject{
 						UIView.this.touchesEnded(touches,ev);
 					}
 					
-					return true;
+					return canConsumeTouch;
 				}
 				
 			});
@@ -308,13 +327,13 @@ public class UIView extends NSObject{
 		//view.getView().bringToFront();
 	}
 	public void touchesBegan(NSSet touches,UIEvent event){
-		
+
 	}
 	public void touchesEnded(NSSet touches,UIEvent event){
-		
+
 	}
 	public void touchesMoved(NSSet touches,UIEvent event){
-		
+
 	}
 	
 	

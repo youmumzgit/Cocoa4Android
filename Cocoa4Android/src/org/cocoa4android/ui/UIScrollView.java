@@ -42,6 +42,7 @@ public class UIScrollView extends UIView {
 		scrollView.addView(contentView.getView());
 		this.setView(scrollView);
 		contentSize = new CGSize(0,0);
+		canConsumeTouch = NO;
 		/*
 		scrollView.setOnTouchListener(new OnTouchListener(){
 			@Override
