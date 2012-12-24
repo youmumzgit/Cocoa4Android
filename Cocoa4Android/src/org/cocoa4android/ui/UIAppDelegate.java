@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.WindowManager;
 
 public abstract class UIAppDelegate extends Activity {
 	protected static final boolean YES = true;
@@ -68,6 +69,8 @@ public abstract class UIAppDelegate extends Activity {
         
         this.window = new UIWindow();
         this.setContentView(this.window.getView());
+        
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

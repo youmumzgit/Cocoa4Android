@@ -97,12 +97,16 @@ public class UITableView extends UIView {
 					}
 				}
 				selectedView = cellsList.get(position);
-				selectedIndexPath = mappingList.get(position);
-				selectedView.setBackgroundColor(new UIColor(0xff0378f0));
-				listView.invalidate();
-				if(delegate != null) {
-					delegate.didSelectRowAtIndexPath(UITableView.this, selectedIndexPath);
+				//incase click the foot or head
+				if (selectedView!=null) {
+					selectedIndexPath = mappingList.get(position);
+					selectedView.setBackgroundColor(new UIColor(0xff0378f0));
+					listView.invalidate();
+					if(delegate != null) {
+						delegate.didSelectRowAtIndexPath(UITableView.this, selectedIndexPath);
+					}
 				}
+				
 				
 			}
 		});
@@ -293,13 +297,11 @@ public class UITableView extends UIView {
 		this.sourceChanged(mappingList);
 	}
 	protected void sourceChanged(List<NSIndexPath> localMappingList) {
-		adapter.mappingList = localMappingList;
-		adapter.notifyDataSetChanged();
-		//listView.requestLayout();
-		
-		//listView.refreshDrawableState();
-		listView.invalidateViews();
-		//listView.invalidate();
+		if (adapter!=null) {
+			adapter.mappingList = localMappingList;
+			adapter.notifyDataSetChanged();
+			listView.invalidateViews();
+		}
 	}
 	public UITableViewCell dequeueReusableCellWithIdentifier(String identifier){
 		if (reuseCell!=null&&reuseCell.reuseIdentifier()!=null&&reuseCell.reuseIdentifier().equals(identifier)) {
