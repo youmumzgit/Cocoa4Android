@@ -37,8 +37,7 @@ import android.widget.RelativeLayout.LayoutParams;
 
 public class UIView extends UIResponder{
 
-	
-	
+
 	protected Context context = UIApplication.sharedApplication().getContext();
 	protected LayoutInflater inflater;
 	
@@ -186,7 +185,7 @@ public class UIView extends UIResponder{
 			
 			
 			if(hasTouchesBegan&&!isUIView){
-				this.view.setOnTouchListener(new OnTouchListener(){
+				view.setOnTouchListener(new OnTouchListener(){
 					@Override
 					public boolean onTouch(View v, MotionEvent event) {
 						
@@ -259,7 +258,7 @@ public class UIView extends UIResponder{
 		}
 		return frame;
 	}
-	private LayoutParams params;
+	protected LayoutParams params;
 	public void setFrame(CGRect frame) {
 		this.frame = frame;
 		float width = frame.size.width*scaleDensityX;

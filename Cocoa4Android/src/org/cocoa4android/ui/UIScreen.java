@@ -22,10 +22,6 @@ import org.cocoa4android.ns.NSObject;
 import android.util.DisplayMetrics;
 
 public class UIScreen extends NSObject{
-	private static final int LOW_DPI_STATUS_BAR_HEIGHT = 19;
-	private static final int MEDIUM_DPI_STATUS_BAR_HEIGHT = 25;
-	private static final int HIGH_DPI_STATUS_BAR_HEIGHT = 38;
-	
 	private static final boolean AUTOSIZE = YES;
 	
 	
@@ -45,8 +41,6 @@ public class UIScreen extends NSObject{
 	private CGSize standardScreenSize = null;
 	private CGRect standardBounds;
 	private CGRect standardApplicationFrame;
-
-	private float statusBarHeight = 0;
 	
 	
 	private float density;
@@ -82,7 +76,7 @@ public class UIScreen extends NSObject{
 	}
 	public void setBounds(CGRect bounds) {
 		this.bounds = bounds;
-		this.setApplicationFrame(new CGRect(0, 0, bounds.size.width, bounds.size.height-this.getStatusBarHeight()));
+		this.setApplicationFrame(new CGRect(0, 0, bounds.size.width, bounds.size.height));
 	}
 	
 	public CGRect applicationFrame() {
@@ -96,26 +90,7 @@ public class UIScreen extends NSObject{
 		this.applicationFrame = applicationFrame;
 	}
 	
-	public float getDensityXM() {
-		float value = 1.0f;
-		if(this.useDip){
-			value = density;
-		}
-		if(standardScreenSize!=null&&AUTOSIZE){
-			value *= applicationFrame.size.width/standardApplicationFrame.size.width;
-		}
-		return value;
-	}
-	public float getDensityYM() {
-		float value = 1.0f;
-		if(this.useDip){
-			value = density;
-		}
-		if(standardScreenSize!=null&&AUTOSIZE){
-			value *= applicationFrame.size.height/standardApplicationFrame.size.height;
-		}
-		return value;
-	}
+
 	public void setDensity(float density) {
 		this.density = density;
 	}
@@ -141,13 +116,6 @@ public class UIScreen extends NSObject{
 		return value;
 	}
 	
-	public float getStatusBarHeight(){
-		if(this.useDip){
-			return this.statusBarHeight/this.density;
-		}
-		return this.statusBarHeight;
-	}
-	
 	public CGSize getStandardScreenSize() {
 		return standardScreenSize;
 	}
@@ -158,7 +126,7 @@ public class UIScreen extends NSObject{
 		this.standardScreenSize = standardScreenSize;
 		if (standardScreenSize!=null) {
 			this.standardBounds = new CGRect(0,0,standardScreenSize.width,standardScreenSize.height);
-			this.standardApplicationFrame = new CGRect(0,0,standardScreenSize.width,standardScreenSize.height-statusBarHeight);
+			this.standardApplicationFrame = new CGRect(0,0,standardScreenSize.width,standardScreenSize.height);
 		}else{
 			this.standardBounds = null;
 			this.standardApplicationFrame = null;
@@ -171,19 +139,6 @@ public class UIScreen extends NSObject{
 	}
 	public void setDensityDpi(int densityDpi) {
 		this.densityDpi = densityDpi;
-		switch (this.densityDpi) {
-	    case DisplayMetrics.DENSITY_HIGH:
-	        statusBarHeight = HIGH_DPI_STATUS_BAR_HEIGHT;
-	        break;
-	    case DisplayMetrics.DENSITY_MEDIUM:
-	        statusBarHeight = MEDIUM_DPI_STATUS_BAR_HEIGHT;
-	        break;
-	    case DisplayMetrics.DENSITY_LOW:
-	        statusBarHeight = LOW_DPI_STATUS_BAR_HEIGHT;
-	        break;
-	    default:
-	        statusBarHeight = MEDIUM_DPI_STATUS_BAR_HEIGHT;
-		}
 	}
 	public float getDensityText() {
 		float value = 1.0f;

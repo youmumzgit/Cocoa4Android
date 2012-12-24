@@ -32,6 +32,9 @@ import android.view.KeyEvent;
 public abstract class UIAppDelegate extends Activity {
 	protected static final boolean YES = true;
 	protected static final boolean NO = false;
+	
+	
+	
 	protected static void NSLog(String format,Object...args){
 		Log.i("Cocoa4Android",NSString.stringWithFormat(format, args).getString());
 	}
@@ -65,8 +68,24 @@ public abstract class UIAppDelegate extends Activity {
         
         this.window = new UIWindow();
         this.setContentView(this.window.getView());
-        
-        final UIImageView imageView = new UIImageView();
+    }
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+        	if(this.window!=null){
+	        	UIViewController viewController = this.window.rootViewController();
+	        	if(viewController!=null){
+	        		return viewController.backKeyDidClicked();
+	        	}
+        	}
+            return true;
+        }
+        return false;
+    }
+	boolean isApplicationLaunched = NO;
+	void launchApplication(){
+		isApplicationLaunched = YES;
+		final UIImageView imageView = new UIImageView();
         imageView.setImage(new UIImage(R.drawable.zz_c4a_default));
         this.window.addSubview(imageView);
         new Timer().schedule(new TimerTask() {
@@ -83,20 +102,6 @@ public abstract class UIAppDelegate extends Activity {
 				});
 			}
 		}, 3000);
-    }
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-        	if(this.window!=null){
-	        	UIViewController viewController = this.window.rootViewController();
-	        	if(viewController!=null){
-	        		return viewController.backKeyDidClicked();
-	        	}
-        	}
-            return true;
-        }
-        return false;
-    }
-	
+	}
 	public abstract void applicationDidFinishLaunching();
 }

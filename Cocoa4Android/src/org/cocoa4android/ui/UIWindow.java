@@ -15,19 +15,23 @@
  */
 package org.cocoa4android.ui;
 
-import org.cocoa4android.cg.CGRect;
+
+import android.content.Context;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 
 public class UIWindow extends UIView {
-	public UIWindow(CGRect frame){
-		super(frame);
-		this.setBackgroundColor(UIColor.whiteColor());
-	}
 	public UIWindow(){
-		super();
-		this.setBackgroundColor(UIColor.whiteColor());
-	}
-	public UIWindow(int viewid) {
-		super(viewid);
+		this.setView(new WindowView(context));
+		params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+		params.alignWithParent = true;
+		params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+		params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+		params.leftMargin = 0;
+		params.topMargin = 0;
+		this.getView().setLayoutParams(params);
+		
 		this.setBackgroundColor(UIColor.whiteColor());
 	}
 	private UIViewController rootViewController;
@@ -40,5 +44,23 @@ public class UIWindow extends UIView {
 	public void setRootViewController(UIViewController rootViewController) {
 		this.rootViewController = rootViewController;
 		this.addSubview(rootViewController.view());
+	}
+	public class WindowView extends RelativeLayout{
+
+		public WindowView(Context context) {
+			super(context);
+		}
+		@Override
+		protected void onSizeChanged(int widthNew, int heightNew, int widthOld, int heightOld){
+			super.onSizeChanged(widthNew, heightNew, widthOld, heightOld);
+			//fix applicationFrame
+			UIScreen.mainScreen().setApplicationFrame(CGRectMake(0, 0, widthNew, heightNew+1));
+			if (widthNew>0&&heightNew>0) {
+				UIAppDelegate delegate =  UIApplication.sharedApplication().delegate();
+				if (!delegate.isApplicationLaunched) {
+					delegate.launchApplication();
+				}
+			}
+		}
 	}
 }

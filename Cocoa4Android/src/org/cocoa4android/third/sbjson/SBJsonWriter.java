@@ -203,7 +203,7 @@ public class SBJsonWriter extends NSObject {
 	/**
 	 * 判断对象是否为空
 	 * @param obj	实例
-	 * @return
+	 * @return 
 	 */
 	private static boolean isNull(Object obj) {
 		if (obj instanceof JSONObject) {
