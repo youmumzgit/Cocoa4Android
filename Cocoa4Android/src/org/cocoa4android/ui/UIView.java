@@ -22,7 +22,6 @@ import org.cocoa4android.cg.CGPoint;
 import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.ns.NSArray;
 import org.cocoa4android.ns.NSMutableArray;
-import org.cocoa4android.ns.NSObject;
 import org.cocoa4android.ns.NSSet;
 
 import android.content.Context;
@@ -116,7 +115,7 @@ public class UIView extends UIResponder{
 	
 	
 	//================================================================================
-    // Hierarchy
+    // UIViewHierarchy
     //================================================================================
 	private UIView superView;
 	public NSArray subViews(){
@@ -350,7 +349,7 @@ public class UIView extends UIResponder{
 		}
 	}
 	
-	public CGAffineTransform getTransform() {
+	public CGAffineTransform transform() {
 		return transform;
 	}
 	/**FIXME not functional
@@ -392,9 +391,11 @@ public class UIView extends UIResponder{
 		public static final int UIViewAutoresizingFlexibleHeight = 0x10;
 		public static final int UIViewAutoresizingFlexibleBottomMargin = 0x20;
 	}
+	
 	//================================================================================
-    // Animation
+    // UIViewAnimation
     //================================================================================
+	private static boolean animationsEnabled = YES;
 	public static void beginAnimations(String animationID,Object context){
 		
 	}
@@ -410,7 +411,15 @@ public class UIView extends UIResponder{
 	public static void setAnimationRepeatCount(float repeatCount){
 		
 	}
-	
+	public static void commitAnimations() {
+		
+	}
+	public static void setAnimationsEnabled(boolean enabled){
+		animationsEnabled = enabled;
+	}
+	public static boolean areAnimationsEnabled(){
+		return animationsEnabled;
+	}
 	public enum UIViewAnimationCurve{
 		UIViewAnimationCurveEaseInOut,         // slow at beginning and end
 	    UIViewAnimationCurveEaseIn,            // slow at beginning
