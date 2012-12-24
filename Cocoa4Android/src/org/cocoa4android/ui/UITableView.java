@@ -22,7 +22,7 @@ import java.util.List;
 import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.ns.NSArray;
 import org.cocoa4android.ns.NSIndexPath;
-import org.cocoa4android.ui.UITableViewCell.UITableViewCellSeparatorStyle;
+import org.cocoa4android.ui.UITableViewCell.UITableViewCellSelectionStyle;
 import org.cocoa4android.ui.UITableViewCell.UITableViewCellShapeType;
 
 
@@ -66,6 +66,7 @@ public class UITableView extends UIView {
 	
 	private UIView selectedView = null;
 	private UIColor selectedColor = null;
+	
 	private NSIndexPath selectedIndexPath = null;
 
 	public UITableView() {
@@ -91,7 +92,10 @@ public class UITableView extends UIView {
 				listView.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
 				
 				if(selectedView != null){
-					selectedView.setBackgroundColor(UIColor.whiteColor());
+					UITableViewCell cell = (UITableViewCell)selectedView;
+					if (cell.selectionStyle()!=UITableViewCellSelectionStyle.UITableViewCellSelectionStyleNone) {
+						selectedView.setBackgroundColor(selectedColor);
+					}
 					listView.invalidate();
 					if (delegate != null) {
 						delegate.disDeselectRowAtIndexPath(UITableView.this, selectedIndexPath);
@@ -100,12 +104,29 @@ public class UITableView extends UIView {
 				selectedView = cellsList.get(position);
 				//incase click the foot or head
 				if (selectedView!=null) {
-					selectedIndexPath = mappingList.get(position);
-					selectedView.setBackgroundColor(new UIColor(0xff0378f0));
-					listView.invalidate();
-					if(delegate != null) {
-						delegate.didSelectRowAtIndexPath(UITableView.this, selectedIndexPath);
+					if (UITableViewCell.class.isInstance(selectedView)) {
+						
+						selectedIndexPath = mappingList.get(position);
+						selectedColor = selectedView.backgroundColor();
+						
+						UITableViewCell cell = (UITableViewCell)selectedView;
+						if (cell.selectionStyle()==UITableViewCellSelectionStyle.UITableViewCellSelectionStyleBlue) {
+							cell.setBackgroundColor(new UIColor(0xff0378f0));
+						}else if(cell.selectionStyle() == UITableViewCellSelectionStyle.UITableViewCellSelectionStyleGray){
+							cell.setBackgroundColor(new UIColor(0xffaaaaaa));
+						}else if(cell.selectionStyle()==UITableViewCellSelectionStyle.UITableViewCellSelectionStyleNone){
+							//do nothing
+						}
+						
+					
+						listView.invalidate();
+						if(delegate != null) {
+							delegate.didSelectRowAtIndexPath(UITableView.this, selectedIndexPath);
+						}
+					}else{
+						selectedView = null;
 					}
+					
 				}
 				
 				
@@ -569,6 +590,12 @@ public class UITableView extends UIView {
 			}
 			return true;
 		}
+	}
+	
+	public enum UITableViewCellSeparatorStyle {
+		UITableViewCellSeparatorStyleNone,
+	    UITableViewCellSeparatorStyleSingleLine,
+	    UITableViewCellSeparatorStyleSingleLineEtched   // This separator style is only supported for grouped style table views currently
 	}
 	
 }

@@ -29,6 +29,8 @@ public class UITableViewCell extends UIView {
 	private UILabel detailTextLabel;
 	private UIImageView imageView;
 	private String reuseIdentifier;
+	
+	
 	public String reuseIdentifier() {
 		return reuseIdentifier;
 	}
@@ -141,11 +143,7 @@ public class UITableViewCell extends UIView {
 	    UITableViewCellStyleSubtitle	// Left aligned label on top and left aligned label on bottom with gray text (Used in iPod).
 	}
 	
-	public enum UITableViewCellSeparatorStyle {
-		UITableViewCellSeparatorStyleNone,
-	    UITableViewCellSeparatorStyleSingleLine,
-	    UITableViewCellSeparatorStyleSingleLineEtched   // This separator style is only supported for grouped style table views currently
-	}
+
 	
 	private interface UITableViewCellShape {
 		final RoundRectShape UITableViewCellShapeNoRound = new RoundRectShape(new float[] {0,0, 0,0, 0,0, 0,0},null,null);
@@ -159,6 +157,23 @@ public class UITableViewCell extends UIView {
 		UITableViewCellShapeTopRound,
 		UITableViewCellShapeBottomRound,
 		UITableViewCellShapeAllRound
+	}
+	
+	private UITableViewCellSelectionStyle selectionStyle = UITableViewCellSelectionStyle.UITableViewCellSelectionStyleBlue;
+	
+	
+	public UITableViewCellSelectionStyle selectionStyle() {
+		return selectionStyle;
+	}
+
+	public void setSelectionStyle(UITableViewCellSelectionStyle selectionStyle) {
+		this.selectionStyle = selectionStyle;
+	}
+
+	public enum UITableViewCellSelectionStyle{
+		UITableViewCellSelectionStyleNone,
+	    UITableViewCellSelectionStyleBlue,
+	    UITableViewCellSelectionStyleGray
 	}
 	
 }
