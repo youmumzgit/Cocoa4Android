@@ -35,8 +35,14 @@ public class UIImageView extends UIView {
 	}
 	public void setHighlighted(boolean highlighted) {
 		if(this.highlighted!=highlighted){
-			if(highlightedImage!=null){
-				imageView.setImageDrawable(highlightedImage.getDrawable());
+			if(highlighted){
+				if(highlightedImage!=null){
+					imageView.setImageDrawable(highlightedImage.getDrawable());
+				}
+			}else{
+				if(image!=null){
+					imageView.setImageDrawable(image.getDrawable());
+				}
 			}
 		}
 		this.highlighted = highlighted;
