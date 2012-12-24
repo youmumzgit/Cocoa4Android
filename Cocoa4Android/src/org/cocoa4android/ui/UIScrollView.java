@@ -43,39 +43,6 @@ public class UIScrollView extends UIView {
 		this.setView(scrollView);
 		contentSize = new CGSize(0,0);
 		canConsumeTouch = NO;
-		/*
-		scrollView.setOnTouchListener(new OnTouchListener(){
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				UITouch[] toucheArray = new UITouch[event.getPointerCount()];
-				
-				for(int i=0;i<toucheArray.length;i++){
-					float x = event.getX(i);
-					float y = event.getY(i);
-					float prevX = 0;
-					float prevY = 0;
-					if(event.getHistorySize()>0){
-						prevX = event.getHistoricalX(i, 0);
-						prevY = event.getHistoricalY(i, 0);
-					}
-					toucheArray[i] = new UITouch(x,y,prevX,prevY,new UIView(v));
-				}
-				NSSet touches = new NSSet(toucheArray);
-				// TODO Auto-generated method stub
-				if(event.getAction()==MotionEvent.ACTION_DOWN){
-					UIScrollView.this.touchesBegan(touches,event);
-				}else if(event.getAction()==MotionEvent.ACTION_MOVE){
-					UIScrollView.this.touchesMoved(touches,event);
-				}else if(event.getAction()==MotionEvent.ACTION_UP){
-					UIScrollView.this.touchesEnded(touches,event);
-				}
-				return false;
-			}
-			
-		});
-		*/
-		//this.setShowsVerticalScrollIndicator(true);
-		
 	}
 	public UIScrollView(CGRect frame) {
 		this();

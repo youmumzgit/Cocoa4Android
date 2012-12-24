@@ -32,6 +32,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.AbsListView;
@@ -46,6 +47,7 @@ public class UITableView extends UIView {
 	private refreshableAdapter adapter = null;
 	private UITableViewDataSource dataSource = null;
 	private UITableViewDelegate delegate = null;
+	private boolean scrollEnabled = YES;
 	
 	private boolean enableMutipleScroll = NO;
 	
@@ -81,8 +83,6 @@ public class UITableView extends UIView {
 		if(isGrouped) {
 			listView.setPadding((int)(10*scaleDensityX), (int)(10*scaleDensityY), (int)(10*scaleDensityX), (int)(25*scaleDensityX));
 		}
-		adapter = new refreshableAdapter(mappingList);
-		listView.setAdapter(adapter);
 		
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -106,7 +106,14 @@ public class UITableView extends UIView {
 				
 			}
 		});
-		
+		listView.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				return !scrollEnabled;
+			}
+		});
 		listView.setScrollBarStyle(ScrollView.SCROLLBARS_OUTSIDE_OVERLAY);
 		listView.setSelector(new ColorDrawable(Color.TRANSPARENT));
 		
@@ -129,6 +136,15 @@ public class UITableView extends UIView {
 		return style;
 	}
 	
+	//FIXME should call setAdapter at the beginning of the display
+	@Override
+	public void setSuperView(UIView superView){
+		super.setSuperView(superView);
+		if (adapter==null) {
+			adapter = new refreshableAdapter(mappingList);
+			listView.setAdapter(adapter);
+		}
+	}
 	
 	@Override
 	public void setBackgroundColor(UIColor backgroundColor){
@@ -301,6 +317,13 @@ public class UITableView extends UIView {
 			listView.removeHeaderView(headerView.getView());
 		}
 		if (view!=null) {
+			AbsListView.LayoutParams params = null;
+			if(view.frame==null){
+				params = new AbsListView.LayoutParams(LayoutParams.FILL_PARENT, (int)(44*scaleDensityY));
+			}else{
+				params = new AbsListView.LayoutParams((int) (view.frame.size.width*scaleDensityX), (int)(view.frame.size.height*scaleDensityY));
+			}
+			view.getView().setLayoutParams(params);
 			listView.addHeaderView(view.getView());
 		}
 		headerView = view;
@@ -315,6 +338,14 @@ public class UITableView extends UIView {
 		footerView = view;
 	}
 	
+	public boolean isScrollEnabled() {
+		return scrollEnabled;
+	}
+	public void setScrollEnabled(boolean scrollEnabled) {
+		this.scrollEnabled = scrollEnabled;
+	
+	}
+
 	public interface UITableViewDataSource {
 		int numberOfRowsInSection(UITableView tableView,int section);
 		UITableViewCell cellForRowAtIndexPath(UITableView tableView,NSIndexPath indexPath);

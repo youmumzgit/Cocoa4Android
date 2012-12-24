@@ -139,11 +139,8 @@ public class UIView extends NSObject{
 				hasTouchesBegan = YES;
 			}
 		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 		}
 		
 		boolean isUIView = this.getClass().equals(UIView.class);
@@ -167,15 +164,15 @@ public class UIView extends NSObject{
 					}
 					NSSet touches = new NSSet(toucheArray);
 					UIEvent ev = new UIEvent(event);
-					// TODO Auto-generated method stub
 					if(event.getAction()==MotionEvent.ACTION_DOWN){
 						UIView.this.touchesBegan(touches,ev);
 					}else if(event.getAction()==MotionEvent.ACTION_MOVE){
 						UIView.this.touchesMoved(touches,ev);
 					}else if(event.getAction()==MotionEvent.ACTION_UP){
 						UIView.this.touchesEnded(touches,ev);
+					}else if(event.getAction()==MotionEvent.ACTION_CANCEL){
+						UIView.this.touchesCancelled(touches,ev);
 					}
-					
 					return canConsumeTouch;
 				}
 				
@@ -335,7 +332,9 @@ public class UIView extends NSObject{
 	public void touchesMoved(NSSet touches,UIEvent event){
 
 	}
-	
+	public void touchesCancelled(NSSet touches,UIEvent event){
+
+	}
 	
 	private int autoresizingMask;
 	

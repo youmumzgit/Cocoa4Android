@@ -27,6 +27,7 @@ public class UILabel extends UIView {
 	
 	public UILabel(){
 		TextView lbl = new TextView(context);
+		lbl.setGravity(Gravity.CENTER_VERTICAL);
 		this.setLabel(lbl);
 		this.setView(lbl);
 		this.setTextColor(UIColor.blackColor());
@@ -42,13 +43,13 @@ public class UILabel extends UIView {
 	public void setTextAlignment(NSTextAlignment alignment){
 		switch (alignment) {
 		case NSTextAlignmentLeft:
-			this.label.setGravity(Gravity.LEFT);
+			this.label.setGravity((label.getGravity()&Gravity.VERTICAL_GRAVITY_MASK)|Gravity.LEFT);
 			break;
 		case NSTextAlignmentCenter:
-			this.label.setGravity(Gravity.CENTER);
+			this.label.setGravity((label.getGravity()&Gravity.VERTICAL_GRAVITY_MASK)|Gravity.CENTER);
 			break;
 		case NSTextAlignmentRight:
-			this.label.setGravity(Gravity.RIGHT);
+			this.label.setGravity((label.getGravity()&Gravity.VERTICAL_GRAVITY_MASK)|Gravity.RIGHT);
 			break;
 		}
 		
