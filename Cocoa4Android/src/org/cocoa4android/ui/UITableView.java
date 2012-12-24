@@ -65,6 +65,7 @@ public class UITableView extends UIView {
 	private List<UIView> cellsList = null;
 	
 	private UIView selectedView = null;
+	private UIColor selectedColor = null;
 	private NSIndexPath selectedIndexPath = null;
 
 	public UITableView() {

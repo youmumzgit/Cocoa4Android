@@ -22,6 +22,7 @@ import org.cocoa4android.cg.CGPoint;
 import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.ns.NSArray;
 import org.cocoa4android.ns.NSMutableArray;
+import org.cocoa4android.ns.NSMutableDictionary;
 import org.cocoa4android.ns.NSSet;
 
 import android.content.Context;
@@ -394,9 +395,11 @@ public class UIView extends UIResponder{
 	//================================================================================
     // UIViewAnimation
     //================================================================================
+	private static NSMutableDictionary animationDic = NSMutableDictionary.dictionary();
 	private static boolean animationsEnabled = YES;
+	private static boolean animationBegan = NO;
 	public static void beginAnimations(String animationID,Object context){
-		
+		animationBegan = YES;
 	}
 	public static void setAnimationDuration(float duation){
 		
