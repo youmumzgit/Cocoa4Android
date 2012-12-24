@@ -138,8 +138,8 @@ public class UITableView extends UIView {
 	
 	//FIXME should call setAdapter at the beginning of the display
 	@Override
-	public void setSuperView(UIView superView){
-		super.setSuperView(superView);
+	protected void setSuperview(UIView superView){
+		super.setSuperview(superView);
 		if (adapter==null) {
 			adapter = new refreshableAdapter(mappingList);
 			listView.setAdapter(adapter);

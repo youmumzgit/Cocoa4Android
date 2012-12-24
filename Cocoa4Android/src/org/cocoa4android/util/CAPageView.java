@@ -108,7 +108,7 @@ public class CAPageView extends UIView implements UIScrollViewDelegate{
 	    	view = datasource.viewAtPage(this, page);
 	    	views.set(page, view);
 	    }
-	    if(view!=null && view.superView()==null){
+	    if(view!=null && view.superview()==null){
 	    	CGRect frame = this.frame();
 	    	CGRect viewFrame = view.frame();
 	    	
@@ -117,7 +117,7 @@ public class CAPageView extends UIView implements UIScrollViewDelegate{
 	    	view.setFrame(new CGRect(x,y,viewFrame.size().width(),viewFrame.size().height()));
 	    	scrollView.addSubview(view);
 	    }
-	    if (isTouchMaskEnabled&&page==0&&mask.superView()==null) {
+	    if (isTouchMaskEnabled&&page==0&&mask.superview()==null) {
 	    	scrollView.addSubview(mask);
 	    }
 	}

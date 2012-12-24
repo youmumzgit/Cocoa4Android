@@ -36,50 +36,21 @@ import android.widget.RelativeLayout.LayoutParams;
 
 
 
-public class UIView extends NSObject{
-	private UIView superView;
-	private View view;
-	private boolean isHidden;
-	protected CGRect frame;
-	protected CGAffineTransform transform;
+public class UIView extends UIResponder{
+
 	
-	private UIColor backgroundColor;
-	
-	
-	protected float density = UIScreen.mainScreen().getDensity();
-	
-	protected float scaleFactorX = UIScreen.mainScreen().getScaleFactorX();
-	protected float scaleFactorY = UIScreen.mainScreen().getScaleFactorY();
-	
-	protected float scaleDensityX = density*scaleFactorX;
-	protected float scaleDensityY = density*scaleFactorY;
 	
 	protected Context context = UIApplication.sharedApplication().getContext();
 	protected LayoutInflater inflater;
-	private int tag;
-	protected boolean keepAspectRatio = NO;
 	
 	
-	private CGPoint center = null;
 	
-	public CGPoint center() {
-		if (this.frame==null&&center!=null) {
-			return center;
-		}
-		CGRect frame = this.frame();
-		return CGPointMake(frame.size.width/2+frame.origin.x, frame.size.height/2+frame.origin.y);
-	}
-	/**
-	 * FIXME fail if UIImageView without setting frame
-	 * @param center
-	 */
-	public void setCenter(CGPoint center) {
-		CGRect frame = this.frame();
-		frame.origin.x = (int) (center.x-frame.size.width/2);
-		frame.origin.y = (int) (center.y-frame.size.height/2);
-		this.setFrame(frame);
-		this.center = center;
-	}
+
+	//================================================================================
+    // Constructor
+    //================================================================================
+	private View view;
+	
 	public UIView(){
 		//if no setting fill the parent
 		this.setView(new RelativeLayout(context));
@@ -102,83 +73,52 @@ public class UIView extends NSObject{
 	public UIView(View view){
 		this.setView(view);
 	}
-	public void addSubview(UIView child){
-		if(this.isViewGroup()){
-			ViewGroup vg = (ViewGroup)this.view;
-			vg.addView(child.getView());
-			child.setSuperView(this);
-		}
+	
+	//================================================================================
+    // Basic Method
+    //================================================================================
+	private boolean isHidden;
+	private UIColor backgroundColor;
+	private int tag;
+	
+	public boolean isHidden() {
+		return isHidden;
 	}
-	public void removeSubView(UIView child){
-		if(this.isViewGroup()){
-			ViewGroup vg = (ViewGroup)this.view;
-			vg.removeView(child.getView());
-			child.setSuperView(null);
-		}
+	public void setHidden(boolean isHidden) {
+		this.isHidden = isHidden;
+		this.view.setVisibility(isHidden?View.INVISIBLE:View.VISIBLE);
 	}
-	public void removeFromSuperView(){
-		if(this.superView!=null){
-			this.superView.removeSubView(this);
-		}
+	
+	public UIColor backgroundColor() {
+		return backgroundColor;
 	}
-	public View getView(){
-		return this.view;
+	public void setBackgroundColor(UIColor backgroundColor) {
+		this.backgroundColor = backgroundColor;
+		this.view.setBackgroundColor(backgroundColor.getColor());
 	}
-	private boolean hasTouchesBegan = NO;
-	protected boolean canConsumeTouch = YES;
-	public void setView(View view){
-		this.view = view;
-		view.setTag(this);
-		
-		//check if the class override the method called touchesBegan
-		
-		
-		try {
-			Method began = this.getClass().getDeclaredMethod("touchesBegan", new Class[]{NSSet.class,UIEvent.class});
-			if (began!=null) {
-				hasTouchesBegan = YES;
-			}
-		} catch (SecurityException e) {
-		} catch (NoSuchMethodException e) {
 
-		}
-		
-		boolean isUIView = this.getClass().equals(UIView.class);
-		if(view!=null&&hasTouchesBegan&&!isUIView){
-			this.view.setOnTouchListener(new OnTouchListener(){
-				@Override
-				public boolean onTouch(View v, MotionEvent event) {
-					
-					UITouch[] toucheArray = new UITouch[event.getPointerCount()];
-					
-					for(int i=0;i<toucheArray.length;i++){
-						float x = event.getX(i);
-						float y = event.getY(i);
-						float prevX = 0;
-						float prevY = 0;
-						if(event.getHistorySize()>0){
-							prevX = event.getHistoricalX(i, 0);
-							prevY = event.getHistoricalY(i, 0);
-						}
-						toucheArray[i] = new UITouch(x,y,prevX,prevY,new UIView(v));
-					}
-					NSSet touches = new NSSet(toucheArray);
-					UIEvent ev = new UIEvent(event);
-					if(event.getAction()==MotionEvent.ACTION_DOWN){
-						UIView.this.touchesBegan(touches,ev);
-					}else if(event.getAction()==MotionEvent.ACTION_MOVE){
-						UIView.this.touchesMoved(touches,ev);
-					}else if(event.getAction()==MotionEvent.ACTION_UP){
-						UIView.this.touchesEnded(touches,ev);
-					}else if(event.getAction()==MotionEvent.ACTION_CANCEL){
-						UIView.this.touchesCancelled(touches,ev);
-					}
-					return canConsumeTouch;
-				}
-				
-			});
+	public int tag() {
+		return tag;
+	}
+	public void setTag(int tag) {
+		this.tag = tag;
+	}
+	
+	public void setBackgroundImage(UIImage backgroundImage){
+		this.view.setBackgroundResource(backgroundImage.getResId());
+	}
+	public void bringSubviewToFront(UIView view){
+		if(this.isViewGroup()){
+			ViewGroup vg = (ViewGroup)this.view;
+			vg.bringChildToFront(view.getView());
 		}
 	}
+	
+	
+	//================================================================================
+    // Hierarchy
+    //================================================================================
+	private UIView superView;
 	public NSArray subViews(){
 		NSMutableArray subViews = null;
 		if(this.isViewGroup()){
@@ -190,19 +130,121 @@ public class UIView extends NSObject{
 		}
 		return subViews;
 	}
-	public UIView superView() {
+	public UIView superview() {
 		return superView;
 	}
-	public void setSuperView(UIView superView) {
+	protected void setSuperview(UIView superView) {
 		this.superView = superView;
 	}
-	public boolean isHidden() {
-		return isHidden;
+	public void addSubview(UIView child){
+		if(this.isViewGroup()){
+			ViewGroup vg = (ViewGroup)this.view;
+			vg.addView(child.getView());
+			child.setSuperview(this);
+		}
 	}
-	public void setHidden(boolean isHidden) {
-		this.isHidden = isHidden;
-		this.view.setVisibility(isHidden?View.INVISIBLE:View.VISIBLE);
+	public void removeSubView(UIView child){
+		if(this.isViewGroup()){
+			ViewGroup vg = (ViewGroup)this.view;
+			vg.removeView(child.getView());
+			child.setSuperview(null);
+		}
 	}
+	public void removeFromSuperView(){
+		if(this.superView!=null){
+			this.superView.removeSubView(this);
+		}
+	}
+	
+	protected boolean isViewGroup(){
+		return ViewGroup.class.isInstance(this.view);
+	}
+	
+	//================================================================================
+    // Convention between View and UIView
+    //================================================================================
+	private boolean hasTouchesBegan = NO;
+	protected boolean canConsumeTouch = YES;
+	
+	public void setView(View view){
+		boolean isUIView = this.getClass().equals(UIView.class);
+		
+		if (!isUIView&&view!=null&&this.view!=view) {
+			if (this.view!=null) {
+				//release the previous view's Listener
+				this.view.setOnTouchListener(null);
+			}
+			//check if the class override the method called touchesBegan
+			try {
+				Method began = this.getClass().getDeclaredMethod("touchesBegan", new Class[]{NSSet.class,UIEvent.class});
+				if (began!=null) {
+					hasTouchesBegan = YES;
+				}
+			} catch (SecurityException e) {
+			} catch (NoSuchMethodException e) {
+
+			}
+			
+			
+			if(hasTouchesBegan&&!isUIView){
+				this.view.setOnTouchListener(new OnTouchListener(){
+					@Override
+					public boolean onTouch(View v, MotionEvent event) {
+						
+						UITouch[] toucheArray = new UITouch[event.getPointerCount()];
+						
+						for(int i=0;i<toucheArray.length;i++){
+							float x = event.getX(i);
+							float y = event.getY(i);
+							float prevX = 0;
+							float prevY = 0;
+							if(event.getHistorySize()>0){
+								prevX = event.getHistoricalX(i, 0);
+								prevY = event.getHistoricalY(i, 0);
+							}
+							toucheArray[i] = new UITouch(x,y,prevX,prevY,new UIView(v));
+						}
+						NSSet touches = new NSSet(toucheArray);
+						UIEvent ev = new UIEvent(event);
+						if(event.getAction()==MotionEvent.ACTION_DOWN){
+							UIView.this.touchesBegan(touches,ev);
+						}else if(event.getAction()==MotionEvent.ACTION_MOVE){
+							UIView.this.touchesMoved(touches,ev);
+						}else if(event.getAction()==MotionEvent.ACTION_UP){
+							UIView.this.touchesEnded(touches,ev);
+						}else if(event.getAction()==MotionEvent.ACTION_CANCEL){
+							UIView.this.touchesCancelled(touches,ev);
+						}
+						return canConsumeTouch;
+					}
+					
+				});
+			}
+		}
+		this.view = view;
+		view.setTag(this);
+	}
+	public View getView(){
+		return this.view;
+	}
+	
+	
+	
+	//================================================================================
+    // Size&Position
+    //================================================================================
+	protected CGRect frame;
+	protected CGAffineTransform transform;
+	private CGPoint center = null;
+	protected boolean keepAspectRatio = NO;
+	
+	protected float density = UIScreen.mainScreen().getDensity();
+	protected float scaleFactorX = UIScreen.mainScreen().getScaleFactorX();
+	protected float scaleFactorY = UIScreen.mainScreen().getScaleFactorY();
+	//FIXME calculate once
+	protected float scaleDensityX = density*scaleFactorX;
+	protected float scaleDensityY = density*scaleFactorY;
+	
 	public CGRect frame() {
 		if(frame==null){
 			float width = this.getView().getWidth()/scaleDensityX;
@@ -274,6 +316,27 @@ public class UIView extends NSObject{
 		params.topMargin = (int)(y);
 		this.view.setLayoutParams(params);
 	}
+	
+
+	public CGPoint center() {
+		if (this.frame==null&&center!=null) {
+			return center;
+		}
+		CGRect frame = this.frame();
+		return CGPointMake(frame.size.width/2+frame.origin.x, frame.size.height/2+frame.origin.y);
+	}
+	/**
+	 * FIXME fail if UIImageView without setting frame
+	 * @param center
+	 */
+	public void setCenter(CGPoint center) {
+		CGRect frame = this.frame();
+		frame.origin.x = (int) (center.x-frame.size.width/2);
+		frame.origin.y = (int) (center.y-frame.size.height/2);
+		this.setFrame(frame);
+		this.center = center;
+	}
+	
 	public boolean isKeepAspectRatio() {
 		return keepAspectRatio;
 	}
@@ -286,10 +349,11 @@ public class UIView extends NSObject{
 			
 		}
 	}
+	
 	public CGAffineTransform getTransform() {
 		return transform;
 	}
-	/**
+	/**FIXME not functional
 	 * Change the size and position of the shape
 	 * @param transform 
 	 */
@@ -297,45 +361,10 @@ public class UIView extends NSObject{
 		this.transform = transform;
 	}
 	
-	public UIColor backgroundColor() {
-		return backgroundColor;
-	}
-	public void setBackgroundColor(UIColor backgroundColor) {
-		this.backgroundColor = backgroundColor;
-		this.view.setBackgroundColor(backgroundColor.getColor());
-	}
-	protected boolean isViewGroup(){
-		return ViewGroup.class.isInstance(this.view);
-	}
-	public int tag() {
-		return tag;
-	}
-	public void setTag(int tag) {
-		this.tag = tag;
-	}
-	public void setBackgroundImage(UIImage backgroundImage){
-		this.view.setBackgroundResource(backgroundImage.getResId());
-	}
-	public void bringSubviewToFront(UIView view){
-		if(this.isViewGroup()){
-			ViewGroup vg = (ViewGroup)this.view;
-			vg.bringChildToFront(view.getView());
-		}
-		//view.getView().bringToFront();
-	}
-	public void touchesBegan(NSSet touches,UIEvent event){
+	//================================================================================
+    // AutoResizing
+    //================================================================================
 
-	}
-	public void touchesEnded(NSSet touches,UIEvent event){
-
-	}
-	public void touchesMoved(NSSet touches,UIEvent event){
-
-	}
-	public void touchesCancelled(NSSet touches,UIEvent event){
-
-	}
-	
 	private int autoresizingMask;
 	
 	public int autoresizingMask() {
@@ -351,7 +380,9 @@ public class UIView extends NSObject{
 		}
 		
 	}
-
+	private boolean isAutoresizing(int autoresizing){
+		return (this.autoresizingMask&autoresizing)>0;
+	}
 	public class UIViewAutoresizing{
 		public static final int UIViewAutoresizingNone = 0x00;
 		public static final int UIViewAutoresizingFlexibleLeftMargin = 0x01;
@@ -361,7 +392,31 @@ public class UIView extends NSObject{
 		public static final int UIViewAutoresizingFlexibleHeight = 0x10;
 		public static final int UIViewAutoresizingFlexibleBottomMargin = 0x20;
 	}
-	private boolean isAutoresizing(int autoresizing){
-		return (this.autoresizingMask&autoresizing)>0;
+	//================================================================================
+    // Animation
+    //================================================================================
+	public static void beginAnimations(String animationID,Object context){
+		
 	}
+	public static void setAnimationDuration(float duation){
+		
+	}
+	public static void setAnimationDelay(float delay){
+		
+	}
+	public static void setAnimationCurve(UIViewAnimationCurve curve){
+		
+	}
+	public static void setAnimationRepeatCount(float repeatCount){
+		
+	}
+	
+	public enum UIViewAnimationCurve{
+		UIViewAnimationCurveEaseInOut,         // slow at beginning and end
+	    UIViewAnimationCurveEaseIn,            // slow at beginning
+	    UIViewAnimationCurveEaseOut,           // slow at end
+	    UIViewAnimationCurveLinear
+	}
+	
+	
 }

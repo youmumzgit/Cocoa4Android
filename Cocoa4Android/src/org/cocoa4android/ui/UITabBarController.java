@@ -63,7 +63,7 @@ public class UITabBarController extends UIViewController {
 		if(index<this.viewControllers.count()){
 			UIViewController viewController = (UIViewController) viewControllers.objectAtIndex(index);
 			UIView view = viewController.view();
-			if(view.superView()==null){
+			if(view.superview()==null){
 				container.addSubview(view);
 			}
 			if(view.isHidden()){
