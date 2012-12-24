@@ -20,6 +20,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 public class UIImage {
+	public static UIImage imageNamed(int resId){
+		return new UIImage(resId);
+	}
+
+	
 	private Drawable drawable;
 	
 	private int resId;
