@@ -26,7 +26,31 @@ public class UIImageView extends UIView {
 	
 	protected ImageView imageView;
 	private UIImage image;
+	private UIImage highlightedImage;
 	
+	private boolean highlighted=NO;
+	
+	public boolean isHighlighted() {
+		return highlighted;
+	}
+	public void setHighlighted(boolean highlighted) {
+		if(this.highlighted!=highlighted){
+			if(highlightedImage!=null){
+				imageView.setImageDrawable(highlightedImage.getDrawable());
+			}
+		}
+		this.highlighted = highlighted;
+	}
+	public UIImage HighlightedImage() {
+		return highlightedImage;
+	}
+	public void setHighlightedImage(UIImage highlightedImage) {
+		if (highlightedImage!=null&&this.highlightedImage!=highlightedImage&&highlighted) {
+			imageView.setImageDrawable(highlightedImage.getDrawable());
+		}
+		this.highlightedImage = highlightedImage;
+		
+	}
 	public UIImageView(UIImage image){
 		this();
 		this.setImage(image);
