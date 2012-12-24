@@ -55,8 +55,8 @@ public class UISwitcher extends UIControl {
 		this.setView(btn);
 		this.setFrame(CGRectMake(0, 0, 0, 0));
 		
-		onImage = new UIImage(R.drawable.c4a_switcher_on);
-		offImage = new UIImage(R.drawable.c4a_switcher_off);
+		onImage = new UIImage(R.drawable.zz_c4a_switcher_on);
+		offImage = new UIImage(R.drawable.zz_c4a_switcher_off);
 		this.setOn(YES, YES);
 	}
 	

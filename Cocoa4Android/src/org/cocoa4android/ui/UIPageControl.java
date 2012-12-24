@@ -69,10 +69,10 @@ public class UIPageControl extends UIView{
 		for (int i = 0; i < numberOfPages; i++) {
 			UIImageView imageView = null;
 			if (i==0) {
-				imageView = new UIImageView(new UIImage(R.drawable.c4a_pagecontrol_active));
+				imageView = new UIImageView(new UIImage(R.drawable.zz_c4a_pagecontrol_active));
 				currentPage = 0;
 			}else{
-				imageView = new UIImageView(new UIImage(R.drawable.c4a_pagecontrol_dim));
+				imageView = new UIImageView(new UIImage(R.drawable.zz_c4a_pagecontrol_dim));
 			}
 			imageView.setFrame(CGRectMake(singleWidth*(i*2+1), 0, singleWidth, singleWidth));
 			this.addSubview(imageView);

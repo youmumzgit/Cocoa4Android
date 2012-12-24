@@ -67,7 +67,7 @@ public abstract class UIAppDelegate extends Activity {
         this.setContentView(this.window.getView());
         
         final UIImageView imageView = new UIImageView();
-        imageView.setImage(new UIImage(R.drawable.c4a_default));
+        imageView.setImage(new UIImage(R.drawable.zz_c4a_default));
         this.window.addSubview(imageView);
         new Timer().schedule(new TimerTask() {
 			@Override
