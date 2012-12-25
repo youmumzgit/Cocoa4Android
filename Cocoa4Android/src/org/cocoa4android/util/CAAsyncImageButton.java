@@ -19,8 +19,10 @@ import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.extend.urlimage.UrlImageButtonCallback;
 import org.cocoa4android.extend.urlimage.UrlImageButtonHelper;
 import org.cocoa4android.ui.UIButton;
+import org.cocoa4android.ui.UIImage;
 
 import android.graphics.drawable.Drawable;
+import android.view.View;
 import android.widget.Button;
 
 public class CAAsyncImageButton extends UIButton implements UrlImageButtonCallback{
@@ -34,10 +36,10 @@ public class CAAsyncImageButton extends UIButton implements UrlImageButtonCallba
 		this.setFrame(frame);
 	}
 	public void setImageUrl(String imageUrl){
-		if(this.getButton().getBackground()!=null){
-			UrlImageButtonHelper.setUrlDrawable(this.button, imageUrl, this.button.getBackground(),this);
+		if(this.getView().getBackground()!=null){
+			UrlImageButtonHelper.setUrlDrawable(this.getView(), imageUrl, this.getView().getBackground(),this);
 		}else{
-			UrlImageButtonHelper.setUrlDrawable(this.button, imageUrl,this);
+			UrlImageButtonHelper.setUrlDrawable(this.getView(), imageUrl,this);
 		}
 	}
 	
@@ -53,8 +55,9 @@ public class CAAsyncImageButton extends UIButton implements UrlImageButtonCallba
 	}
 
 	@Override
-	public void onLoaded(Button button, Drawable loadedDrawable, String url,
+	public void onLoaded(View button, Drawable loadedDrawable, String url,
 			boolean loadedFromCache) {
+		this.setImage(new UIImage(loadedDrawable));
 		if(imageButtonCallback!=null){
 			imageButtonCallback.imageDidLoaded(this);
 		}

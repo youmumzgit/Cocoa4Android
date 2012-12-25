@@ -104,7 +104,11 @@ public class UIView extends UIResponder{
 	}
 	
 	public void setBackgroundImage(UIImage backgroundImage){
-		this.view.setBackgroundResource(backgroundImage.getResId());
+		if(backgroundImage.getResId()!=0){
+			this.getView().setBackgroundResource(backgroundImage.getResId());
+		}else{
+			this.getView().setBackgroundDrawable(backgroundImage.getDrawable());
+		}
 	}
 	public void bringSubviewToFront(UIView view){
 		if(this.isViewGroup()){
@@ -184,37 +188,39 @@ public class UIView extends UIResponder{
 
 			}
 			
-			
-			if(hasTouchesBegan&&!isUIView){
+			if (!isUIView) {
 				view.setOnTouchListener(new OnTouchListener(){
 					@Override
 					public boolean onTouch(View v, MotionEvent event) {
-						
-						UITouch[] toucheArray = new UITouch[event.getPointerCount()];
-						
-						for(int i=0;i<toucheArray.length;i++){
-							float x = event.getX(i);
-							float y = event.getY(i);
-							float prevX = 0;
-							float prevY = 0;
-							if(event.getHistorySize()>0){
-								prevX = event.getHistoricalX(i, 0);
-								prevY = event.getHistoricalY(i, 0);
+						UIView.this.handleTouch(event);
+						if(hasTouchesBegan){
+							UITouch[] toucheArray = new UITouch[event.getPointerCount()];
+							
+							for(int i=0;i<toucheArray.length;i++){
+								float x = event.getX(i);
+								float y = event.getY(i);
+								float prevX = 0;
+								float prevY = 0;
+								if(event.getHistorySize()>0){
+									prevX = event.getHistoricalX(i, 0);
+									prevY = event.getHistoricalY(i, 0);
+								}
+								toucheArray[i] = new UITouch(x,y,prevX,prevY,new UIView(v));
 							}
-							toucheArray[i] = new UITouch(x,y,prevX,prevY,new UIView(v));
+							NSSet touches = new NSSet(toucheArray);
+							UIEvent ev = new UIEvent(event);
+							if(event.getAction()==MotionEvent.ACTION_DOWN){
+								UIView.this.touchesBegan(touches,ev);
+							}else if(event.getAction()==MotionEvent.ACTION_MOVE){
+								UIView.this.touchesMoved(touches,ev);
+							}else if(event.getAction()==MotionEvent.ACTION_UP){
+								UIView.this.touchesEnded(touches,ev);
+							}else if(event.getAction()==MotionEvent.ACTION_CANCEL){
+								UIView.this.touchesCancelled(touches,ev);
+							}
+							return canConsumeTouch;
 						}
-						NSSet touches = new NSSet(toucheArray);
-						UIEvent ev = new UIEvent(event);
-						if(event.getAction()==MotionEvent.ACTION_DOWN){
-							UIView.this.touchesBegan(touches,ev);
-						}else if(event.getAction()==MotionEvent.ACTION_MOVE){
-							UIView.this.touchesMoved(touches,ev);
-						}else if(event.getAction()==MotionEvent.ACTION_UP){
-							UIView.this.touchesEnded(touches,ev);
-						}else if(event.getAction()==MotionEvent.ACTION_CANCEL){
-							UIView.this.touchesCancelled(touches,ev);
-						}
-						return canConsumeTouch;
+						return false;
 					}
 					
 				});
@@ -226,9 +232,6 @@ public class UIView extends UIResponder{
 	public View getView(){
 		return this.view;
 	}
-	
-	
-	
 	//================================================================================
     // Size&Position
     //================================================================================
@@ -357,6 +360,7 @@ public class UIView extends UIResponder{
 	 * @param transform 
 	 */
 	public void setTransform(CGAffineTransform transform) {
+		this.recordAnimationByTransformation(transform);
 		this.transform = transform;
 	}
 	
@@ -395,30 +399,54 @@ public class UIView extends UIResponder{
 	//================================================================================
     // UIViewAnimation
     //================================================================================
-	private static NSMutableDictionary animationDic = NSMutableDictionary.dictionary();
+	private static NSMutableDictionary animationDic = null;
 	private static boolean animationsEnabled = YES;
 	private static boolean animationBegan = NO;
+	private static float duation = 0.0f;
+	private static float delay=0.0f;
+	private static int repeatCount=1;
+	private static UIViewAnimationCurve curve = null;
+	/**
+	 * begin an animation transaction
+	 * frame bounds center transform alpha backgroundColor contentStretch will be recorded
+	 * @param animationID
+	 * @param context
+	 */
+	//FIXME didn't use the animationID
 	public static void beginAnimations(String animationID,Object context){
-		animationBegan = YES;
+		if (animationsEnabled) {
+			animationBegan = YES;
+			animationDic = NSMutableDictionary.dictionary();
+		}
 	}
 	public static void setAnimationDuration(float duation){
-		
+		UIView.duation = duation;
 	}
 	public static void setAnimationDelay(float delay){
-		
+		UIView.delay = delay;
 	}
 	public static void setAnimationCurve(UIViewAnimationCurve curve){
-		
+		UIView.curve = curve;
 	}
-	public static void setAnimationRepeatCount(float repeatCount){
-		
+	public static void setAnimationRepeatCount(int repeatCount){
+		UIView.repeatCount = repeatCount;
 	}
 	public static void commitAnimations() {
-		
+		animationBegan = NO;
+		animationDic = null;
+		UIView.repeatCount = 1;
+		UIView.duation = 0.0f;
+		UIView.delay = 0.0f;
 	}
 	public static void setAnimationsEnabled(boolean enabled){
 		animationsEnabled = enabled;
 	}
+	private void recordAnimationByTransformation(CGAffineTransform transform){
+		if (animationBegan) {
+			
+		}
+	}
+	
 	public static boolean areAnimationsEnabled(){
 		return animationsEnabled;
 	}

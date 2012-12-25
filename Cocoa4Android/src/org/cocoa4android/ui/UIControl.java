@@ -20,7 +20,6 @@ import java.util.HashMap;
 
 import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.util.CAObjectMethod;
-
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,7 +27,7 @@ import android.view.View.OnClickListener;
 
 public class UIControl extends UIView {
 	
-	protected UIControlState currentState = UIControlState.UIControlStateNormal;
+	protected int state = UIControlState.UIControlStateNormal;
 	
 	protected HashMap<UIControlEvent,ArrayList<CAObjectMethod>> callbacks = new HashMap<UIControlEvent,ArrayList<CAObjectMethod>>();
 	public UIControl() {
@@ -40,59 +39,109 @@ public class UIControl extends UIView {
 	public void setView(View view) {
 		super.setView(view);
 		view.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				ArrayList<CAObjectMethod> oms = callbacks.get(UIControlEvent.UIControlEventTouchUpInside);
-				if(oms!=null){
-					for(int i=0;i<oms.size();i++){
-						//loop to call the callbacks
-						CAObjectMethod om = oms.get(i);
-						om.invoke(UIControl.this);
-					}
-				}
+				UIControl.this.callback(UIControlEvent.UIControlEventTouchUpInside);
 			}
 		});
 	}
-	public void addEventListener(Object target,String selector,UIControlEvent controlEvent){
+	@Override
+	protected void handleTouch(MotionEvent event){
+		super.handleTouch(event);
+		if (TouchDownHandlerCount>0&&event.getAction()==MotionEvent.ACTION_DOWN) {
+			this.callback(UIControlEvent.UIControlEventTouchDown);
+		}
+	}
+	private void callback(UIControlEvent event){
+		ArrayList<CAObjectMethod> oms = callbacks.get(event);
+		if(oms!=null){
+			for(int i=0;i<oms.size();i++){
+				CAObjectMethod om = oms.get(i);
+				om.invoke(UIControl.this);
+			}
+		}
+	}
+	private int TouchDownHandlerCount = 0;
+	public void addTarget(Object target,String selector,UIControlEvent controlEvent){
 		ArrayList<CAObjectMethod> ams = callbacks.get(controlEvent);
 		if(ams==null){
 			ams = new ArrayList<CAObjectMethod>();
 			callbacks.put(controlEvent,ams);
 		}
+		if (controlEvent==UIControlEvent.UIControlEventTouchDown) {
+			TouchDownHandlerCount++;
+		}
 		ams.add(new CAObjectMethod(target,selector));
-		
 	}
-	
-	protected UIControlState getCurrentState() {
-		return currentState;
-	}
-	protected void setCurrentState(UIControlState currentState) {
-		this.currentState = currentState;
-	}
-	
-	public void touchesEnded(UITouch[] touches,MotionEvent event){
-		ArrayList<CAObjectMethod> oms = callbacks.get(UIControlEvent.UIControlEventTouchUpInside);
+	public void removeTarget(Object target,String selector,UIControlEvent controlEvent){
+		ArrayList<CAObjectMethod> oms = callbacks.get(controlEvent);
 		if(oms!=null){
 			for(int i=0;i<oms.size();i++){
-				//loop to call the callbacks
 				CAObjectMethod om = oms.get(i);
-				om.invoke(this);
+				if (om.getTarget()==target&&om.getSelector().equals(selector)) {
+					oms.remove(i);
+					if (controlEvent==UIControlEvent.UIControlEventTouchDown) {
+						TouchDownHandlerCount--;
+					}
+					break;
+				}
 			}
 		}
 	}
+	
+	protected int state() {
+		return state;
+	}
 
+	
+	private boolean enabled = YES;
+	
+	public boolean isEnabled() {
+		return enabled;
+	}
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+		this.invalidateState();
+	}
+	private boolean selected = NO;
+	public boolean isSelected() {
+		return selected;
+	}
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+		this.invalidateState();
+	}
+	private boolean highlighted = NO;
+	
+	public boolean isHighlighted() {
+		return highlighted;
+	}
+	public void setHighlighted(boolean highlighted) {
+		this.highlighted = highlighted;
+		this.invalidateState();
+	}
+	protected void invalidateState(){
+		state = UIControlState.UIControlStateNormal;
+		if (!this.isEnabled()) {
+			state |=UIControlState.UIControlStateDisabled;
+		}
+		if (this.isSelected()) {
+			state |=UIControlState.UIControlStateSelected;
+		}
+		if (this.isHighlighted()) {
+			state |=UIControlState.UIControlStateHighlighted;
+		}
+	}
 	public enum UIControlEvent{
 		UIControlEventTouchUpInside,
 		UIControlEventTouchDown,
 	}
 	
-	public enum UIControlState{
-		UIControlStateNormal,
-		UIControlStateDisabled,
-		UIControlStateHighlighted,
-		UIControlStateSelected
+	public class UIControlState{
+		public static final int UIControlStateNormal = 0;
+		public static final int UIControlStateHighlighted = 1 << 0;
+		public static final int UIControlStateDisabled = 1 << 1;
+		public static final int UIControlStateSelected = 1 << 2;
 	}
 
 	

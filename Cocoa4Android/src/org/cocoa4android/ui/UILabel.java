@@ -31,7 +31,7 @@ public class UILabel extends UIView {
 		this.setLabel(lbl);
 		this.setView(lbl);
 		this.setTextColor(UIColor.blackColor());
-		this.setFontSize(16);
+		this.setFontSize(8);
 	}
 	public UILabel(CGRect frame){
 		this();

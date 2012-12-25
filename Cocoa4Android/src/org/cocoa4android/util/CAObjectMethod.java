@@ -21,6 +21,13 @@ import java.lang.reflect.Method;
 public class CAObjectMethod{
 	private Object target;
 	private Method method;
+	private String selector;
+	public String getSelector() {
+		return selector;
+	}
+	public void setSelector(String selector) {
+		this.selector = selector;
+	}
 	private Object data;
 	
 	
@@ -32,6 +39,7 @@ public class CAObjectMethod{
 			Method method = ms[i];
 			if(method.getName().equals(selector)){
 				m = method;
+				this.selector = selector;
 				break;
 			}
 		}

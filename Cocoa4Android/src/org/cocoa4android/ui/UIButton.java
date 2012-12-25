@@ -15,94 +15,223 @@
  */
 package org.cocoa4android.ui;
 
-
-import java.util.HashMap;
-
 import org.cocoa4android.cg.CGRect;
+import org.cocoa4android.ns.NSTextAlignment;
 
+import android.util.SparseArray;
 import android.view.MotionEvent;
-import android.widget.Button;
 
 public class UIButton extends UIControl {
-	//private HashMap<UIControlState,String> images = new HashMap<UIControlState,String>();
-	private boolean enable = true;
-	private HashMap<UIControlState,String> titles = new HashMap<UIControlState,String>();
-	private HashMap<UIControlState,UIImage> backgroundImages = new HashMap<UIControlState,UIImage>();
+	private SparseArray<String> titles = new SparseArray<String>();
+	private SparseArray<UIImage> backgroundImages = new SparseArray<UIImage>();
+	private SparseArray<UIImage> images = new SparseArray<UIImage>();
+	private SparseArray<UIColor> titleColors = new SparseArray<UIColor>();
 	
-	protected Button button = null;
+	private UILabel titleLabel = null;
+	private UIImageView imageView = null;
+	
+	private int effectState = UIControlState.UIControlStateNormal;
+	
+	private boolean autoHighlight = NO;
+	
+	public boolean isAutoHighlight() {
+		return autoHighlight;
+	}
+	public void setAutoHighlight(boolean autoHighlight) {
+		this.autoHighlight = autoHighlight;
+		this.autoHighlight();
+	}
+	public UILabel titleLabel() {
+		return titleLabel;
+	}
 	public UIButton(){
-		Button btn = new Button(context);
-		this.setButton(btn);
-		btn.setFocusable(NO);
-		this.setView(button);
+		super();
+		imageView = new UIImageView();
+		this.addSubview(imageView);
+	}
+	@Override
+	protected void handleTouch(MotionEvent event){
+		super.handleTouch(event);
+		if (event.getAction()==MotionEvent.ACTION_DOWN) {
+			this.setHighlighted(YES);
+		}else if(event.getAction()==MotionEvent.ACTION_UP){
+			this.setHighlighted(NO);
+		}
 	}
 	public UIButton(CGRect frame){
 		this();
 		this.setFrame(frame);
 	}
-	public Button getButton() {
-		return button;
+	public void setFrame(CGRect frame){
+		super.setFrame(frame);
+		if (titleLabel!=null) {
+			titleLabel.setFrame(CGRectMake(0, 0, frame.size.width, frame.size.height));
+		}
 	}
 	public void setTitle(String title){
 		this.setTitle(title, UIControlState.UIControlStateNormal);
 	}
-	public void setTitle(String title,UIControlState state){
-		titles.put(state, title);
-		if(this.currentState==state){
-			this.button.setText(title);
-		}
-	}
-	public void setImage(UIImage backgroundImage){
-		this.setImage(backgroundImage, UIControlState.UIControlStateNormal);
-	}
-	public void setImage(UIImage backgroundImage,UIControlState state){
-		backgroundImages.put(state, backgroundImage);
-		if(this.currentState==state){
-			if(backgroundImage.getResId()!=0){
-				this.button.setBackgroundResource(backgroundImage.getResId());
-			}else{
-				this.button.setBackgroundDrawable(backgroundImage.getDrawable());
+	public void setTitle(String title,int state){
+		if (title==null) {
+			titles.remove(state);
+		}else{
+			//if set title than added
+			if (titleLabel==null) {
+				titleLabel = new UILabel();
+				titleLabel.setTextAlignment(NSTextAlignment.NSTextAlignmentCenter);
+				titleLabel.setTextColor(UIColor.whiteColor());
+				this.addSubview(titleLabel);
+				if (frame!=null) {
+					titleLabel.setFrame(CGRectMake(0, 0, frame.size.width, frame.size.height));
+				}
+			}
+			titles.put(state, title);
+			if(isCurrentState(state)){
+				titleLabel.setText(title);
 			}
 		}
 	}
-	
+	public void setTitleColor(UIColor titleColor){
+		this.setTitleColor(titleColor, UIControlState.UIControlStateNormal);
+	}
+	public void setTitleColor(UIColor titleColor,int state){
+		if (titleColor==null) {
+			titleColors.remove(state);
+		}else{
+			//if set title than added
+			if (titleLabel==null) {
+				titleLabel = new UILabel();
+				titleLabel.setTextAlignment(NSTextAlignment.NSTextAlignmentCenter);
+				this.addSubview(titleLabel);
+			}
+			titleColors.put(state, titleColor);
+			if(isCurrentState(state)){
+				titleLabel.setTextColor(titleColor);
+			}
+		}
+	}
+	public void setImage(UIImage image){
+		this.setImage(image, UIControlState.UIControlStateNormal);
+		//auto generate highlight image
+		this.autoHighlight();
+	}
+	private void autoHighlight(){
+		if (autoHighlight) {
+			UIImage normalImage = images.get(UIControlState.UIControlStateNormal);
+			if (normalImage!=null) {
+				UIImage highlightImage = normalImage.createHighlightImage();
+				if (highlightImage!=null) {
+					this.setImage(highlightImage, UIControlState.UIControlStateHighlighted);
+				}else{
+					this.setImage(null, UIControlState.UIControlStateHighlighted);
+				}
+			}
+		}
+	}
+	public void setImage(UIImage image,int state){
+		if (image==null) {
+			images.remove(state);
+		}else{
+			images.put(state, image);
+			if(isCurrentState(state)){
+				imageView.setImage(image);
+			}
+		}
+	}
+	@Override
+	public void setBackgroundImage(UIImage backgroundImage){
+		this.setBackgroundImage(backgroundImage, UIControlState.UIControlStateNormal);
+		//auto generate highlight image
+		
+	}
+	public void setBackgroundImage(UIImage backgroundImage,int state){
+		if (backgroundImage==null) {
+			backgroundImages.remove(state);
+		}else{
+			backgroundImages.put(state, backgroundImage);
+			if(isCurrentState(state)){
+				imageView.setBackgroundImage(backgroundImage);
+			}
+		}
+	}
 	
 	@Override
-	public void setCurrentState(UIControlState currentState){
-		if(this.currentState!=currentState){
-			UIImage backgroundImage = backgroundImages.get(currentState);
+	protected void invalidateState(){
+		//store the value temporarily
+		int currentState = state;
+		super.invalidateState();
+		
+		//caculate the effect state
+		if ((state&UIControlState.UIControlStateDisabled)>0) {
+			this.effectState = UIControlState.UIControlStateDisabled;
+		}else if((state&UIControlState.UIControlStateHighlighted)>0){
+			this.effectState = UIControlState.UIControlStateHighlighted;
+		}else if((state&UIControlState.UIControlStateSelected)>0){
+			this.effectState = UIControlState.UIControlStateSelected;
+		}else{
+			this.effectState = UIControlState.UIControlStateNormal;
+		}
+		
+		
+		//state Changed
+		if(currentState!=state){
+			UIImage image = currentImage();
+			if(image!=null){
+				imageView.setImage(image);
+			}
+			UIImage backgroundImage = currentBackgroundImage();
 			if(backgroundImage!=null){
-				this.button.setBackgroundResource(backgroundImage.getResId());
+				imageView.setBackgroundImage(backgroundImage);
 			}
 			
-			String title = titles.get(currentState);
-			if(currentState!=null){
-				this.button.setText(title);
+			String title = currentTitle();
+			if (title!=null) {
+				titleLabel.setText(title);
 			}
-			this.currentState = currentState;
-		}
-	}
-	
-	
-	
-	
-	public void setButton(Button button) {
-		this.button = button;
-	}
-	public boolean isEnable() {
-		return enable;
-	}
-	public void setEnable(boolean enable) {
-		if(this.enable != enable){
-			if(enable){
-				this.setCurrentState(UIControlState.UIControlStateNormal);
-			}else{
-				this.setCurrentState(UIControlState.UIControlStateDisabled);
+			
+			UIColor titleColor = currentTitleColor();
+			if (titleColor!=null) {
+				titleLabel.setTextColor(titleColor);
 			}
-			this.enable = enable;
-			this.button.setEnabled(enable);
 		}
+		
 	}
-	public void touchesEnded(UITouch[] touches,MotionEvent event){}
 	
+	@Override
+	public void setEnabled(boolean enabled){
+		super.setEnabled(enabled);
+		this.getView().setEnabled(enabled);
+	}
+	
+	public String currentTitle(){
+		String title = titles.get(state);
+		if (title==null) {
+			title = titles.get(effectState);
+		}
+		return title;
+	}
+	public UIImage currentImage(){
+		UIImage image = images.get(state);
+		if (image==null) {
+			image = images.get(effectState);
+		}
+		return image;
+	}
+	public UIImage currentBackgroundImage(){
+		UIImage backgroundImage = backgroundImages.get(state);
+		if (backgroundImage==null) {
+			backgroundImage = backgroundImages.get(effectState);
+		}
+		return backgroundImage;
+	}
+	public UIColor currentTitleColor(){
+		UIColor color = titleColors.get(state);
+		if (color==null) {
+			color = titleColors.get(effectState);
+		}
+		return color;
+	}
+	protected boolean isCurrentState(int state) {
+		return this.state==state||effectState==state;
+	}
 }

@@ -54,9 +54,9 @@ public class NSObject {
 	
 	
 	
-	/*
-	 * CG MAKE Method
-	 */
+	//================================================================================
+    // CG Method
+    //================================================================================
 	protected CGRect CGRectMake(float x,float y,float width,float height){
 		return new CGRect(x,y,width,height);
 	}

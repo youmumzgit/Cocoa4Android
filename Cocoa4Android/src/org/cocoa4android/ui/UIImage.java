@@ -16,6 +16,8 @@
 package org.cocoa4android.ui;
 
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
@@ -23,17 +25,13 @@ public class UIImage {
 	public static UIImage imageNamed(int resId){
 		return new UIImage(resId);
 	}
-
 	
 	private Drawable drawable;
-	
-	private int resId;
-	
+	private int resId=0;
+	private UIImage highlightImage=null;
 	
 	public UIImage(int resId){
 		this.setResId(resId);
-		Drawable d = UIApplication.sharedApplication().delegate().getResources().getDrawable(resId);
-		this.setDrawable(d);
 	}
 	public UIImage(Drawable drawable){
 		this.setDrawable(drawable);
@@ -52,12 +50,40 @@ public class UIImage {
 		this.resId = resId;
 	}
 	public Drawable getDrawable() {
+		if (drawable==null&&resId!=0) {
+			drawable = UIApplication.sharedApplication().delegate().getResources().getDrawable(resId);
+		}
 		return drawable;
 	}
 	public void setDrawable(Drawable drawable) {
 		this.drawable = drawable;
 	}
 		
-
+	UIImage createHighlightImage(){
+		if (highlightImage!=null) {
+			return highlightImage;
+		}
+		if(BitmapDrawable.class.isInstance(getDrawable())){
+			Bitmap bitmap = ((BitmapDrawable)this.getDrawable()).getBitmap();
+			int width = bitmap.getWidth();
+			int height = bitmap.getHeight();
+			int[] argb = new int[width*height];
+			bitmap.getPixels(argb, 0, width, 0, 0, width, height);
+			for (int i = 0; i < argb.length; i++) {
+				int alpha = Color.alpha(argb[i]);
+				int red = Color.red(argb[i]);
+				int green = Color.green(argb[i]);
+				int blue = Color.blue(argb[i]);
+				if (alpha > 0) {
+					argb[i] = Color.argb(alpha, red>>1, green>>1, blue>>1);
+				}
+			}
+			highlightImage = new UIImage(Bitmap.createBitmap(argb, width, height, Config.ARGB_4444));
+			return highlightImage;
+		}
+		return null;
+		
+		
+	}
 	
 }

@@ -59,7 +59,7 @@ public class CAPageView extends UIView implements UIScrollViewDelegate{
     	pageControl = new UIPageControl();
     	
     	mask = new UIControl(new CGRect(0,0,frame.size().width(),frame.size().height()));
-    	mask.addEventListener(this, "didSelectOnView", UIControlEvent.UIControlEventTouchUpInside);
+    	mask.addTarget(this, "didSelectOnView", UIControlEvent.UIControlEventTouchUpInside);
     }
     
     public void scrollToPage(int page){

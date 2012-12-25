@@ -15,6 +15,7 @@ import java.util.Hashtable;
 import junit.framework.Assert;
 
 import org.apache.http.NameValuePair;
+import org.cocoa4android.ui.UIView;
 
 //import android.annotation.TargetApi;
 import android.app.Activity;
@@ -34,7 +35,7 @@ import android.os.Looper;
 import android.provider.ContactsContract;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.widget.Button;
+import android.view.View;
 import android.widget.ImageView;
 
 public final class UrlImageButtonHelper {
@@ -114,7 +115,7 @@ public final class UrlImageButtonHelper {
      * @param defaultResource The Android resid of the {@link Drawable} that
      *            should be displayed while the image is being downloaded.
      */
-    public static void setUrlDrawable(final Button button, final String url, final int defaultResource) {
+    public static void setUrlDrawable(final View button, final String url, final int defaultResource) {
         setUrlDrawable(button.getContext(), button, url, defaultResource, CACHE_DURATION_THREE_DAYS);
     }
 
@@ -126,7 +127,7 @@ public final class UrlImageButtonHelper {
      *            is loaded.
      * @param url The URL of the image that should be loaded.
      */
-    public static void setUrlDrawable(final Button button, final String url) {
+    public static void setUrlDrawable(final View button, final String url) {
         setUrlDrawable(button.getContext(), button, url, null, CACHE_DURATION_THREE_DAYS, null);
     }
 
@@ -146,7 +147,7 @@ public final class UrlImageButtonHelper {
      *            image will also be displayed if the image fails to load. This
      *            can be set to {@code null}.
      */
-    public static void setUrlDrawable(final Button button, final String url, final Drawable defaultDrawable) {
+    public static void setUrlDrawable(final View button, final String url, final Drawable defaultDrawable) {
         setUrlDrawable(button.getContext(), button, url, defaultDrawable, CACHE_DURATION_THREE_DAYS, null);
     }
 
@@ -162,7 +163,7 @@ public final class UrlImageButtonHelper {
      * @param cacheDurationMs The length of time, in milliseconds, that this
      *            image should be cached locally.
      */
-    public static void setUrlDrawable(final Button button, final String url, final int defaultResource, final long cacheDurationMs) {
+    public static void setUrlDrawable(final View button, final String url, final int defaultResource, final long cacheDurationMs) {
         setUrlDrawable(button.getContext(), button, url, defaultResource, cacheDurationMs);
     }
 
@@ -184,7 +185,7 @@ public final class UrlImageButtonHelper {
      * @param cacheDurationMs The length of time, in milliseconds, that this
      *            image should be cached locally.
      */
-    public static void setUrlDrawable(final Button button, final String url, final Drawable defaultDrawable, final long cacheDurationMs) {
+    public static void setUrlDrawable(final View button, final String url, final Drawable defaultDrawable, final long cacheDurationMs) {
         setUrlDrawable(button.getContext(), button, url, defaultDrawable, cacheDurationMs, null);
     }
 
@@ -202,7 +203,7 @@ public final class UrlImageButtonHelper {
      * @param cacheDurationMs The length of time, in milliseconds, that this
      *            image should be cached locally.
      */
-    private static void setUrlDrawable(final Context context, final Button button, final String url, final int defaultResource, final long cacheDurationMs) {
+    private static void setUrlDrawable(final Context context, final View button, final String url, final int defaultResource, final long cacheDurationMs) {
         Drawable d = null;
         if (defaultResource != 0) {
             d = button.getResources().getDrawable(defaultResource);
@@ -223,7 +224,7 @@ public final class UrlImageButtonHelper {
      *            called when the image successfully finishes loading. This
      *            value can be null.
      */
-    public static void setUrlDrawable(final Button button, final String url, final int defaultResource, final UrlImageButtonCallback callback) {
+    public static void setUrlDrawable(final View button, final String url, final int defaultResource, final UrlImageButtonCallback callback) {
         setUrlDrawable(button.getContext(), button, url, defaultResource, CACHE_DURATION_THREE_DAYS, callback);
     }
 
@@ -238,7 +239,7 @@ public final class UrlImageButtonHelper {
      *            called when the image successfully finishes loading. This
      *            value can be null.
      */
-    public static void setUrlDrawable(final Button button, final String url, final UrlImageButtonCallback callback) {
+    public static void setUrlDrawable(final View button, final String url, final UrlImageButtonCallback callback) {
         setUrlDrawable(button.getContext(), button, url, null, CACHE_DURATION_THREE_DAYS, callback);
     }
 
@@ -261,7 +262,7 @@ public final class UrlImageButtonHelper {
      *            called when the image successfully finishes loading. This
      *            value can be null.
      */
-    public static void setUrlDrawable(final Button button, final String url, final Drawable defaultDrawable, final UrlImageButtonCallback callback) {
+    public static void setUrlDrawable(final View button, final String url, final Drawable defaultDrawable, final UrlImageButtonCallback callback) {
         setUrlDrawable(button.getContext(), button, url, defaultDrawable, CACHE_DURATION_THREE_DAYS, callback);
     }
 
@@ -280,7 +281,7 @@ public final class UrlImageButtonHelper {
      *            called when the image successfully finishes loading. This
      *            value can be null.
      */
-    public static void setUrlDrawable(final Button button, final String url, final int defaultResource, final long cacheDurationMs, final UrlImageButtonCallback callback) {
+    public static void setUrlDrawable(final View button, final String url, final int defaultResource, final long cacheDurationMs, final UrlImageButtonCallback callback) {
         setUrlDrawable(button.getContext(), button, url, defaultResource, cacheDurationMs, callback);
     }
 
@@ -305,7 +306,7 @@ public final class UrlImageButtonHelper {
      *            called when the image successfully finishes loading. This
      *            value can be null.
      */
-    public static void setUrlDrawable(final Button button, final String url, final Drawable defaultDrawable, final long cacheDurationMs, final UrlImageButtonCallback callback) {
+    public static void setUrlDrawable(final View button, final String url, final Drawable defaultDrawable, final long cacheDurationMs, final UrlImageButtonCallback callback) {
         setUrlDrawable(button.getContext(), button, url, defaultDrawable, cacheDurationMs, callback);
     }
 
@@ -326,7 +327,7 @@ public final class UrlImageButtonHelper {
      *            called when the image successfully finishes loading. This
      *            value can be null.
      */
-    private static void setUrlDrawable(final Context context, final Button button, final String url, final int defaultResource, final long cacheDurationMs, final UrlImageButtonCallback callback) {
+    private static void setUrlDrawable(final Context context, final View button, final String url, final int defaultResource, final long cacheDurationMs, final UrlImageButtonCallback callback) {
         Drawable d = null;
         if (defaultResource != 0) {
             d = button.getResources().getDrawable(defaultResource);
@@ -404,7 +405,7 @@ public final class UrlImageButtonHelper {
      *            called when the image successfully finishes loading. This
      *            value can be null.
      */
-    private static void setUrlDrawable(final Context context, final Button button, final String url, final Drawable defaultDrawable, final long cacheDurationMs, final UrlImageButtonCallback callback) {
+    private static void setUrlDrawable(final Context context, final View button, final String url, final Drawable defaultDrawable, final long cacheDurationMs, final UrlImageButtonCallback callback) {
         cleanup(context);
         // disassociate this ImageView from any pending downloads
         if (isNullOrEmpty(url)) {
@@ -467,7 +468,7 @@ public final class UrlImageButtonHelper {
             mPendingViews.put(button, url);
         }
 
-        final ArrayList<Button> currentDownload = mPendingDownloads.get(url);
+        final ArrayList<View> currentDownload = mPendingDownloads.get(url);
         if (currentDownload != null) {
             // Also, multiple vies may be waiting for this url.
             // So, let's maintain a list of these views.
@@ -480,7 +481,7 @@ public final class UrlImageButtonHelper {
             return;
         }
 
-        final ArrayList<Button> downloads = new ArrayList<Button>();
+        final ArrayList<View> downloads = new ArrayList<View>();
         if (button != null) {
             downloads.add(button);
         }
@@ -511,7 +512,7 @@ public final class UrlImageButtonHelper {
                 mLiveCache.put(url, usableResult);
                 if (callback != null && button == null)
                     callback.onLoaded(null, loader.result, url, false);
-                for (final Button iv: downloads) {
+                for (final View iv: downloads) {
                     // validate the url it is waiting for
                     final String pendingUrl = mPendingViews.get(iv);
                     if (!url.equals(pendingUrl)) {
@@ -711,6 +712,6 @@ public final class UrlImageButtonHelper {
         task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
      */
-    private static Hashtable<Button, String> mPendingViews = new Hashtable<Button, String>();
-    private static Hashtable<String, ArrayList<Button>> mPendingDownloads = new Hashtable<String, ArrayList<Button>>();
+    private static Hashtable<View, String> mPendingViews = new Hashtable<View, String>();
+    private static Hashtable<String, ArrayList<View>> mPendingDownloads = new Hashtable<String, ArrayList<View>>();
 }

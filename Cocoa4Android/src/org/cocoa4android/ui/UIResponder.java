@@ -18,6 +18,8 @@ package org.cocoa4android.ui;
 import org.cocoa4android.ns.NSObject;
 import org.cocoa4android.ns.NSSet;
 
+import android.view.MotionEvent;
+
 public class UIResponder extends NSObject {
 	//================================================================================
     // Touch Event
@@ -34,5 +36,9 @@ public class UIResponder extends NSObject {
 	}
 	public void touchesCancelled(NSSet touches,UIEvent event){
 
+	}
+	
+	protected void handleTouch(MotionEvent event){
+		
 	}
 }

@@ -88,12 +88,13 @@ public class UIImageView extends UIView {
 	public void setImage(UIImage image) {
 		this.image = image;
 		if(image!=null){
-			imageView.setImageDrawable(image.getDrawable());
-			//imageView.setImageResource(image.getResId());
-			/*
-			Rect r = imageView.getDrawable().getBounds();
-			this.setFrame(new CGRect(r));
-			*/
+			if(image.getResId()!=0){
+				imageView.setImageResource(image.getResId());
+				//imageView.setBackgroundResource(image.getResId());
+			}else{
+				imageView.setImageDrawable(image.getDrawable());
+				//imageView.setBackgroundDrawable(image.getDrawable());
+			}
 		}
 	}
 }
