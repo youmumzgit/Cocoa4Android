@@ -22,15 +22,22 @@ import org.cocoa4android.cg.CGPoint;
 import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.ns.NSArray;
 import org.cocoa4android.ns.NSMutableArray;
-import org.cocoa4android.ns.NSMutableDictionary;
 import org.cocoa4android.ns.NSSet;
 
 import android.content.Context;
+import android.graphics.Matrix;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.Transformation;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
@@ -41,10 +48,6 @@ public class UIView extends UIResponder{
 
 	protected Context context = UIApplication.sharedApplication().getContext();
 	protected LayoutInflater inflater;
-	
-	
-	
-
 	//================================================================================
     // Constructor
     //================================================================================
@@ -360,7 +363,7 @@ public class UIView extends UIResponder{
 	 * @param transform 
 	 */
 	public void setTransform(CGAffineTransform transform) {
-		this.recordAnimationByTransformation(transform);
+		this.applyTransformation(transform);
 		this.transform = transform;
 	}
 	
@@ -399,11 +402,11 @@ public class UIView extends UIResponder{
 	//================================================================================
     // UIViewAnimation
     //================================================================================
-	private static NSMutableDictionary animationDic = null;
+	private static NSMutableArray animations = null;
 	private static boolean animationsEnabled = YES;
 	private static boolean animationBegan = NO;
-	private static float duation = 0.0f;
-	private static float delay=0.0f;
+	private static double duation = 0;
+	private static double delay=0;
 	private static int repeatCount=1;
 	private static UIViewAnimationCurve curve = null;
 	/**
@@ -416,13 +419,13 @@ public class UIView extends UIResponder{
 	public static void beginAnimations(String animationID,Object context){
 		if (animationsEnabled) {
 			animationBegan = YES;
-			animationDic = NSMutableDictionary.dictionary();
+			animations = NSMutableArray.array();
 		}
 	}
-	public static void setAnimationDuration(float duation){
+	public static void setAnimationDuration(double duation){
 		UIView.duation = duation;
 	}
-	public static void setAnimationDelay(float delay){
+	public static void setAnimationDelay(double delay){
 		UIView.delay = delay;
 	}
 	public static void setAnimationCurve(UIViewAnimationCurve curve){
@@ -431,9 +434,38 @@ public class UIView extends UIResponder{
 	public static void setAnimationRepeatCount(int repeatCount){
 		UIView.repeatCount = repeatCount;
 	}
+	//FIXME empty method
+	public static void setAnimationTransition(UIViewAnimationTransition transition,UIView view,boolean cache){
+		
+	}
 	public static void commitAnimations() {
+		for (int i = 0; i < animations.count(); i++) {
+			Animation animation = (Animation) animations.objectAtIndex(i);
+			animation.setDuration((long) UIView.duation);
+			switch (curve) {
+			case UIViewAnimationCurveEaseInOut:
+				animation.setInterpolator(new AccelerateDecelerateInterpolator());
+				break;
+			case UIViewAnimationCurveEaseIn:
+				animation.setInterpolator(new DecelerateInterpolator());
+				break;
+			case UIViewAnimationCurveEaseOut:
+				animation.setInterpolator(new AccelerateInterpolator());
+				break;
+			case UIViewAnimationCurveLinear:
+				animation.setInterpolator(new LinearInterpolator());
+				break;
+			default:
+				break;
+			}
+			animation.setRepeatCount(repeatCount);
+			animation.setStartTime((long) (AnimationUtils.currentAnimationTimeMillis()+UIView.delay));
+			
+			animation.startNow();
+		}
+		
 		animationBegan = NO;
-		animationDic = null;
+		animations = null;
 		UIView.repeatCount = 1;
 		UIView.duation = 0.0f;
 		UIView.delay = 0.0f;
@@ -441,9 +473,19 @@ public class UIView extends UIResponder{
 	public static void setAnimationsEnabled(boolean enabled){
 		animationsEnabled = enabled;
 	}
-	private void recordAnimationByTransformation(CGAffineTransform transform){
+	private void applyTransformation(CGAffineTransform transform){
+		MatrixAnimation animation = new MatrixAnimation(this.transform,transform);
+		//animation.setFillBefore(YES);
+		animation.setFillAfter(YES);
+		if (frame!=null) {
+			animation.setAnchorPoint(CGPointMake(frame.size.width*scaleFactorX/2,frame.size.height*scaleFactorY/2));
+		}
 		if (animationBegan) {
-			
+			this.getView().setAnimation(animation);
+			animations.addObject(animation);
+		}else{
+			animation.setDuration(0);
+			this.getView().startAnimation(animation);
 		}
 	}
 	
@@ -456,6 +498,71 @@ public class UIView extends UIResponder{
 	    UIViewAnimationCurveEaseOut,           // slow at end
 	    UIViewAnimationCurveLinear
 	}
+	public enum UIViewAnimationTransition{
+		UIViewAnimationTransitionNone,
+	    UIViewAnimationTransitionFlipFromLeft,
+	    UIViewAnimationTransitionFlipFromRight,
+	    UIViewAnimationTransitionCurlUp,
+	    UIViewAnimationTransitionCurlDown,
+	}
 	
+	protected class MatrixAnimation extends Animation{
+		private CGAffineTransform endTransform;
+		
+		private float startRotation = 0.0f;
+		private float endRotation = 0.0f; 
+		private float deltaRotation = 0.0f;
+		
+		private float startScaleX = 0.0f;
+		private float startScaleY = 0.0f;
+		private float deltaScaleX = 0.0f;
+		private float deltaScaleY = 0.0f;
+		
+		private float startTransX = 0.0f;
+		private float startTransY = 0.0f;
+		private float deltaTransX = 0.0f;
+		private float deltaTransY = 0.0f;
+		
+		private CGPoint anchorPoint;
+		
+		
+		public MatrixAnimation(CGAffineTransform startTransform,CGAffineTransform endTransform) {
+			this.endTransform = endTransform;
+			if (startTransform!=null) {
+				startRotation = (float) Math.toDegrees(Math.atan2(startTransform.b, startTransform.a));
+				startScaleX = startTransform.a;
+				startScaleY = startTransform.d;
+				
+				startTransX = startTransform.tx;
+				startTransY = startTransform.ty;
+			}
+			endRotation = (float) Math.toDegrees(Math.atan2(this.endTransform.b, endTransform.a));
+			deltaRotation = endRotation - startRotation;
+			
+			deltaScaleX = endTransform.a - startScaleX;
+			deltaScaleY = endTransform.d - startScaleY;
+			
+			deltaTransX = endTransform.tx - startTransX;
+			deltaTransY = endTransform.ty - startTransY;
+		}
+		@Override
+		protected void applyTransformation(float interpolatedTime, Transformation t){
+			//通过Matrix.setScale函数来缩放，该函数的两个参数代表X、Y轴缩放因子，由于interpolatedTime是从0到1变化所在这里实现的效果就是控件从最小逐渐变化到最大。
+			Matrix matrix = t.getMatrix();
+			matrix.setScale(startScaleX+deltaScaleX*interpolatedTime, startScaleY+deltaScaleY*interpolatedTime);
+			matrix.setTranslate(startTransX+deltaTransX*interpolatedTime, startTransY+deltaTransY*interpolatedTime);
+			
+			if (anchorPoint!=null) {
+				matrix.setRotate(startRotation+deltaRotation*interpolatedTime,anchorPoint.x,anchorPoint.y);
+			}else{
+				matrix.setRotate(startRotation+deltaRotation*interpolatedTime);
+			}
+			//Matrix 可以实现各种复杂的变换
+			//preTranslate函数是在缩放前移动而postTranslate是在缩放完成后移动。
+		}
+		public void setAnchorPoint(CGPoint anchorPoint){
+			this.anchorPoint = anchorPoint;
+		}
+	}
 	
 }

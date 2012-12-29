@@ -28,7 +28,9 @@ public class NSObject {
 	protected static final boolean NO = false;
 	
 	protected static final int NSNotFound = -1;
-	
+	protected static final double M_PI = 3.14159265358979323846264338327950288;
+	protected static final double M_PI_2 = 1.57079632679489661923132169163975144;
+	protected static final double M_PI_4 = 0.785398163397448309615660845819875721;
 	protected static void NSLog(String format,Object...args){
 		Log.i("Cocoa4Android",NSString.stringWithFormat(format, args).getString());
 	}
@@ -81,6 +83,7 @@ public class NSObject {
 	}
 	protected CGAffineTransform CGAffineTransformMakeRotation(float angle) {
 		CGAffineTransform transform = new CGAffineTransform();
+		
 		transform.a = (float) Math.cos(angle);
 		transform.b = (float) Math.sin(angle);
 		transform.c = (float) -Math.sin(angle);
