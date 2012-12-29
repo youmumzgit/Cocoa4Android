@@ -42,7 +42,6 @@ public class NSDateFormatter extends NSObject {
 		try {
 			date = NSDate.dateWithDate(_dateFormat.parse(string));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			date = new NSDate();
 		}

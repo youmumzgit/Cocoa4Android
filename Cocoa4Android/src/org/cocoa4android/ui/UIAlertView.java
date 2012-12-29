@@ -119,7 +119,6 @@ public class UIAlertView {
 				builder.setNeutralButton(otherButtonTitles[i], new OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
 						if(UIAlertView.this.delegate!=null){
 							UIAlertView.this.delegate.clickedButtonAtIndex(UIAlertView.this, buttonIndex);
 						}

@@ -67,7 +67,6 @@ public class NSDate extends NSObject {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return _date.toString();
 	}
 }

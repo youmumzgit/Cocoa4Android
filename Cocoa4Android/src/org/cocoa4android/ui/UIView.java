@@ -359,9 +359,10 @@ public class UIView extends UIResponder{
 	public CGAffineTransform transform() {
 		return transform;
 	}
-	/**FIXME not functional
-	 * Change the size and position of the shape
-	 * @param transform 
+	/**
+	 * Change the size and position of the shape by CGAffineTransform
+	 * @param transform transform matrix
+	 * @see CGAffineTransform
 	 */
 	public void setTransform(CGAffineTransform transform) {
 		this.applyTransformation(transform);

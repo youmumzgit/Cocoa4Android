@@ -18,10 +18,7 @@ package org.cocoa4android.ui;
 import org.cocoa4android.R;
 import org.cocoa4android.cg.CGRect;
 
-import android.R.raw;
 import android.graphics.Color;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ToggleButton;
@@ -46,7 +43,6 @@ public class UISwitcher extends UIControl {
 			
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				// TODO Auto-generated method stub
 				UISwitcher.this.setOn(isChecked, YES);
 			}
 		});
@@ -65,7 +61,7 @@ public class UISwitcher extends UIControl {
 		this();
 		this.setFrame(frame);
 	}
-	//FIXME no animated
+	//FIXME no animation
 	public void setOn(boolean on,boolean animated){
 		if (on!=this.on) {
 			this.on = on;

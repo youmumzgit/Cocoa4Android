@@ -136,7 +136,6 @@ public class UITableView extends UIView {
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				// TODO Auto-generated method stub
 				return !scrollEnabled;
 			}
 		});
@@ -406,7 +405,6 @@ public class UITableView extends UIView {
 	public class CAListView extends ListView{
 		public CAListView(Context context) {
 			super(context);
-			// TODO Auto-generated constructor stub
 		}
 		private int currX;
 		private int currY;

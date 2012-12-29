@@ -61,7 +61,6 @@ public class SBJsonParser extends NSObject {
 			
 			return array;
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -93,7 +92,6 @@ public class SBJsonParser extends NSObject {
 			}
 			return dic;
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

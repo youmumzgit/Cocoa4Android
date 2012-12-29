@@ -98,7 +98,6 @@ public abstract class UIAppDelegate extends Activity {
 					
 					@Override
 					public void run() {
-						// TODO Auto-generated method stub
 						imageView.removeFromSuperView();
 						UIAppDelegate.this.applicationDidFinishLaunching();
 					}

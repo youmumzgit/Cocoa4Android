@@ -49,7 +49,6 @@ public class UIViewController extends NSObject{
 	
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
 					UIViewController.this.viewDidLoad();
 				}
 			},200);
@@ -191,7 +190,6 @@ public class UIViewController extends NSObject{
 
 			@Override
 			public void onAnimationEnd(Animation animation) {
-				// TODO Auto-generated method stub
 				//HIDE
 				//UINavigationController.this.getView().setHidden(true);
 				if(UIViewController.this.isPresent){
@@ -207,13 +205,11 @@ public class UIViewController extends NSObject{
 
 			@Override
 			public void onAnimationRepeat(Animation animation) {
-				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void onAnimationStart(Animation animation) {
-				// TODO Auto-generated method stub
 				
 			}
 			

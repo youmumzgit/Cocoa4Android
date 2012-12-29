@@ -127,7 +127,6 @@ public class UINavigationController extends UIViewController {
 
 			@Override
 			public void onAnimationEnd(Animation animation) {
-				// TODO Auto-generated method stub
 				//HIDE
 				if(UINavigationController.this.isPush){
 					UINavigationController.this.fromView.setHidden(true);
@@ -143,13 +142,11 @@ public class UINavigationController extends UIViewController {
 
 			@Override
 			public void onAnimationRepeat(Animation animation) {
-				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void onAnimationStart(Animation animation) {
-				// TODO Auto-generated method stub
 				
 			}
 			
