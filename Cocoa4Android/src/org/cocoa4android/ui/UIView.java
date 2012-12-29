@@ -48,6 +48,7 @@ public class UIView extends UIResponder{
 
 	protected Context context = UIApplication.sharedApplication().getContext();
 	protected LayoutInflater inflater;
+	
 	//================================================================================
     // Constructor
     //================================================================================

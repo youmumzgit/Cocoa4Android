@@ -23,12 +23,27 @@ import java.util.Iterator;
 public class NSArray extends NSObject implements Collection<Object>{
 	ArrayList<Object> list = null;
 	
+	/**
+	 * Initialize an array using one object
+	 * @param object
+	 * @return
+	 */
 	public static NSArray arrayWithObject(Object object){
 		return new NSArray(object);
 	}
+	/**
+	 * Initialize an array using some objects
+	 * @param objects
+	 * @return
+	 */
 	public static NSArray arrayWithObjects(Object ...objects){
 		return new NSArray(objects);
 	}
+	/**
+	 * Initialize an array using another array
+	 * @param array
+	 * @return
+	 */
 	public static NSArray arrayWithArray(NSArray array){
 		return new NSArray(array);
 	}

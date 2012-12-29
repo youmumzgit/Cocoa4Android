@@ -16,7 +16,7 @@ public class NSTimer extends NSObject {
 	public static NSTimer scheduledTimerWithTimeInterval(double timeInterval,Object target,String selector,Object userInfo,boolean repeats)
 	{
 		NSTimer timer = new NSTimer(timeInterval,target,selector,userInfo,repeats);
-		
+		//TODO start timer
 		return timer;
 	}
 	
