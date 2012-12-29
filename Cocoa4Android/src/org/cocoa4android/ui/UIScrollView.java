@@ -18,8 +18,8 @@ package org.cocoa4android.ui;
 import org.cocoa4android.cg.CGPoint;
 import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.cg.CGSize;
-import org.cocoa4android.extend.HVScrollView;
 import org.cocoa4android.ns.NSSet;
+import org.cocoa4android.other.HVScrollView;
 
 import android.view.MotionEvent;
 import android.view.View;

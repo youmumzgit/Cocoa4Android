@@ -1,4 +1,4 @@
-package org.cocoa4android.extend;
+package org.cocoa4android.other;
 
 import java.util.List;  
 

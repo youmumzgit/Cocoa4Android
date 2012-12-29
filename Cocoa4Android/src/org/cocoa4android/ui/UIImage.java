@@ -20,15 +20,18 @@ import android.graphics.Bitmap.Config;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.SparseArray;
 
 public class UIImage {
+	private static SparseArray<UIImage> highlightImages = new SparseArray<UIImage>();
+	
 	public static UIImage imageNamed(int resId){
 		return new UIImage(resId);
 	}
 	
 	private Drawable drawable;
 	private int resId=0;
-	private UIImage highlightImage=null;
+	
 	
 	public UIImage(int resId){
 		this.setResId(resId);
@@ -60,8 +63,11 @@ public class UIImage {
 	}
 		
 	UIImage createHighlightImage(){
-		if (highlightImage!=null) {
-			return highlightImage;
+		if (resId>0) {
+			UIImage highlightImage = highlightImages.get(resId);
+			if (highlightImage!=null) {
+				return highlightImage;
+			}
 		}
 		if(BitmapDrawable.class.isInstance(getDrawable())){
 			Bitmap bitmap = ((BitmapDrawable)this.getDrawable()).getBitmap();
@@ -78,7 +84,10 @@ public class UIImage {
 					argb[i] = Color.argb(alpha, red>>1, green>>1, blue>>1);
 				}
 			}
-			highlightImage = new UIImage(Bitmap.createBitmap(argb, width, height, Config.ARGB_4444));
+			UIImage highlightImage = new UIImage(Bitmap.createBitmap(argb, width, height, Config.ARGB_4444));
+			if (resId>0) {
+				highlightImages.put(resId, highlightImage);
+			}
 			return highlightImage;
 		}
 		return null;
