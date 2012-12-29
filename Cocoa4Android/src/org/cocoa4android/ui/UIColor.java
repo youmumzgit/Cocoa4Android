@@ -19,6 +19,11 @@ import android.graphics.Color;
 
 public class UIColor {
 	private int color;
+	
+	public static UIColor colorWithRed(float red,float green,float blue,float alpha){
+		return new UIColor(red,green,blue,alpha);
+	}
+	
 	public UIColor(int color){
 		this.color = color;
 	}
