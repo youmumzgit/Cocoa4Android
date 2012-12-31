@@ -56,8 +56,8 @@ public class UIWindow extends UIView {
 			//fix applicationFrame
 			UIScreen.mainScreen().setApplicationFrame(CGRectMake(0, 0, widthNew, heightNew+1));
 			if (widthNew>0&&heightNew>0) {
-				UIAppDelegate delegate =  UIApplication.sharedApplication().delegate();
-				if (!delegate.isApplicationLaunched) {
+				AppDelegate delegate =  UIApplication.sharedApplication().delegate();
+				if (!UIApplication.sharedApplication().isApplicationLaunched()) {
 					delegate.launchApplication();
 				}
 			}

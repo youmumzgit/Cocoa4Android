@@ -23,25 +23,20 @@ import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.ns.NSString;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 
-public abstract class UIAppDelegate extends Activity {
+public abstract class UIAppDelegate extends Activity implements AppDelegate{
 	protected static final boolean YES = true;
 	protected static final boolean NO = false;
-	
 	
 	
 	protected static void NSLog(String format,Object...args){
 		Log.i("Cocoa4Android",NSString.stringWithFormat(format, args).getString());
 	}
-	
-	public static Context context;
-	public UIWindow window;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,17 +61,15 @@ public abstract class UIAppDelegate extends Activity {
         UIScreen.mainScreen().setBounds(new CGRect(0,0,width,height));
         UIScreen.mainScreen().setDensityText(dm.scaledDensity);
         
-        
-        this.window = new UIWindow();
-        this.setContentView(this.window.getView());
+        this.setContentView(AppDelegate.window.getView());
         
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-        	if(this.window!=null){
-	        	UIViewController viewController = this.window.rootViewController();
+        	if(AppDelegate.window!=null){
+	        	UIViewController viewController = AppDelegate.window.rootViewController();
 	        	if(viewController!=null){
 	        		return viewController.backKeyDidClicked();
 	        	}
@@ -85,12 +78,12 @@ public abstract class UIAppDelegate extends Activity {
         }
         return false;
     }
-	boolean isApplicationLaunched = NO;
-	void launchApplication(){
-		isApplicationLaunched = YES;
+	
+	public void launchApplication(){
+		UIApplication.sharedApplication().setApplicationLaunched(YES);
 		final UIImageView imageView = new UIImageView();
         imageView.setImage(new UIImage(R.drawable.zz_c4a_default));
-        this.window.addSubview(imageView);
+        AppDelegate.window.addSubview(imageView);
         new Timer().schedule(new TimerTask() {
 			@Override
 			public void run() {
@@ -105,5 +98,4 @@ public abstract class UIAppDelegate extends Activity {
 			}
 		}, 3000);
 	}
-	public abstract void applicationDidFinishLaunching();
 }

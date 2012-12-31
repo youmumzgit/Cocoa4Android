@@ -54,7 +54,7 @@ public class UIImage {
 	}
 	public Drawable getDrawable() {
 		if (drawable==null&&resId!=0) {
-			drawable = UIApplication.sharedApplication().delegate().getResources().getDrawable(resId);
+			drawable = UIApplication.sharedApplication().getActivity().getResources().getDrawable(resId);
 		}
 		return drawable;
 	}

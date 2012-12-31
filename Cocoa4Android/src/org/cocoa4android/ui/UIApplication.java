@@ -17,14 +17,22 @@ package org.cocoa4android.ui;
 
 import org.cocoa4android.ns.NSObject;
 
+import android.app.Activity;
 import android.content.Context;
 
 public class UIApplication extends NSObject{
-	private UIAppDelegate delegate;
+	private AppDelegate delegate;
 	
 	private static UIApplication sharedApplication = null;
 	
+	private boolean isApplicationLaunched = NO;
 	
+	public boolean isApplicationLaunched() {
+		return isApplicationLaunched;
+	}
+	public void setApplicationLaunched(boolean isApplicationLaunched) {
+		this.isApplicationLaunched = isApplicationLaunched;
+	}
 	public static UIApplication sharedApplication() {
 		if(sharedApplication==null){
 			sharedApplication = new UIApplication();
@@ -37,11 +45,14 @@ public class UIApplication extends NSObject{
 	public void setContext(Context context) {
 		this.context = context;
 	}
-	public UIAppDelegate delegate() {
+	public AppDelegate delegate() {
 		return delegate;
 	}
-	public void setDelegate(UIAppDelegate delegate) {
+	public void setDelegate(AppDelegate delegate) {
 		this.delegate = delegate;
+	}
+	public Activity getActivity(){
+		return (Activity) this.delegate;
 	}
 	private Context context = null;
 	
