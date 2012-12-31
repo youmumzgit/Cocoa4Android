@@ -28,6 +28,7 @@ public class UINavigationController extends UIViewController {
 	private Stack<UIViewController> stack = new Stack<UIViewController>();
 	private UIView fromView;
 	private UIViewController toViewController;
+	private UIViewController fromViewController;
 	private boolean isPush;
 	
 	private boolean navigationBarHidden;
@@ -58,7 +59,7 @@ public class UINavigationController extends UIViewController {
 				isTransition = NO;
 			}
 			toViewController = viewController;
-			
+			fromViewController = stack.peek();
 			stack.push(viewController);
 		}
 		
@@ -68,7 +69,7 @@ public class UINavigationController extends UIViewController {
 		if (!isTransition) {
 			isTransition = YES;
 			if(stack.size()>1){
-				UIViewController fromViewController =  stack.pop();
+				fromViewController =  stack.pop();
 				toViewController = stack.peek();
 				if(animated){
 					this.translateBetweenViews(fromViewController.view(), toViewController.view(),false);
@@ -81,7 +82,7 @@ public class UINavigationController extends UIViewController {
 					isTransition = NO;
 					
 					fromViewController.view().removeFromSuperView();
-					
+					fromViewController.viewDidUnload();
 				}
 			}
 		}
@@ -132,6 +133,7 @@ public class UINavigationController extends UIViewController {
 					UINavigationController.this.fromView.setHidden(true);
 				}else{
 					UINavigationController.this.fromView.removeFromSuperView();
+					UINavigationController.this.fromViewController.viewDidUnload();
 				}
 				if (UINavigationController.this.toViewController!=null) {
 					UINavigationController.this.toViewController.viewDidAppear(YES);

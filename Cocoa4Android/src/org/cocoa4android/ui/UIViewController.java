@@ -57,9 +57,13 @@ public class UIViewController extends NSObject{
 	protected void viewDidLoad(){
 		
 	}
+	protected void viewDidUnload(){
+		
+	}
 	protected void viewDidAppear(Boolean animated){
 		
 	}
+	
 	
 	protected int viewid;
 	protected LayoutInflater inflater;
@@ -153,6 +157,7 @@ public class UIViewController extends NSObject{
 					this.translateBetweenViews(this.presentedViewController().view(), false);
 				}else{
 					this.presentedViewController().view().removeFromSuperView();
+					this.presentedViewController().viewDidUnload();
 					this.setPresentedViewController(null);
 					this.viewDidAppear(NO);
 					isTransition = NO;
@@ -196,8 +201,10 @@ public class UIViewController extends NSObject{
 					UIViewController.this.presentedViewController.viewDidAppear(YES);
 				}else{
 					UIViewController.this.presentedViewController().view().removeFromSuperView();
+					UIViewController.this.presentedViewController().viewDidUnload();
 					UIViewController.this.setPresentedViewController(null);
 					UIViewController.this.viewDidAppear(YES);
+					
 				}
 				isTransition = NO;
 			}
