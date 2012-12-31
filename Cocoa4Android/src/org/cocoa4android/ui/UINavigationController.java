@@ -59,7 +59,6 @@ public class UINavigationController extends UIViewController {
 				isTransition = NO;
 			}
 			toViewController = viewController;
-			fromViewController = stack.peek();
 			stack.push(viewController);
 		}
 		
