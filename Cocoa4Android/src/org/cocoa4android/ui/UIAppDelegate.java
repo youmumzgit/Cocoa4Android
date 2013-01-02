@@ -33,6 +33,7 @@ public abstract class UIAppDelegate extends Activity implements AppDelegate{
 	protected static final boolean YES = true;
 	protected static final boolean NO = false;
 	
+	protected UIWindow window;
 	
 	protected static void NSLog(String format,Object...args){
 		Log.i("Cocoa4Android",NSString.stringWithFormat(format, args).getString());
@@ -61,15 +62,17 @@ public abstract class UIAppDelegate extends Activity implements AppDelegate{
         UIScreen.mainScreen().setBounds(new CGRect(0,0,width,height));
         UIScreen.mainScreen().setDensityText(dm.scaledDensity);
         
-        this.setContentView(AppDelegate.window.getView());
+        window = new UIWindow();
+        UIApplication.sharedApplication().setWindow(window);
+        this.setContentView(window.getView());
         
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-        	if(AppDelegate.window!=null){
-	        	UIViewController viewController = AppDelegate.window.rootViewController();
+        	if(window!=null){
+	        	UIViewController viewController = window.rootViewController();
 	        	if(viewController!=null){
 	        		return viewController.backKeyDidClicked();
 	        	}
@@ -83,7 +86,7 @@ public abstract class UIAppDelegate extends Activity implements AppDelegate{
 		UIApplication.sharedApplication().setApplicationLaunched(YES);
 		final UIImageView imageView = new UIImageView();
         imageView.setImage(new UIImage(R.drawable.zz_c4a_default));
-        AppDelegate.window.addSubview(imageView);
+        window.addSubview(imageView);
         new Timer().schedule(new TimerTask() {
 			@Override
 			public void run() {

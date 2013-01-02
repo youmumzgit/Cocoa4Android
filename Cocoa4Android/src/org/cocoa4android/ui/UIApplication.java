@@ -56,5 +56,14 @@ public class UIApplication extends NSObject{
 	}
 	private Context context = null;
 	
+	private UIWindow window;
+
+	public void setWindow(UIWindow window){
+		this.window = window;
+	}
+	public UIWindow getWindow() {
+		return window;
+	}
+	
 	
 }
