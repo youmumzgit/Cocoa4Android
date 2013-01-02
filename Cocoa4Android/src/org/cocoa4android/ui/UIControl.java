@@ -102,6 +102,7 @@ public class UIControl extends UIView {
 	}
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+		this.getView().setEnabled(enabled);
 		this.invalidateState();
 	}
 	private boolean selected = NO;

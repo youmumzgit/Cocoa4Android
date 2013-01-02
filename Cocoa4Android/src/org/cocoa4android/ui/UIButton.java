@@ -197,12 +197,6 @@ public class UIButton extends UIControl {
 		
 	}
 	
-	@Override
-	public void setEnabled(boolean enabled){
-		super.setEnabled(enabled);
-		this.getView().setEnabled(enabled);
-	}
-	
 	public String currentTitle(){
 		String title = titles.get(state);
 		if (title==null) {
