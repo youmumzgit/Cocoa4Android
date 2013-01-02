@@ -244,12 +244,12 @@ public class UIView extends UIResponder{
 	private CGPoint center = null;
 	protected boolean keepAspectRatio = NO;
 	
-	protected static final float density = UIScreen.mainScreen().getDensity();
-	protected static final float scaleFactorX = UIScreen.mainScreen().getScaleFactorX();
-	protected static final float scaleFactorY = UIScreen.mainScreen().getScaleFactorY();
+	static float density = 1.0f;
+	static float scaleFactorX = 1.0f;
+	static float scaleFactorY = 1.0f;
 	
-	protected static final float scaleDensityX = density*scaleFactorX;
-	protected static final float scaleDensityY = density*scaleFactorY;
+	static float scaleDensityX = 1.0f;
+	static float scaleDensityY = 1.0f;
 	
 	public CGRect frame() {
 		if(frame==null){

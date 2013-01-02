@@ -52,15 +52,7 @@ public abstract class UIAppDelegate extends Activity implements AppDelegate{
         
         DisplayMetrics dm = new DisplayMetrics();   
         getWindowManager().getDefaultDisplay().getMetrics(dm); 
-        float density = dm.density;
-        UIScreen.mainScreen().setDensity(density);
-        UIScreen.mainScreen().setDensityDpi(dm.densityDpi);
-        
-        float width = dm.widthPixels;
-        float height = dm.heightPixels;
-        
-        UIScreen.mainScreen().setBounds(new CGRect(0,0,width,height));
-        UIScreen.mainScreen().setDensityText(dm.scaledDensity);
+        UIScreen.mainScreen().setDisplayMetrics(dm);
         
         window = new UIWindow();
         UIApplication.sharedApplication().setWindow(window);

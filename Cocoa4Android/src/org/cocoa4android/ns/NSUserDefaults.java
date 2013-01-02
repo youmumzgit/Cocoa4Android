@@ -62,6 +62,8 @@ public class NSUserDefaults extends NSObject {
 	public boolean booleanForKey(String key){
 		return mPerferences.getBoolean(key, false);
 	}
+	
+	//TODO add Collections
 	/*
 	public void setArray(String[] value,String key){
 		//String array = JSONHelper.toJSON(value);

@@ -13,10 +13,11 @@ public class NSTimer extends NSObject {
 		this.userInfo = userInfo;
 		this.repeats = repeats;
 	}
+	//FIXME start timer
 	public static NSTimer scheduledTimerWithTimeInterval(double timeInterval,Object target,String selector,Object userInfo,boolean repeats)
 	{
 		NSTimer timer = new NSTimer(timeInterval,target,selector,userInfo,repeats);
-		//TODO start timer
+		
 		return timer;
 	}
 	

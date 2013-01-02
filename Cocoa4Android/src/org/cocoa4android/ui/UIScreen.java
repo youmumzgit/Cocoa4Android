@@ -23,8 +23,7 @@ import android.util.DisplayMetrics;
 
 public class UIScreen extends NSObject{
 	private static final boolean AUTOSIZE = YES;
-	
-	
+	private static final boolean USEDIP = NO;
 	
 	private static UIScreen mainScreen = null;
 	public static UIScreen mainScreen(){
@@ -34,38 +33,20 @@ public class UIScreen extends NSObject{
 		return mainScreen;
 	}
 	
-	
-	CGRect bounds;
-	CGRect applicationFrame;
-	
-	private CGSize standardScreenSize = null;
-	private CGRect standardBounds;
-	private CGRect standardApplicationFrame;
-	
-	
-	private float density;
-	private int densityDpi;
-	
-	private float densityText;
-	
-	private boolean useDip = false;
-
-	public boolean isUseDip() {
-		return useDip;
-	}
-	public void setUseDip(boolean useDip) {
-		if(this.useDip!=useDip){
-			//update applicationFrame;
-			if(useDip){
-				this.bounds.size.width /=this.density;
-				this.bounds.size.height /=this.density;
-				this.setBounds(bounds);
-				this.setStandardScreenSize(null);
-			}
-			this.useDip = useDip;
-		}
+	public void setDisplayMetrics(DisplayMetrics dm) {
+		this.setDensity(dm.density);
+		UIView.density = this.getDensity();
+		this.setDensityDpi(dm.densityDpi);
+		this.setBounds(CGRectMake(0, 0, dm.widthPixels, dm.heightPixels));
+		this.setDensityText(dm.scaledDensity);
 		
 	}
+	
+	//================================================================================
+    // Screen Size
+    //================================================================================
+	CGRect bounds;
+	CGRect applicationFrame;
 	
 	public CGRect bounds() {
 		if(this.standardScreenSize==null){
@@ -74,9 +55,8 @@ public class UIScreen extends NSObject{
 			return this.standardBounds;
 		}
 	}
-	public void setBounds(CGRect bounds) {
-		this.bounds = bounds;
-		this.setApplicationFrame(new CGRect(0, 0, bounds.size.width, bounds.size.height));
+	private void setBounds(CGRect bounds) {
+		this.bounds = CGRectMake(0, 0, bounds.size.width/density, bounds.size.height/density);
 	}
 	
 	public CGRect applicationFrame() {
@@ -86,21 +66,86 @@ public class UIScreen extends NSObject{
 			return this.standardApplicationFrame;
 		}
 	}
-	public void setApplicationFrame(CGRect applicationFrame) {
-		this.applicationFrame = applicationFrame;
+	void setApplicationFrame(CGRect applicationFrame) {
+		this.applicationFrame = CGRectMake(0, 0, applicationFrame.size.width/density, applicationFrame.size.height/density);
 	}
 	
-
-	public void setDensity(float density) {
-		this.density = density;
+	//================================================================================
+    // Standard Size
+    //================================================================================
+	private CGSize standardScreenSize = null;
+	private CGRect standardBounds;
+	private CGRect standardApplicationFrame;
+	
+	
+	public CGSize getStandardScreenSize() {
+		return standardScreenSize;
 	}
+	/*
+	 * set the standard screen size,once set this value,the screen will auto resized to fit the real screen
+	 */
+	public void setStandardScreenSize(CGSize standardScreenSize) {
+		this.standardScreenSize = standardScreenSize;
+		if (standardScreenSize!=null) {
+			this.standardBounds = new CGRect(0,0,standardScreenSize.width,standardScreenSize.height);
+			this.standardApplicationFrame = new CGRect(0,0,standardScreenSize.width,standardScreenSize.height);
+			
+			UIView.scaleFactorX = this.getScaleFactorX();
+			UIView.scaleFactorY = this.getScaleFactorY();
+			UIView.scaleDensityX = UIView.scaleFactorX*UIView.density;
+			UIView.scaleDensityY = UIView.scaleFactorY*UIView.density;
+		}else{
+			this.standardBounds = null;
+			this.standardApplicationFrame = null;
+		}
+		
+	}
+	
+	//================================================================================
+    // Density
+    //================================================================================
+	private float density;
+	private int densityDpi;
+	private float densityText;
+	
 	public float getDensity(){
+		return density;
+	}
+	private void setDensity(float density) {
+		if (USEDIP) {
+			this.density = density;
+		}else{
+			this.density = 1.0f;
+		}
+		
+	}
+	
+	
+	public float getDensityDpi() {
+		return densityDpi;
+	}
+	private void setDensityDpi(int densityDpi) {
+		this.densityDpi = densityDpi;
+	}
+	
+	public float getDensityText() {
 		float value = 1.0f;
-		if(this.useDip){
-			value = density;
+		if(USEDIP){
+			value = densityText;
+		}
+		if(standardScreenSize!=null&&AUTOSIZE){
+			value *= applicationFrame.size.height/standardApplicationFrame.size.height;
 		}
 		return value;
 	}
+	private void setDensityText(float densityText) {
+		this.densityText = densityText;
+	}
+	
+	
+	//================================================================================
+    // Scale
+    //================================================================================
 	public float getScaleFactorX(){
 		float value = 1.0f;
 		if(standardScreenSize!=null&&AUTOSIZE){
@@ -116,41 +161,31 @@ public class UIScreen extends NSObject{
 		return value;
 	}
 	
-	public CGSize getStandardScreenSize() {
-		return standardScreenSize;
-	}
+	
+	
+	
+	
 	/*
-	 * set the standard screen size,once set this value,the screen will auto sized to fit the real screen
-	 */
-	public void setStandardScreenSize(CGSize standardScreenSize) {
-		this.standardScreenSize = standardScreenSize;
-		if (standardScreenSize!=null) {
-			this.standardBounds = new CGRect(0,0,standardScreenSize.width,standardScreenSize.height);
-			this.standardApplicationFrame = new CGRect(0,0,standardScreenSize.width,standardScreenSize.height);
-		}else{
-			this.standardBounds = null;
-			this.standardApplicationFrame = null;
+	private boolean useDip = NO;
+
+	public boolean isUseDip() {
+		return useDip;
+	}
+	//recommend to use pixel 
+	//so make it private
+	private void setUseDip(boolean useDip) {
+		if(this.useDip!=useDip){
+			//update applicationFrame;
+			if(useDip){
+				this.bounds.size.width /=this.density;
+				this.bounds.size.height /=this.density;
+				this.setBounds(bounds);
+				this.setStandardScreenSize(null);
+			}
+			this.useDip = useDip;
+			UIView.density = this.getDensity();
 		}
 		
 	}
-	
-	public float getDensityDpi() {
-		return densityDpi;
-	}
-	public void setDensityDpi(int densityDpi) {
-		this.densityDpi = densityDpi;
-	}
-	public float getDensityText() {
-		float value = 1.0f;
-		if(this.useDip){
-			value = densityText;
-		}
-		if(standardScreenSize!=null&&AUTOSIZE){
-			value *= applicationFrame.size.height/standardApplicationFrame.size.height;
-		}
-		return value;
-	}
-	public void setDensityText(float densityText) {
-		this.densityText = densityText;
-	}
+	*/
 }
