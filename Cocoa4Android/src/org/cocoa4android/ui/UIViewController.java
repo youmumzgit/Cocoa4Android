@@ -130,7 +130,7 @@ public class UIViewController extends NSObject{
 			UIView modalView = viewController.view();
 			modalView.setFrame(UIScreen.mainScreen().applicationFrame());
 			modalView.setBackgroundColor(UIColor.whiteColor());
-			UIApplication.sharedApplication().delegate().window.addSubview(modalView);
+			AppDelegate.window.addSubview(modalView);
 			this.setPresentedViewController(viewController);
 			
 			if(animated){
