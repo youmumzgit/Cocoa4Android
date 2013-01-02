@@ -72,7 +72,7 @@ public class UILabel extends UIView {
 	public void setNumberOfLines(int numberOfLines){
 		this.label.setLines(numberOfLines);
 	}
-	public int getNumberOfLines(){
+	public int numberOfLines(){
 		return this.label.getLineCount();
 	}
 }
