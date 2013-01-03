@@ -494,10 +494,11 @@ public class UIView extends UIResponder{
 			CGPoint currentCenter = this.center();
 			float toXDelta = center.x - currentCenter.x;
 			float toYDelta = center.y - currentCenter.y;
-			TranslateAnimation animation = new TranslateAnimation(0, toXDelta, 0, toYDelta);
+			TranslateAnimation animation = new TranslateAnimation(0, toXDelta*scaleDensityX, 0, toYDelta*scaleDensityY);
 			this.getView().setAnimation(animation);
 			animations.addObject(animation);
 		}else{
+			//FIXME didn't apply the value to the frame
 			CGRect frame = this.frame();
 			frame.origin.x = (int) (center.x-frame.size.width/2);
 			frame.origin.y = (int) (center.y-frame.size.height/2);
