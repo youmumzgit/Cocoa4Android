@@ -25,9 +25,15 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnKeyListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
+import org.cocoa4android.ns.NSRange;
 import org.cocoa4android.ns.NSTextAlignment;
 
 
@@ -46,6 +52,31 @@ public class UITextField extends UIView {
 		background.getPaint().setStrokeWidth(1);
 		this.textField.setBackgroundDrawable(background);
 		this.textField.setPadding((int)(8*scaleDensityX), 0, (int)(8*scaleDensityY), 0);
+		this.textField.setOnKeyListener(new OnKeyListener() {
+			
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if (event.getAction()!=KeyEvent.ACTION_DOWN)
+                    return true;
+				
+				if (keyCode == KeyEvent.KEYCODE_ENTER) {
+					if (delegate!=null) {
+						return delegate.textFieldShouldReturn(UITextField.this);
+					}
+				}
+				return true;
+			}
+		});
+		this.textField.setOnEditorActionListener(new OnEditorActionListener() {
+			
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				if (delegate!=null) {
+					return delegate.textFieldShouldReturn(UITextField.this);
+				}
+				return false;
+			}
+		});
 	}
 	public UITextField(CGRect frame){
 		this();
@@ -81,10 +112,6 @@ public class UITextField extends UIView {
 		}
 		
 	}
-	public void setFrame(CGRect frame){
-		super.setFrame(frame);
-		//this.textField.settex
-	}
 	public void setFont(UIFont font) {
 		this.setFontSize(font.fontSize);
 		this.textField.setTypeface(font.getFont());
@@ -104,18 +131,33 @@ public class UITextField extends UIView {
 	public boolean isSecureTextEntry(){
 		return false;
 	}
-	public void becomeFirstResponder(){
-		InputMethodManager imm = (InputMethodManager)textField.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-		if (!imm.isActive()) {
-			imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-		}
+	@Override 
+	public boolean canBecomeFirstResponder(){
+		return YES;
 	}
-	public void resignFirstResponder(){
-		textField.clearFocus();
-		InputMethodManager imm = (InputMethodManager)textField.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-		if (imm.isActive()) {
-			imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+	@Override
+	public boolean becomeFirstResponder(){
+		if (!this.isFirstResponder()) {
+			super.becomeFirstResponder();
+			textField.requestFocus();
+			InputMethodManager imm = (InputMethodManager)textField.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+			if (!imm.isActive()) {
+				imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+			}
 		}
+		return YES;
+	}
+	@Override
+	public boolean resignFirstResponder(){
+		if (this.isFirstResponder()) {
+			super.resignFirstResponder();
+			textField.clearFocus();
+			InputMethodManager imm = (InputMethodManager)textField.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+			if (imm.isActive()) {
+				imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+			}
+		}
+		return YES;
 	}
 	
 	public String placeholder() {
@@ -125,5 +167,40 @@ public class UITextField extends UIView {
 		this.placeholder = placeholder;
 		this.textField.setHintTextColor(UIColor.lightGrayColor().getColor());
 		this.textField.setHint(placeholder);
+	}
+	private UITextFieldDelegate delegate = null;
+	
+	public UITextFieldDelegate delegate() {
+		return delegate;
+	}
+	public void setDelegate(UITextFieldDelegate delegate) {
+		this.delegate = delegate;
+	}
+
+	public interface UITextFieldDelegate{
+		/*
+		//TODO other delegate method
+		 * 
+		public boolean textFieldShouldBeginEditing(UITextField textField);
+		public void textFieldDidBeginEditing(UITextField textField);
+		public boolean textFieldShouldEndEditing(UITextField textField);
+		public void textFieldDidEndEditing(UITextField textField);
+		
+		public void shouldChangeCharactersInRange(UITextField textField,NSRange range,String string);
+		public boolean textFieldShouldClear(UITextField textField);
+		*/
+		public boolean textFieldShouldReturn(UITextField textField);
+		
+		/*
+		- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField;        // return NO to disallow editing.
+		- (void)textFieldDidBeginEditing:(UITextField *)textField;           // became first responder
+		- (BOOL)textFieldShouldEndEditing:(UITextField *)textField;          // return YES to allow editing to stop and to resign first responder status. NO to disallow the editing session to end
+		- (void)textFieldDidEndEditing:(UITextField *)textField;             // may be called if forced even if shouldEndEditing returns NO (e.g. view removed from window) or endEditing:YES called
+
+		- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;   // return NO to not change text
+
+		- (BOOL)textFieldShouldClear:(UITextField *)textField;               // called when clear button pressed. return NO to ignore (no notifications)
+		- (BOOL)textFieldShouldReturn:(UITextField *)textField;              // called when 'return' key pressed. return NO to ignore.
+		*/
 	}
 }

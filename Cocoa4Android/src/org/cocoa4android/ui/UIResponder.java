@@ -41,4 +41,35 @@ public class UIResponder extends NSObject {
 	protected void handleTouch(MotionEvent event){
 		
 	}
+	
+	//================================================================================
+    // First Responder
+    //================================================================================
+	protected static UIResponder firstResponder = null;
+	// default is NO
+	public boolean canBecomeFirstResponder(){
+		return NO;
+	}   
+	public boolean becomeFirstResponder(){
+		if (this.canBecomeFirstResponder()) {
+			firstResponder = this;
+			return YES;
+		}
+		return NO;
+	}
+	// default is YES
+	public boolean canResignFirstResponder(){
+		return YES;
+	}
+	public boolean resignFirstResponder(){
+		if (this.canResignFirstResponder()) {
+			firstResponder = null;
+			return YES;
+		}
+		return NO;
+	}
+	public boolean isFirstResponder(){
+		
+		return firstResponder==this;
+	}
 }
