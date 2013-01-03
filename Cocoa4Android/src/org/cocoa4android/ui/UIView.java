@@ -461,7 +461,7 @@ public class UIView extends UIResponder{
 			}
 			animation.setRepeatCount(repeatCount);
 			//FIXME delay value not used
-			animation.setStartTime((long) (AnimationUtils.currentAnimationTimeMillis()+UIView.delay*1000));
+			//animation.setStartTime((long) (AnimationUtils.currentAnimationTimeMillis()+UIView.delay*1000));
 			animation.startNow();
 			//animation.start();
 		}
