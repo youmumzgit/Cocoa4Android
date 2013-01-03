@@ -415,7 +415,7 @@ public class UIView extends UIResponder{
 	 * @param animationID
 	 * @param context
 	 */
-	//FIXME didn't use the animationID
+	//FIXME didn't use the animationID,didn't support setFrame
 	public static void beginAnimations(String animationID,Object context){
 		if (animationsEnabled) {
 			animationBegan = YES;
@@ -492,8 +492,8 @@ public class UIView extends UIResponder{
 	private void applyCenter(CGPoint center){
 		if (animationBegan) {
 			CGPoint currentCenter = this.center();
-			float toXDelta = currentCenter.x - center.x;
-			float toYDelta = currentCenter.y - center.y;
+			float toXDelta = center.x - currentCenter.x;
+			float toYDelta = center.y - currentCenter.y;
 			TranslateAnimation animation = new TranslateAnimation(0, toXDelta, 0, toYDelta);
 			this.getView().setAnimation(animation);
 			animations.addObject(animation);
