@@ -461,7 +461,8 @@ public class UIView extends UIResponder{
 			animation.setRepeatCount(repeatCount);
 			animation.setStartTime((long) (AnimationUtils.currentAnimationTimeMillis()+UIView.delay));
 			animation.setFillAfter(YES);
-			animation.startNow();
+			//animation.startNow();
+			animation.start();
 		}
 		
 		animationBegan = NO;
