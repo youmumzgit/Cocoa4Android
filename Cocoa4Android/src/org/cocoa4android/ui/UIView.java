@@ -494,8 +494,17 @@ public class UIView extends UIResponder{
 			CGPoint currentCenter = this.center();
 			float toXDelta = center.x - currentCenter.x;
 			float toYDelta = center.y - currentCenter.y;
-			TranslateAnimation animation = new TranslateAnimation(0, toXDelta*scaleDensityX, 0, toYDelta*scaleDensityY);
+			//TranslateAnimation animation = new TranslateAnimation(0, toXDelta*scaleDensityX, 0, toYDelta*scaleDensityY);
+			TranslateAnimation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 
+																	this.frame.origin.x, 
+																	Animation.RELATIVE_TO_PARENT, 
+																	this.frame.origin.x+toXDelta, 
+																	Animation.RELATIVE_TO_PARENT, 
+																	this.frame.origin.y, 
+																	Animation.RELATIVE_TO_PARENT, 
+																	this.frame.origin.y+toYDelta);
 			this.getView().setAnimation(animation);
+			animation.setFillAfter(YES);
 			animations.addObject(animation);
 			animation.setAnimationListener(new AnimationListener() {
 				
@@ -517,7 +526,6 @@ public class UIView extends UIResponder{
 					UIView.this.setFrame(frame);
 				}
 			});
-			//FIXME didn't apply the value to the frame
 		}else{
 			CGRect frame = this.frame();
 			frame.origin.x = (int) (center.x-frame.size.width/2);
