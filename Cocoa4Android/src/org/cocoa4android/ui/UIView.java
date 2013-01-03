@@ -38,6 +38,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.Transformation;
+import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
@@ -336,10 +337,7 @@ public class UIView extends UIResponder{
 	 * @param center
 	 */
 	public void setCenter(CGPoint center) {
-		CGRect frame = this.frame();
-		frame.origin.x = (int) (center.x-frame.size.width/2);
-		frame.origin.y = (int) (center.y-frame.size.height/2);
-		this.setFrame(frame);
+		this.applyCenter(center);
 		this.center = center;
 	}
 	
@@ -462,7 +460,7 @@ public class UIView extends UIResponder{
 			}
 			animation.setRepeatCount(repeatCount);
 			animation.setStartTime((long) (AnimationUtils.currentAnimationTimeMillis()+UIView.delay));
-			
+			animation.setFillAfter(YES);
 			animation.startNow();
 		}
 		
@@ -490,7 +488,21 @@ public class UIView extends UIResponder{
 			this.getView().startAnimation(animation);
 		}
 	}
-	
+	private void applyCenter(CGPoint center){
+		if (animationBegan) {
+			CGPoint currentCenter = this.center();
+			float toXDelta = currentCenter.x - center.x;
+			float toYDelta = currentCenter.y - center.y;
+			TranslateAnimation animation = new TranslateAnimation(0, toXDelta, 0, toYDelta);
+			this.getView().setAnimation(animation);
+			animations.addObject(animation);
+		}else{
+			CGRect frame = this.frame();
+			frame.origin.x = (int) (center.x-frame.size.width/2);
+			frame.origin.y = (int) (center.y-frame.size.height/2);
+			this.setFrame(frame);
+		}
+	}
 	public static boolean areAnimationsEnabled(){
 		return animationsEnabled;
 	}
