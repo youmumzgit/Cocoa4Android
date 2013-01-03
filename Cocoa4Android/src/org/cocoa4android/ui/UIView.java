@@ -441,7 +441,7 @@ public class UIView extends UIResponder{
 	public static void commitAnimations() {
 		for (int i = 0; i < animations.count(); i++) {
 			Animation animation = (Animation) animations.objectAtIndex(i);
-			animation.setDuration((long) UIView.duation);
+			animation.setDuration((long) UIView.duation*1000);
 			switch (curve) {
 			case UIViewAnimationCurveEaseInOut:
 				animation.setInterpolator(new AccelerateDecelerateInterpolator());
