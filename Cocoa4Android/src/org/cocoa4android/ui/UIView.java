@@ -526,6 +526,7 @@ public class UIView extends UIResponder{
 					frame.origin.x = (int) (UIView.this.center.x-frame.size.width/2);
 					frame.origin.y = (int) (UIView.this.center.y-frame.size.height/2);
 					UIView.this.setFrame(frame);
+					UIView.this.getView().invalidate();
 				}
 			});
 		}else{
