@@ -34,6 +34,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
@@ -459,7 +460,7 @@ public class UIView extends UIResponder{
 				break;
 			}
 			animation.setRepeatCount(repeatCount);
-			animation.setStartTime((long) (AnimationUtils.currentAnimationTimeMillis()+UIView.delay));
+			animation.setStartTime((long) (AnimationUtils.currentAnimationTimeMillis()+UIView.delay*1000));
 			animation.setFillAfter(YES);
 			//animation.startNow();
 			animation.start();
@@ -497,8 +498,28 @@ public class UIView extends UIResponder{
 			TranslateAnimation animation = new TranslateAnimation(0, toXDelta*scaleDensityX, 0, toYDelta*scaleDensityY);
 			this.getView().setAnimation(animation);
 			animations.addObject(animation);
-		}else{
+			animation.setAnimationListener(new AnimationListener() {
+				
+				@Override
+				public void onAnimationStart(Animation animation) {
+					
+				}
+				
+				@Override
+				public void onAnimationRepeat(Animation animation) {
+					
+				}
+				
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					CGRect frame = UIView.this.frame();
+					frame.origin.x = (int) (UIView.this.center.x-frame.size.width/2);
+					frame.origin.y = (int) (UIView.this.center.y-frame.size.height/2);
+					UIView.this.setFrame(frame);
+				}
+			});
 			//FIXME didn't apply the value to the frame
+		}else{
 			CGRect frame = this.frame();
 			frame.origin.x = (int) (center.x-frame.size.width/2);
 			frame.origin.y = (int) (center.y-frame.size.height/2);
