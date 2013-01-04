@@ -85,7 +85,7 @@ public class UIViewController extends NSObject{
 	}
 
 
-	public UINavigationController getNavigationController() {
+	public UINavigationController navigationController() {
 		return navigationController;
 	}
 
@@ -259,5 +259,8 @@ public class UIViewController extends NSObject{
 
 	public void setTitle(String title) {
 		this.title = title;
+		if (this.navigationController!=null) {
+			this.navigationController.setTitle(title);
+		}
 	}
 }

@@ -16,6 +16,8 @@
 package org.cocoa4android.ui;
 
 
+import org.cocoa4android.cg.CGRect;
+
 import android.content.Context;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -34,9 +36,13 @@ public class UIWindow extends UIView {
 		
 		this.setBackgroundColor(UIColor.whiteColor());
 	}
+	public UIWindow(CGRect frame){
+		this();
+	}
 	private UIViewController rootViewController;
 	public void makeKeyAndVisible(){
-		this.setHidden(false);
+		UIApplication.sharedApplication().getActivity().setContentView(this.getView());
+		UIApplication.sharedApplication().setWindow(this);
 	}
 	public UIViewController rootViewController() {
 		return rootViewController;

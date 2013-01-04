@@ -42,6 +42,7 @@ public class UIButton extends UIControl {
 		this.autoHighlight();
 	}
 	public UILabel titleLabel() {
+		this.initTitleLabel();
 		return titleLabel;
 	}
 	public UIButton(){
@@ -76,18 +77,21 @@ public class UIButton extends UIControl {
 			titles.remove(state);
 		}else{
 			//if set title than added
-			if (titleLabel==null) {
-				titleLabel = new UILabel();
-				titleLabel.setTextAlignment(NSTextAlignment.NSTextAlignmentCenter);
-				titleLabel.setTextColor(UIColor.whiteColor());
-				this.addSubview(titleLabel);
-				if (frame!=null) {
-					titleLabel.setFrame(CGRectMake(0, 0, frame.size.width, frame.size.height));
-				}
-			}
+			this.initTitleLabel();
 			titles.put(state, title);
 			if(isCurrentState(state)){
 				titleLabel.setText(title);
+			}
+		}
+	}
+	private void initTitleLabel(){
+		if (titleLabel==null) {
+			titleLabel = new UILabel();
+			titleLabel.setTextAlignment(NSTextAlignment.NSTextAlignmentCenter);
+			titleLabel.setTextColor(UIColor.whiteColor());
+			this.addSubview(titleLabel);
+			if (frame!=null) {
+				titleLabel.setFrame(CGRectMake(0, 0, frame.size.width, frame.size.height));
 			}
 		}
 	}

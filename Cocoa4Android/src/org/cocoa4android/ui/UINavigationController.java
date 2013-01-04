@@ -17,27 +17,118 @@ package org.cocoa4android.ui;
 
 import java.util.Stack;
 
+import org.cocoa4android.R;
+import org.cocoa4android.cg.CGPoint;
 import org.cocoa4android.cg.CGRect;
+import org.cocoa4android.ns.NSTextAlignment;
+import org.cocoa4android.ui.UIControl.UIControlEvent;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Shader.TileMode;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.TranslateAnimation;
 
 public class UINavigationController extends UIViewController {
+	
+	
+	private boolean navigationBarHidden;
+	private UIView contentView;
+	//================================================================================
+    // Constructor
+    //================================================================================
+	public UINavigationController(){
+		super();
+		appFrame = UIScreen.mainScreen().applicationFrame();
+		navigationBarHeight = appFrame.size.height/11.0f;
+		contentView = new UIView(CGRectMake(0, navigationBarHeight, appFrame.size.width, appFrame.size.height-navigationBarHeight));
+		this.view.addSubview(contentView);
+		this.initNavigationBar();
+	}
+	
+	//================================================================================
+    // NavigationBar
+    //================================================================================
+	private UIView navigationBar;
+	private float navigationBarHeight = 1.0f;
+	private UILabel titleLabel = null;
+	private UIButton backButton = null;
+	private CGRect appFrame = null;
+	private void initNavigationBar() {
+		navigationBar = new UIView(CGRectMake(0, 0, appFrame.size.width, navigationBarHeight));
+		
+		Bitmap bitmap = BitmapFactory.decodeResource(UIApplication.sharedApplication().getActivity().getResources(), R.drawable.zz_c4a_navigationbar_background_default);  
+		BitmapDrawable bd = new BitmapDrawable(bitmap);  
+		bd.setTileModeX(TileMode.REPEAT);
+		bd.setDither(true);  
+		navigationBar.getView().setBackgroundDrawable(bd); 
+		this.view.addSubview(navigationBar);
+		
+		int halfWidth = ((int)appFrame.size.width)>>1;
+		titleLabel = new UILabel(CGRectMake(halfWidth>>1, 0, halfWidth, navigationBarHeight));
+		titleLabel.setTextAlignment(NSTextAlignment.NSTextAlignmentCenter);
+		titleLabel.setTextColor(UIColor.whiteColor());
+		titleLabel.setFontSize(14);
+		titleLabel.getLabel().setShadowLayer(0.4f, 0, -1, 0x55000000);
+		navigationBar.addSubview(titleLabel);
+	}
+	private void invalidateBackButton(){
+		if (stack.size()>1) {
+			if (backButton==null) {
+				int backWidth = (int)(appFrame.size.width)>>3;
+				int backHeight = (int) (backWidth*0.6f);
+				backButton = new UIButton(CGRectMake(0, 0, backWidth, backHeight));
+				backButton.setKeepAspectRatio(YES);
+				backButton.setAutoHighlight(YES);
+				backButton.setImage(UIImage.imageNamed(R.drawable.zz_c4a_navigationbar_return));
+				backButton.addTarget(this, "popViewController", UIControlEvent.UIControlEventTouchUpInside);
+				backButton.setCenter(CGPointMake(appFrame.size.width/12.0f,((int)navigationBarHeight)>>1));
+				backButton.titleLabel().setTextAlignment(NSTextAlignment.NSTextAlignmentCenter);
+				backButton.titleLabel().setFontSize(7);
+				backButton.titleLabel().getView().setPadding(((int)appFrame.size.width)>>5, backHeight>>5, 0, 0);
+				backButton.titleLabel().getLabel().setShadowLayer(0.4f, 0, -2, 0x55000000);
+				backButton.titleLabel().setNumberOfLines(1);
+				this.navigationBar.addSubview(backButton);
+			}
+			backButton.setHidden(NO);
+			String title = stack.get(stack.size()-2).title();
+			if (title==null) {
+				backButton.setTitle("·µ»Ø");
+			}else{
+				backButton.setTitle(title);
+			}
+		}else{
+			if (backButton!=null) {
+				backButton.setHidden(YES);
+			}
+		}
+	}
+	public void setTitle(String title){
+		titleLabel.setText(title);
+	}
+	public boolean isNavigationBarHidden() {
+		return navigationBarHidden;
+	}
+	public void setNavigationBarHidden(boolean navigationBarHidden) {
+		this.navigationBarHidden = navigationBarHidden;
+		navigationBar.setHidden(navigationBarHidden);
+		if (navigationBarHidden) {
+			contentView.setFrame(UIScreen.mainScreen().applicationFrame());
+		}
+	}
+	
+	
+	//================================================================================
+    // Push&Pop
+    //================================================================================
 	private Stack<UIViewController> stack = new Stack<UIViewController>();
 	private UIView fromView;
 	private UIViewController toViewController;
 	private UIViewController fromViewController;
 	private boolean isPush;
-	
-	private boolean navigationBarHidden;
-	public UINavigationController(){
-		super();
-	}
-	public UINavigationController(int resId){
-		super(resId);
-	}
 	public void pushViewController(UIViewController viewController,boolean animated){
 		if (!isTransition) {
 			isTransition = YES;
@@ -47,7 +138,7 @@ public class UINavigationController extends UIViewController {
 			}
 			viewController.setNavigationController(this);
 			UIView view = viewController.view();
-			this.view().addSubview(view);
+			this.contentView.addSubview(view);
 			
 			if(animated&&lastView!=null){
 				this.translateBetweenViews(lastView, view,true);
@@ -61,9 +152,11 @@ public class UINavigationController extends UIViewController {
 			toViewController = viewController;
 			stack.push(viewController);
 		}
-		
+		this.invalidateBackButton();
 	}
-
+	public void popViewController(){
+		this.popViewController(YES);
+	}
 	public void popViewController(boolean animated){
 		if (!isTransition) {
 			isTransition = YES;
@@ -84,14 +177,19 @@ public class UINavigationController extends UIViewController {
 					fromViewController.viewDidUnload();
 				}
 			}
+			this.invalidateBackButton();
 		}
 		
 		
 	}
+	
 	public void popToRootViewController(boolean animated){
+		//TODO popToRootViewController
+		this.invalidateBackButton();
 	}
 	public void popToViewController(UIViewController viewController,boolean animated){
-		
+		//TODO popToViewController
+		this.invalidateBackButton();
 	}
 	private void translateBetweenViews(UIView fromView ,UIView toView ,boolean isPush){
 		//show
@@ -153,12 +251,10 @@ public class UINavigationController extends UIViewController {
 			
 		});
 	}
-	public boolean isNavigationBarHidden() {
-		return navigationBarHidden;
-	}
-	public void setNavigationBarHidden(boolean navigationBarHidden) {
-		this.navigationBarHidden = navigationBarHidden;
-	}
+	
+	//================================================================================
+    // backKey
+    //================================================================================
 	@Override
 	public boolean backKeyDidClicked(){
 		if(!super.backKeyDidClicked()){
