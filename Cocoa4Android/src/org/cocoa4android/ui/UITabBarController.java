@@ -15,32 +15,40 @@
  */
 package org.cocoa4android.ui;
 
+import org.cocoa4android.R;
 import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.ns.NSArray;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Shader.TileMode;
+import android.graphics.drawable.BitmapDrawable;
 
 public class UITabBarController extends UIViewController {
 
 	private NSArray viewControllers;
-	protected UIView tabBar;
-	private UIView container;
-	
+	protected UITabBar tabBar;
+	private UIView contentView;
+	private CGRect appFrame = null;
 	private int selectedIndex=-1;
 	//private int previousSelectedIndex = -1;
 	
 	public UITabBarController(){
 		super();
-		//add two part of view					 
-		int tabBarHeight = 40;
-		CGRect frame = UIScreen.mainScreen().applicationFrame();
-		container = new UIView(new CGRect(0,0,frame.size().width(),frame.size().height()));
-		this.view.addSubview(container);
+		appFrame = UIScreen.mainScreen().applicationFrame();				 
+		float tabBarHeight = appFrame.size.height/10.0f;
+		contentView = new UIView(CGRectMake(0,0,appFrame.size().width(),appFrame.size().height()-tabBarHeight));
+		this.view.addSubview(contentView);
+		this.initTabBar();
 		
-		//default set tabBar 49
-		tabBar = new UIView(new CGRect(0,frame.size().height()-tabBarHeight,frame.size().width(),tabBarHeight));
-		tabBar.setBackgroundColor(UIColor.blackColor());
-		this.view.addSubview(tabBar);
 	}
 	
+	private void initTabBar(){
+		//default set tabBar 49
+		tabBar = new UITabBar();
+
+		this.view.addSubview(tabBar);
+	}
 	public NSArray getViewControllers() {
 		return viewControllers;
 	}
@@ -64,7 +72,7 @@ public class UITabBarController extends UIViewController {
 			UIViewController viewController = (UIViewController) viewControllers.objectAtIndex(index);
 			UIView view = viewController.view();
 			if(view.superview()==null){
-				container.addSubview(view);
+				contentView.addSubview(view);
 			}
 			if(view.isHidden()){
 				view.setHidden(NO);

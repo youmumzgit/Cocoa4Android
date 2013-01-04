@@ -76,7 +76,7 @@ public class UINavigationController extends UIViewController {
 		navigationBar.addSubview(titleLabel);
 	}
 	private void invalidateBackButton(){
-		if (stack.size()>1) {
+		if (stack.size()>1&&!navigationBarHidden) {
 			if (backButton==null) {
 				int backWidth = (int)(appFrame.size.width)>>3;
 				int backHeight = (int) (backWidth*0.6f);
