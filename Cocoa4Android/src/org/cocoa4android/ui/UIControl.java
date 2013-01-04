@@ -49,7 +49,7 @@ public class UIControl extends UIView {
 	@Override
 	protected void handleTouch(MotionEvent event){
 		super.handleTouch(event);
-		if (TouchDownHandlerCount>0&&event.getAction()==MotionEvent.ACTION_DOWN) {
+		if (touchDownHandlerCount>0&&event.getAction()==MotionEvent.ACTION_DOWN) {
 			this.callback(UIControlEvent.UIControlEventTouchDown);
 		}
 	}
@@ -62,7 +62,8 @@ public class UIControl extends UIView {
 			}
 		}
 	}
-	private int TouchDownHandlerCount = 0;
+	private int touchDownHandlerCount = 0;
+	
 	public void addTarget(Object target,String selector,UIControlEvent controlEvent){
 		ArrayList<CAObjectMethod> ams = callbacks.get(controlEvent);
 		if(ams==null){
@@ -70,7 +71,7 @@ public class UIControl extends UIView {
 			callbacks.put(controlEvent,ams);
 		}
 		if (controlEvent==UIControlEvent.UIControlEventTouchDown) {
-			TouchDownHandlerCount++;
+			touchDownHandlerCount++;
 		}
 		ams.add(new CAObjectMethod(target,selector));
 	}
@@ -82,7 +83,7 @@ public class UIControl extends UIView {
 				if (om.getTarget()==target&&om.getSelector().equals(selector)) {
 					oms.remove(i);
 					if (controlEvent==UIControlEvent.UIControlEventTouchDown) {
-						TouchDownHandlerCount--;
+						touchDownHandlerCount--;
 					}
 					break;
 				}

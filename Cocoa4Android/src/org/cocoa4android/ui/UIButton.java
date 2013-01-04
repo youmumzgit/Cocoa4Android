@@ -54,7 +54,7 @@ public class UIButton extends UIControl {
 		super.handleTouch(event);
 		if (event.getAction()==MotionEvent.ACTION_DOWN) {
 			this.setHighlighted(YES);
-		}else if(event.getAction()==MotionEvent.ACTION_UP){
+		}else if(event.getAction()==MotionEvent.ACTION_UP||event.getAction()==MotionEvent.ACTION_CANCEL){
 			this.setHighlighted(NO);
 		}
 	}

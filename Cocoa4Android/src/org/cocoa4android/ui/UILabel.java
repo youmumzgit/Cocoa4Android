@@ -40,6 +40,7 @@ public class UILabel extends UIView {
 	public TextView getLabel() {
 		return label;
 	}
+	private NSTextAlignment textAlignment;
 	public void setTextAlignment(NSTextAlignment alignment){
 		switch (alignment) {
 		case NSTextAlignmentLeft:
@@ -53,7 +54,13 @@ public class UILabel extends UIView {
 			break;
 		}
 		
+		textAlignment = alignment;
 	}
+	public NSTextAlignment textAlignment() {
+		return textAlignment;
+	}
+	
+	
 	public void setLabel(TextView label) {
 		this.label = label;
 	}

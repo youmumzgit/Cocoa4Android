@@ -43,6 +43,7 @@ public class UITextField extends UIView {
 	
 	public UITextField(){
 		textField = new EditText(context);
+		textField.setGravity(Gravity.CENTER_VERTICAL);
 		textField.setFocusable(YES);
 		this.setTextField(textField);
 		this.setView(textField);
@@ -52,6 +53,7 @@ public class UITextField extends UIView {
 		background.getPaint().setStrokeWidth(1);
 		this.textField.setBackgroundDrawable(background);
 		this.textField.setPadding((int)(8*scaleDensityX), 0, (int)(8*scaleDensityY), 0);
+
 		this.textField.setOnKeyListener(new OnKeyListener() {
 			
 			@Override
@@ -95,22 +97,31 @@ public class UITextField extends UIView {
 	public String text(){
 		return this.textField.getText().toString();
 	}
+	private UIColor textColor;
 	public void setTextColor(UIColor color){
 		this.textField.setTextColor(color.getColor());
+		textColor = color;
 	}
+	public UIColor textColor(){
+		return textColor;
+	}
+	private NSTextAlignment textAlignment;
 	public void setTextAlignment(NSTextAlignment alignment){
 		switch (alignment) {
 		case NSTextAlignmentLeft:
-			this.textField.setGravity(Gravity.LEFT|Gravity.CENTER_VERTICAL);
+			this.textField.setGravity(textField.getGravity()&Gravity.VERTICAL_GRAVITY_MASK|Gravity.LEFT);
 			break;
 		case NSTextAlignmentCenter:
-			this.textField.setGravity(Gravity.CENTER|Gravity.CENTER_VERTICAL);
+			this.textField.setGravity(textField.getGravity()&Gravity.VERTICAL_GRAVITY_MASK|Gravity.CENTER);
 			break;
 		case NSTextAlignmentRight:
-			this.textField.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);
+			this.textField.setGravity(textField.getGravity()&Gravity.VERTICAL_GRAVITY_MASK|Gravity.RIGHT);
 			break;
 		}
-		
+		textAlignment = alignment;
+	}
+	public NSTextAlignment textAlignment() {
+		return textAlignment;
 	}
 	public void setFont(UIFont font) {
 		this.setFontSize(font.fontSize);

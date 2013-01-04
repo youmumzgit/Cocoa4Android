@@ -130,12 +130,15 @@ public class UIScreen extends NSObject{
 	
 	public float getDensityText() {
 		float value = 1.0f;
+		value = densityText;
+		/*
 		if(USEDIP){
 			value = densityText;
 		}
 		if(standardScreenSize!=null&&AUTOSIZE){
 			value *= applicationFrame.size.height/standardApplicationFrame.size.height;
 		}
+		*/
 		return value;
 	}
 	private void setDensityText(float densityText) {
