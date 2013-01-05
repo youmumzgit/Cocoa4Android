@@ -460,7 +460,7 @@ public class UIView extends UIResponder{
 	public static void commitAnimations() {
 		for (int i = 0; i < animations.count(); i++) {
 			Animation animation = (Animation) animations.objectAtIndex(i);
-			animation.setDuration((long) UIView.duation*1000);
+			animation.setDuration((long) (UIView.duation*1000));
 			switch (curve) {
 			case UIViewAnimationCurveEaseInOut:
 				animation.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -631,30 +631,6 @@ public class UIView extends UIResponder{
 	}
 	
 	
-	public class CocoaRelativeLayout extends RelativeLayout{
-
-		public CocoaRelativeLayout(Context context) {
-			super(context);
-		}
-		@Override
-		protected void onDraw(Canvas canvas) {
-			super.onDraw(canvas);
-			UIView.this.draw();
-	    }
-		@Override
-		protected void onLayout(boolean changed, int l, int t, int r, int b){
-			int count = getChildCount();
-
-	        for (int i = 0; i < count; i++) {
-	            View child = getChildAt(i);
-	            //remove all 
-	            if (child.getVisibility() == VISIBLE) {
-	            	UIView childView = (UIView) child.getTag();
-	            	CGRect frame = childView.frame();
-	            	child.layout((int)frame.origin.x+20, (int)frame.origin.y, (int)(frame.origin.x+frame.size.width), (int)(frame.origin.y+frame.size.height));
-	            }
-	        }
-		}
-	}
+	
 	
 }

@@ -69,7 +69,7 @@ public class UIImageView extends UIView {
 	}
 	
 	public UIImageView(){
-		imageView = new CocoaImageView(this.context);
+		imageView = new ImageView(this.context);
 		//fix me
 		imageView.setScaleType(ImageView.ScaleType.FIT_XY); 
 		
@@ -102,17 +102,5 @@ public class UIImageView extends UIView {
 				imageView.setImageDrawable(image.getDrawable());
 			}
 		}
-	}
-	public class CocoaImageView extends ImageView{
-
-		public CocoaImageView(Context context) {
-			super(context);
-		}
-		@Override
-		protected void onDraw(Canvas canvas){
-			super.onDraw(canvas);
-			UIImageView.this.draw();
-		}
-		
 	}
 }
