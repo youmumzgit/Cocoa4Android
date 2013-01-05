@@ -15,14 +15,9 @@
  */
 package org.cocoa4android.ui;
 
-import org.cocoa4android.R;
+
 import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.ns.NSArray;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Shader.TileMode;
-import android.graphics.drawable.BitmapDrawable;
 
 public class UITabBarController extends UIViewController {
 

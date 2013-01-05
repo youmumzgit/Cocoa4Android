@@ -25,6 +25,7 @@ import org.cocoa4android.ns.NSMutableArray;
 import org.cocoa4android.ns.NSSet;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -322,6 +323,7 @@ public class UIView extends UIResponder{
 		}
 		params.leftMargin = (int)(x);
 		params.topMargin = (int)(y);
+		
 		this.view.setLayoutParams(params);
 	}
 	
@@ -368,6 +370,16 @@ public class UIView extends UIResponder{
 		this.transform = transform;
 	}
 	
+	public void draw(){
+		
+	}
+	// Only override drawRect: if you perform custom drawing.
+	// An empty implementation adversely affects performance during animation.
+	protected void drawRect(CGRect rect)
+	{
+	    // Drawing code
+	}
+	
 	//================================================================================
     // AutoResizing
     //================================================================================
@@ -377,15 +389,16 @@ public class UIView extends UIResponder{
 	public int autoresizingMask() {
 		return autoresizingMask;
 	}
-	//FIXME  cannot realize the whole function because the super views' frame changes
-	public void setAutoresizingMask(int autoresizingMask) {
+	protected void setAutoresizingMask(int autoresizingMask) {
+		//TODO  reCaculate it in layout method and change this to public 
+		/*
 		if (autoresizingMask!=this.autoresizingMask) {
 			this.autoresizingMask = autoresizingMask;
 			if (this.frame!=null) {
 				this.setFrame(frame);
 			}
 		}
-		
+		*/
 	}
 	private boolean isAutoresizing(int autoresizing){
 		return (this.autoresizingMask&autoresizing)>0;
@@ -609,6 +622,33 @@ public class UIView extends UIResponder{
 		}
 		public void setAnchorPoint(CGPoint anchorPoint){
 			this.anchorPoint = anchorPoint;
+		}
+	}
+	
+	
+	public class CocoaRelativeLayout extends RelativeLayout{
+
+		public CocoaRelativeLayout(Context context) {
+			super(context);
+		}
+		@Override
+		protected void onDraw(Canvas canvas) {
+			super.onDraw(canvas);
+			UIView.this.draw();
+	    }
+		@Override
+		protected void onLayout(boolean changed, int l, int t, int r, int b){
+			int count = getChildCount();
+
+	        for (int i = 0; i < count; i++) {
+	            View child = getChildAt(i);
+	            //remove all 
+	            if (child.getVisibility() == VISIBLE) {
+	            	UIView childView = (UIView) child.getTag();
+	            	CGRect frame = childView.frame();
+	            	child.layout((int)frame.origin.x+20, (int)frame.origin.y, (int)(frame.origin.x+frame.size.width), (int)(frame.origin.y+frame.size.height));
+	            }
+	        }
 		}
 	}
 	

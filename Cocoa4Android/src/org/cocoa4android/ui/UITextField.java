@@ -59,14 +59,14 @@ public class UITextField extends UIView {
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				if (event.getAction()!=KeyEvent.ACTION_DOWN)
-                    return true;
+                    return YES;
 				
 				if (keyCode == KeyEvent.KEYCODE_ENTER) {
 					if (delegate!=null) {
 						return delegate.textFieldShouldReturn(UITextField.this);
 					}
 				}
-				return true;
+				return NO;
 			}
 		});
 		this.textField.setOnEditorActionListener(new OnEditorActionListener() {

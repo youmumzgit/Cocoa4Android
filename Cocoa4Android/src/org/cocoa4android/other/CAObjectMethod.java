@@ -63,15 +63,17 @@ public class CAObjectMethod{
 	}
 	public void invoke(Object sender){
 		try {
-			Object[] params = this.method.getParameterTypes();
-			if(params.length==1){
-				if(this.data==null){
-					this.method.invoke(target, new Object[]{sender});
-				}else{
-					this.method.invoke(target, new Object[]{data});
+			if (this.method!=null) {
+				Object[] params = this.method.getParameterTypes();
+				if(params.length==1){
+					if(this.data==null){
+						this.method.invoke(target, new Object[]{sender});
+					}else{
+						this.method.invoke(target, new Object[]{data});
+					}
+				}else if(params.length==0){
+					this.method.invoke(target, (Object[]) null);
 				}
-			}else if(params.length==0){
-				this.method.invoke(target, (Object[]) null);
 			}
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();

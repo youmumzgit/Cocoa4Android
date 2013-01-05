@@ -18,6 +18,7 @@ package org.cocoa4android.ui;
 import org.cocoa4android.cg.CGRect;
 
 
+import android.content.Context;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
@@ -62,7 +63,7 @@ public class UIImageView extends UIView {
 		this.setImage(image);
 	}
 	public UIImageView(){
-		imageView = new ImageView(this.context);
+		imageView = new CocoaImageView(this.context);
 		//fix me
 		imageView.setScaleType(ImageView.ScaleType.FIT_XY); 
 		
@@ -90,11 +91,16 @@ public class UIImageView extends UIView {
 		if(image!=null){
 			if(image.getResId()!=0){
 				imageView.setImageResource(image.getResId());
-				//imageView.setBackgroundResource(image.getResId());
 			}else{
 				imageView.setImageDrawable(image.getDrawable());
-				//imageView.setBackgroundDrawable(image.getDrawable());
 			}
 		}
+	}
+	public class CocoaImageView extends ImageView{
+
+		public CocoaImageView(Context context) {
+			super(context);
+		}
+		
 	}
 }

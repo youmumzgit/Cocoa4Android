@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 chao
+ * Copyright (C) 2012 chao,Wu Tong
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@ import org.cocoa4android.ui.UITableViewCell.UITableViewCellShapeType;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.MotionEvent;
@@ -77,7 +78,7 @@ public class UITableView extends UIView {
 	public UITableView(UITableViewStyle style) {
 		
 		this.style = style;
-		listView = new CAListView(context);
+		listView = new CocoaListView(context);
 		listView.setBackgroundColor(Color.GRAY);
 		listView.setDrawingCacheBackgroundColor(Color.WHITE);
 		listView.setCacheColorHint(0);
@@ -264,6 +265,7 @@ public class UITableView extends UIView {
 			this.setSeparatorStyle(cellSeparatorStyle);
 		}
 	}
+	//FIXME no animation
 	public void insertRowsAtIndexPaths(NSArray indexPaths,UITableViewRowAnimation animation) {
 		NSIndexPath indexPath = null;
 		NSIndexPath tmpIndexPath = null;
@@ -305,7 +307,7 @@ public class UITableView extends UIView {
 		}
 		this.sourceChanged(mappingList);
 	}
-	
+	//FIXME no animation
 	public void deleteRowsAtIndexPaths(NSArray indexPaths,UITableViewRowAnimation animation) {
 		NSIndexPath indexPath = null;
 		mappingList.indexOf(indexPath);
@@ -402,8 +404,8 @@ public class UITableView extends UIView {
 	    UITableViewRowAnimationMiddle,          // available in iOS 3.2.  attempts to keep cell centered in the space it will/did occupy
 	    UITableViewRowAnimationAutomatic        // available in iOS 5.0.  chooses an appropriate animation style for you
 	}
-	public class CAListView extends ListView{
-		public CAListView(Context context) {
+	public class CocoaListView extends ListView{
+		public CocoaListView(Context context) {
 			super(context);
 		}
 		private int currX;
@@ -449,6 +451,11 @@ public class UITableView extends UIView {
 			}
 			return super.onTouchEvent(event);
 	    } 
+		@Override
+		protected void onDraw(Canvas canvas) {
+			super.onDraw(canvas);
+			UITableView.this.draw();
+	    }
 	}
 	public class refreshableAdapter extends BaseAdapter{
 		public List<NSIndexPath> mappingList;

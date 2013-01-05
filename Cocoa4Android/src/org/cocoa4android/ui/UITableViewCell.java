@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 chao
+ * Copyright (C) 2012 chao,Wu Tong
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
