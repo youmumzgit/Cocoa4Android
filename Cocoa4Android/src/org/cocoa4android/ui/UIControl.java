@@ -73,7 +73,11 @@ public class UIControl extends UIView {
 		if (controlEvent==UIControlEvent.UIControlEventTouchDown) {
 			touchDownHandlerCount++;
 		}
-		ams.add(new CAObjectMethod(target,selector));
+		CAObjectMethod om = new CAObjectMethod(target,selector);
+		if (om.getMethod()!=null) {
+			ams.add(om);
+		}
+		
 	}
 	public void removeTarget(Object target,String selector,UIControlEvent controlEvent){
 		ArrayList<CAObjectMethod> oms = callbacks.get(controlEvent);

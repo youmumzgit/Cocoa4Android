@@ -111,11 +111,16 @@ public class UIView extends UIResponder{
 	}
 	
 	public void setBackgroundImage(UIImage backgroundImage){
-		if(backgroundImage.getResId()!=0){
-			this.getView().setBackgroundResource(backgroundImage.getResId());
-		}else{
-			this.getView().setBackgroundDrawable(backgroundImage.getDrawable());
+		if (backgroundImage==null) {
+			this.getView().setBackgroundDrawable(null);
+		}else {
+			if(backgroundImage.getResId()!=0){
+				this.getView().setBackgroundResource(backgroundImage.getResId());
+			}else{
+				this.getView().setBackgroundDrawable(backgroundImage.getDrawable());
+			}
 		}
+		
 	}
 	public void bringSubviewToFront(UIView view){
 		if(this.isViewGroup()){

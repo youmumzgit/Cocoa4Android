@@ -104,7 +104,18 @@ public class UIViewController extends NSObject{
 	}
 
 
-
+	private UITabBarItem tabBarItem = new UITabBarItem("Label",null,0);
+	
+	protected void setTabBarItem(UITabBarItem tabBarItem){
+		this.tabBarItem = tabBarItem;
+		if (this.tabBarController!=null) {
+			this.tabBarController.setTabBarItem(tabBarItem, this);
+		}
+	}
+	public UITabBarItem tabBarItem() {
+		return this.tabBarItem;
+	}
+	
 	public UITabBarController tabBarController() {
 		return tabBarController;
 	}

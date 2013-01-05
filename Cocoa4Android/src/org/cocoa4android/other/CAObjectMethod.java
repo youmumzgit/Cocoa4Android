@@ -43,6 +43,7 @@ public class CAObjectMethod{
 				break;
 			}
 		}
+		
 		this.setMethod(m);
 	}
 	public CAObjectMethod(Object target,String selector,Object data){

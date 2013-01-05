@@ -18,6 +18,7 @@ package org.cocoa4android.ui;
 
 import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.ns.NSArray;
+import org.cocoa4android.ns.NSMutableArray;
 
 public class UITabBarController extends UIViewController {
 
@@ -39,9 +40,8 @@ public class UITabBarController extends UIViewController {
 	}
 	
 	private void initTabBar(){
-		//default set tabBar 49
 		tabBar = new UITabBar();
-
+		tabBar.tabBarController = this;
 		this.view.addSubview(tabBar);
 	}
 	public NSArray getViewControllers() {
@@ -51,15 +51,35 @@ public class UITabBarController extends UIViewController {
 	public void setViewControllers(NSArray viewControllers) {
 		if(viewControllers!=null&&viewControllers.count() > 0){
 			this.viewControllers = viewControllers;
-			
+			NSMutableArray items = NSMutableArray.array();
 			for(int i = 0;i<viewControllers.count();i++){
 				UIViewController viewController = (UIViewController) viewControllers.objectAtIndex(i);
 				viewController.setTabBarController(this);
+				items.addObject(viewController.tabBarItem());
 			}
+			this.tabBar.setItems(items);
 			this.loadViewController(0);
 			//default select the first one
 			//this.setSelectedIndex(0);
 			this.selectedIndex = 0;
+			
+			UITabBarItem item = (UITabBarItem) items.objectAtIndex(0);
+			this.tabBar.setSelectedItem(item);
+			item.itemButton.setSelected(YES);
+		}
+	}
+	void setTabBarItem(UITabBarItem tabBarItem,UIViewController viewController){
+		int changeIndex = -1;
+		if(viewControllers!=null){
+			for(int i = 0;i<viewControllers.count();i++){
+				if (viewController==viewControllers.objectAtIndex(i)) {
+					changeIndex = i;
+					break;
+				}
+			}
+		}
+		if (changeIndex!=-1) {
+			this.tabBar.setItemAtIndex(tabBarItem, changeIndex);
 		}
 	}
 	private boolean loadViewController(int index){

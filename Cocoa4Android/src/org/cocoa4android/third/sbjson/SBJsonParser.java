@@ -48,14 +48,14 @@ public class SBJsonParser extends NSObject {
 				String value = arJsonArray.getString(i).trim();
 				if(value.startsWith("[")){
 					NSObject nsArray = SBJsonParser.parseArray(value);
-					array.add(nsArray);
+					array.addObject(nsArray);
 				}else if(value.startsWith("{")){
 					NSObject nsDictionary = SBJsonParser.parseDictionary(value);
-					array.add(nsDictionary);
+					array.addObject(nsDictionary);
 				}else if(!value.toLowerCase().equals("null")){
-					array.add(value);
+					array.addObject(value);
 				}else{
-					array.add(null);
+					array.addObject(null);
 				}
 			}
 			

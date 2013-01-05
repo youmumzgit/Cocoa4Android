@@ -20,7 +20,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 
-public class NSArray extends NSObject implements Collection<Object>{
+public class NSArray extends NSObject{
 	ArrayList<Object> list = null;
 	
 	/**
@@ -84,60 +84,7 @@ public class NSArray extends NSObject implements Collection<Object>{
 	}
 	
 	
-	@Override
-	public boolean add(Object object) {
-		return list.add(object);
-	}
-	@Override
-	public boolean addAll(Collection<? extends Object> arg0) {
-		return list.addAll(arg0);
-	}
-	@Override
-	public void clear() {
-		list.clear();
-	}
 	
-	@Override
-	public boolean contains(Object object) {
-		return list.contains(object);
-	}
-	@Override
-	public boolean containsAll(Collection<?> arg0) {
-		return list.containsAll(arg0);
-	}
-	@Override
-	public boolean isEmpty() {
-		return list.isEmpty();
-	}
-	@Override
-	public Iterator<Object> iterator() {
-		return list.iterator();
-	}
-	@Override
-	public boolean remove(Object object) {
-		return list.remove(object);
-	}
-	@Override
-	public boolean removeAll(Collection<?> arg0) {
-		
-		return list.removeAll(arg0);
-	}
-	@Override
-	public boolean retainAll(Collection<?> arg0) {
-		return false;
-	}
-	@Override
-	public int size() {
-		return list.size();
-	}
-	@Override
-	public Object[] toArray() {
-		return list.toArray();
-	}
-	@Override
-	public <T> T[] toArray(T[] array) {
-		return list.toArray(array);
-	}
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < this.count(); i++) {

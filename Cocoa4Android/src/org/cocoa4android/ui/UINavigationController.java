@@ -64,7 +64,7 @@ public class UINavigationController extends UIViewController {
 		BitmapDrawable bd = new BitmapDrawable(bitmap);  
 		bd.setTileModeX(TileMode.REPEAT);
 		bd.setDither(true);  
-		navigationBar.getView().setBackgroundDrawable(bd); 
+		navigationBar.setBackgroundImage(new UIImage(bd.getBitmap()));
 		this.view.addSubview(navigationBar);
 		
 		int halfWidth = ((int)appFrame.size.width)>>1;
@@ -75,6 +75,7 @@ public class UINavigationController extends UIViewController {
 		titleLabel.getLabel().setShadowLayer(0.4f, 0, -1, 0x55000000);
 		navigationBar.addSubview(titleLabel);
 	}
+	//FIXME no animation on buttons and labels
 	private void invalidateBackButton(){
 		if (stack.size()>1&&!navigationBarHidden) {
 			if (backButton==null) {

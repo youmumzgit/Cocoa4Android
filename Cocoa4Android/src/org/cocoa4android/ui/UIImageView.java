@@ -19,6 +19,7 @@ import org.cocoa4android.cg.CGRect;
 
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
@@ -26,6 +27,9 @@ import android.widget.RelativeLayout.LayoutParams;
 public class UIImageView extends UIView {
 	
 	protected ImageView imageView;
+	public ImageView getImageView() {
+		return imageView;
+	}
 	private UIImage image;
 	private UIImage highlightedImage;
 	
@@ -61,7 +65,9 @@ public class UIImageView extends UIView {
 	public UIImageView(UIImage image){
 		this();
 		this.setImage(image);
+		this.setFrame(CGRectMake(0, 0, image.size().width, image.size().height));
 	}
+	
 	public UIImageView(){
 		imageView = new CocoaImageView(this.context);
 		//fix me
@@ -79,6 +85,7 @@ public class UIImageView extends UIView {
 		//FIXME the imageView suppose to keepAspectRatio but the position will be moved and leave gaps
 		//this.keepAspectRatio = YES;
 	}
+	
 	public UIImageView(CGRect frame){
 		this();
 		this.setFrame(frame);
@@ -100,6 +107,11 @@ public class UIImageView extends UIView {
 
 		public CocoaImageView(Context context) {
 			super(context);
+		}
+		@Override
+		protected void onDraw(Canvas canvas){
+			super.onDraw(canvas);
+			UIImageView.this.draw();
 		}
 		
 	}

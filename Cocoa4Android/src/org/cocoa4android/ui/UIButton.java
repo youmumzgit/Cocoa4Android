@@ -45,6 +45,9 @@ public class UIButton extends UIControl {
 		this.initTitleLabel();
 		return titleLabel;
 	}
+	public UIImageView imageView(){
+		return imageView;
+	}
 	public UIButton(){
 		super();
 		imageView = new UIImageView();
@@ -154,7 +157,7 @@ public class UIButton extends UIControl {
 		}else{
 			backgroundImages.put(state, backgroundImage);
 			if(isCurrentState(state)){
-				imageView.setBackgroundImage(backgroundImage);
+				super.setBackgroundImage(backgroundImage);
 			}
 		}
 	}
@@ -177,7 +180,7 @@ public class UIButton extends UIControl {
 		}
 		
 		
-		//state Changed
+		//State Changed
 		if(currentState!=state){
 			UIImage image = currentImage();
 			if(image!=null){
@@ -185,7 +188,11 @@ public class UIButton extends UIControl {
 			}
 			UIImage backgroundImage = currentBackgroundImage();
 			if(backgroundImage!=null){
-				imageView.setBackgroundImage(backgroundImage);
+				super.setBackgroundImage(backgroundImage);
+			}else{
+				if (state==UIControlState.UIControlStateNormal) {
+					super.setBackgroundImage(null);
+				}
 			}
 			
 			String title = currentTitle();

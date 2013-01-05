@@ -192,10 +192,10 @@ public class NSString extends NSObject {
 				string= content.substring(start,end+1);
 				if (string.equals("/")) {
 					if (start==0 || end==content.length()-1) {
-						pathArray.add('/');
+						pathArray.addObject('/');
 					}
 				}else {
-					pathArray.add(string);
+					pathArray.addObject(string);
 				} 
 				start = i+1;
 			}
