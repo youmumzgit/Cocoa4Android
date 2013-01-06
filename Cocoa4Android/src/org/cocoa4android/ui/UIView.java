@@ -482,7 +482,7 @@ public class UIView extends UIResponder{
 			animation.setStartTime((long) (AnimationUtils.currentAnimationTimeMillis()+UIView.delay*1000));
 			//animation.startNow();
 			animation.start();
-			UIApplication.sharedApplication().getWindow().getView().invalidate();
+			UIApplication.sharedApplication().getWindow().getView().postInvalidate();
 		}
 		
 		animationBegan = NO;
