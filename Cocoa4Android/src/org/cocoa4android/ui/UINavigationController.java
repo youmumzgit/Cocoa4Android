@@ -106,6 +106,7 @@ public class UINavigationController extends UIViewController {
 				backButton.setHidden(YES);
 			}
 		}
+		titleLabel.setText(toViewController.title());
 	}
 	public void setTitle(String title){
 		titleLabel.setText(title);
