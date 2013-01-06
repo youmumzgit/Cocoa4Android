@@ -42,9 +42,8 @@ public abstract class UIAppDelegate extends Activity implements AppDelegate{
 	@Override
     public void onCreate(Bundle savedInstanceState) {
 		//work before onCreate
-		//setTheme(android.R.style.Theme_Translucent_NoTitleBar);
+		setTheme(android.R.style.Theme_Translucent_NoTitleBar);
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.main);
         UIApplication.sharedApplication().setContext(this);
         UIApplication.sharedApplication().setDelegate(this);
         

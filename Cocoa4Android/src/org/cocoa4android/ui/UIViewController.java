@@ -16,7 +16,6 @@
 package org.cocoa4android.ui;
 
 import org.cocoa4android.cg.CGRect;
-import org.cocoa4android.ns.NSObject;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +23,7 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.view.animation.Animation.AnimationListener;
 
-public class UIViewController extends NSObject{
+public class UIViewController extends UIResponder{
 	protected static boolean isTransition = false;
 	
 	protected UIView view;
