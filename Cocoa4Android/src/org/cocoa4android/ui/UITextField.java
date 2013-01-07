@@ -33,7 +33,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-import org.cocoa4android.ns.NSRange;
 import org.cocoa4android.ns.NSTextAlignment;
 
 

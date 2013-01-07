@@ -27,7 +27,10 @@ public class UIFont extends NSObject {
 	public UIFont() {
 		font = Typeface.DEFAULT;
 	}
-	
+	public UIFont(float fontSize) {
+		this();
+		this.fontSize = fontSize;
+	}
 	public UIFont(String fontName,float fontSize) {
 		this.fontSize = fontSize;
 		font = Typeface.create(fontName, Typeface.NORMAL);
@@ -40,7 +43,23 @@ public class UIFont extends NSObject {
 	public static UIFont fontWithName(String fontName,float fontSize) {
 		return new UIFont(fontName, fontSize);
 	}
-	
+	public static UIFont systemFontOfSize(float fontSize){
+		return new UIFont(fontSize);
+	}
+	public static UIFont boldSystemFontOfSize(float fontSize){
+		UIFont f = new UIFont(fontSize);
+		f.font = Typeface.DEFAULT_BOLD;
+		return f;
+	}
+	public static UIFont italicSystemFontOfSize(float fontSize){
+		UIFont f = new UIFont(fontSize);
+		f.font = Typeface.defaultFromStyle(Typeface.ITALIC);
+		return f;
+	}
+	public static UIFont fontWithSize(float fontSize){
+		UIFont f = new UIFont(fontSize);
+		return f;
+	}
 	public Typeface getFont() {
 		return font;
 	}

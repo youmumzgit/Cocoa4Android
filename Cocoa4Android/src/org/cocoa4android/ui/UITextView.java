@@ -56,6 +56,13 @@ public class UITextView extends UIView {
 		this.editable = editable;
 		this.editText.setEditable(editable);
 	}
+	public void setFont(UIFont font) {
+		this.setFontSize(font.fontSize);
+		this.editText.setTypeface(font.getFont());
+	}
+	public void setFontSize(float fontSize){
+		this.editText.setTextSize(fontSize*UIScreen.mainScreen().getDensityText());
+	}
 	public boolean hasText(){
 		return editText.getText().length()>0;
 	}

@@ -20,6 +20,10 @@ import org.cocoa4android.third.sbjson.SBJsonParser;
 public class NSString extends NSObject {
 	protected String content = null;
 	
+	public static NSString stringWithJavaString(String string){
+		return new NSString(string);
+	}
+	
 	public NSString(){
 		this.content = "";
 	}

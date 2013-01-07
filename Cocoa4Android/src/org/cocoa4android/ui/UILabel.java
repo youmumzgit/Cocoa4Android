@@ -59,7 +59,13 @@ public class UILabel extends UIView {
 	public NSTextAlignment textAlignment() {
 		return textAlignment;
 	}
-	
+	public void setFont(UIFont font) {
+		this.setFontSize(font.fontSize);
+		this.label.setTypeface(font.getFont());
+	}
+	public void setFontSize(float fontSize){
+		this.label.setTextSize(fontSize*UIScreen.mainScreen().getDensityText());
+	}
 	
 	public void setLabel(TextView label) {
 		this.label = label;
