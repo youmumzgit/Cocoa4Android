@@ -84,7 +84,7 @@ public class UIControl extends UIView {
 		if(oms!=null){
 			for(int i=0;i<oms.size();i++){
 				CAObjectMethod om = oms.get(i);
-				if (om.getTarget()==target&&om.getSelector().equals(selector)) {
+				if ((target==null&&selector==null)||(om.getTarget()==target&&om.getSelector().equals(selector))) {
 					oms.remove(i);
 					if (controlEvent==UIControlEvent.UIControlEventTouchDown) {
 						touchDownHandlerCount--;

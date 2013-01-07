@@ -35,7 +35,7 @@ public class UIPageControl extends UIView{
 		super.setFrame(frame);
 		this.center = null;
 	}
-	private NSMutableArray dots = NSMutableArray.array(10);
+	private NSMutableArray dots = NSMutableArray.arrayWithCapacity(10);
 	
 	
 	public int getNumberOfPages() {

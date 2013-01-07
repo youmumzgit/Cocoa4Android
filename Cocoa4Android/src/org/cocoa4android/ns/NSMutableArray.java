@@ -32,7 +32,7 @@ public class NSMutableArray extends NSArray {
 		return new NSMutableArray(array);
 	}
 	
-	public static NSMutableArray array(int capacity){
+	public static NSMutableArray arrayWithCapacity(int capacity){
 		return new NSMutableArray(capacity);
 	}
 	public NSMutableArray(NSArray array){

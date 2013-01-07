@@ -138,7 +138,7 @@ public class UIView extends UIResponder{
 		NSMutableArray subViews = null;
 		if(this.isViewGroup()){
 			ViewGroup vg = (ViewGroup)this.view;
-			subViews = NSMutableArray.array(vg.getChildCount());
+			subViews = NSMutableArray.arrayWithCapacity(vg.getChildCount());
 			for (int i = 0; i < vg.getChildCount(); i++) {
 				subViews.addObject(new UIView(vg.getChildAt(i)));
 			}
