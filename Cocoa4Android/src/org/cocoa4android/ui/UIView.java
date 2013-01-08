@@ -25,7 +25,6 @@ import org.cocoa4android.ns.NSMutableArray;
 import org.cocoa4android.ns.NSSet;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -140,7 +139,7 @@ public class UIView extends UIResponder{
 			ViewGroup vg = (ViewGroup)this.view;
 			subViews = NSMutableArray.arrayWithCapacity(vg.getChildCount());
 			for (int i = 0; i < vg.getChildCount(); i++) {
-				subViews.addObject(new UIView(vg.getChildAt(i)));
+				subViews.addObject(vg.getChildAt(i).getTag());
 			}
 		}
 		return subViews;
@@ -375,15 +374,6 @@ public class UIView extends UIResponder{
 		this.transform = transform;
 	}
 	
-	public void draw(){
-		
-	}
-	// Only override drawRect: if you perform custom drawing.
-	// An empty implementation adversely affects performance during animation.
-	protected void drawRect(CGRect rect)
-	{
-	    // Drawing code
-	}
 	
 	//================================================================================
     // AutoResizing

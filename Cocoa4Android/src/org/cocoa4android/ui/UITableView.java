@@ -454,7 +454,6 @@ public class UITableView extends UIView {
 		@Override
 		protected void onDraw(Canvas canvas) {
 			super.onDraw(canvas);
-			UITableView.this.draw();
 	    }
 	}
 	public class refreshableAdapter extends BaseAdapter{
