@@ -45,7 +45,7 @@ import android.widget.ScrollView;
 
 public class UITableView extends UIView {
 	private ListView listView = null;
-	private refreshableAdapter adapter = null;
+	private CocoaAdapter adapter = null;
 	private UITableViewDataSource dataSource = null;
 	private UITableViewDelegate delegate = null;
 	private boolean scrollEnabled = YES;
@@ -161,15 +161,10 @@ public class UITableView extends UIView {
 	public UITableViewStyle style() {
 		return style;
 	}
-	
-	//FIXME should call setAdapter at the beginning of the display
+
 	@Override
 	protected void setSuperview(UIView superView){
 		super.setSuperview(superView);
-		if (adapter==null) {
-			adapter = new refreshableAdapter(mappingList);
-			listView.setAdapter(adapter);
-		}
 	}
 	
 	@Override
@@ -412,7 +407,14 @@ public class UITableView extends UIView {
 		private int currY;
 		private int prevX;
 		private int prevY;
-		
+		@Override
+		protected void onLayout(boolean changed, int l, int t, int r, int b){
+			if (adapter==null) {
+				adapter = new CocoaAdapter(mappingList);
+				listView.setAdapter(adapter);
+			}
+			super.onLayout(changed, l, t, r, b);
+		}
 		protected void onSizeChanged(int xNew, int yNew, int xOld, int yOld){
 			super.onSizeChanged(xNew, yNew, xOld, yOld);
 		}
@@ -456,9 +458,9 @@ public class UITableView extends UIView {
 			super.onDraw(canvas);
 	    }
 	}
-	public class refreshableAdapter extends BaseAdapter{
+	public class CocoaAdapter extends BaseAdapter{
 		public List<NSIndexPath> mappingList;
-		public refreshableAdapter(List<NSIndexPath> mappingList){
+		public CocoaAdapter(List<NSIndexPath> mappingList){
 			this.mappingList = mappingList;
 		}
 		
