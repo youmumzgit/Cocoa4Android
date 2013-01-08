@@ -85,7 +85,7 @@ public class UINavigationController extends UIViewController {
 				backButton.setKeepAspectRatio(YES);
 				backButton.setAutoHighlight(YES);
 				backButton.setImage(UIImage.imageNamed(R.drawable.zz_c4a_navigationbar_return));
-				backButton.addTarget(this, "popViewController", UIControlEvent.UIControlEventTouchUpInside);
+				backButton.addTarget(this, selector("popViewController"), UIControlEvent.UIControlEventTouchUpInside);
 				backButton.setCenter(CGPointMake(appFrame.size.width/12.0f,((int)navigationBarHeight)>>1));
 				backButton.titleLabel().setTextAlignment(NSTextAlignment.NSTextAlignmentCenter);
 				backButton.titleLabel().setFontSize(7);

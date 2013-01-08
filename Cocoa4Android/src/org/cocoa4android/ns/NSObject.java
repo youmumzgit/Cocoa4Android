@@ -53,9 +53,6 @@ public class NSObject {
 	public boolean isArray(){
 		return NSArray.class.isInstance(this);
 	}
-	
-	
-	
 	//================================================================================
     // CG Method
     //================================================================================
@@ -121,5 +118,11 @@ public class NSObject {
 		
 		
 		return minx<=maxx&&miny<=maxy;
+	}
+	protected NSClass class2NSClass(Class<? extends Object> class1) {
+		return new NSClass(class1);
+	}
+	protected String selector(String selector) {
+		return selector;
 	}
 }

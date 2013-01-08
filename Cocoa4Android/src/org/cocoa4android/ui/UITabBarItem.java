@@ -29,7 +29,7 @@ public class UITabBarItem extends UIBarItem {
 		itemButton.setTitle(this.title());
 		itemButton.setTitleColor(UIColor.grayColor());
 		itemButton.setTitleColor(UIColor.whiteColor(), UIControlState.UIControlStateSelected);
-		itemButton.addTarget(this, "select", UIControlEvent.UIControlEventTouchUpInside);
+		itemButton.addTarget(this, selector("select"), UIControlEvent.UIControlEventTouchUpInside);
 		if (this.image()!=null) {
 			itemButton.setImage(this.image().createTabBarImage(NO));
 			itemButton.setImage(this.image().createTabBarImage(YES), UIControlState.UIControlStateSelected);

@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.cocoa4android.cg.CGRect;
-import org.cocoa4android.other.CAObjectMethod;
+import org.cocoa4android.ns.NSInvocation;
+import org.cocoa4android.ns.NSMethodSignature;
 
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,7 +31,7 @@ public class UIControl extends UIView {
 	
 	protected int state = UIControlState.UIControlStateNormal;
 	
-	protected HashMap<UIControlEvent,ArrayList<CAObjectMethod>> callbacks = new HashMap<UIControlEvent,ArrayList<CAObjectMethod>>();
+	protected HashMap<UIControlEvent,ArrayList<NSInvocation>> callbacks = new HashMap<UIControlEvent,ArrayList<NSInvocation>>();
 	public UIControl() {
 		super();
 	}
@@ -54,38 +55,43 @@ public class UIControl extends UIView {
 		}
 	}
 	private void callback(UIControlEvent event){
-		ArrayList<CAObjectMethod> oms = callbacks.get(event);
-		if(oms!=null){
-			for(int i=0;i<oms.size();i++){
-				CAObjectMethod om = oms.get(i);
-				om.invoke(UIControl.this);
+		ArrayList<NSInvocation> invocations = callbacks.get(event);
+		if(invocations!=null){
+			for(int i=0;i<invocations.size();i++){
+				NSInvocation invocation = invocations.get(i);
+				if (invocation.getParamsCount()==1) {
+					invocation.setArgument(UIControl.this, 2);
+				}
+				invocation.invoke();
 			}
 		}
 	}
 	private int touchDownHandlerCount = 0;
 	
 	public void addTarget(Object target,String selector,UIControlEvent controlEvent){
-		ArrayList<CAObjectMethod> ams = callbacks.get(controlEvent);
-		if(ams==null){
-			ams = new ArrayList<CAObjectMethod>();
-			callbacks.put(controlEvent,ams);
+		ArrayList<NSInvocation> invocations = callbacks.get(controlEvent);
+		if(invocations==null){
+			invocations = new ArrayList<NSInvocation>();
+			callbacks.put(controlEvent,invocations);
 		}
 		if (controlEvent==UIControlEvent.UIControlEventTouchDown) {
 			touchDownHandlerCount++;
 		}
-		CAObjectMethod om = new CAObjectMethod(target,selector);
-		if (om.getMethod()!=null) {
-			ams.add(om);
+		NSMethodSignature sig = class2NSClass(target.getClass()).instanceMethodSignatureForSelector(selector);
+		if (sig!=null) {
+			NSInvocation invocation = NSInvocation.invocationWithMethodSignature(sig);
+			invocation.setTarget(target);
+			invocations.add(invocation);
 		}
 		
 	}
 	public void removeTarget(Object target,String selector,UIControlEvent controlEvent){
-		ArrayList<CAObjectMethod> oms = callbacks.get(controlEvent);
-		if(oms!=null){
-			for(int i=0;i<oms.size();i++){
-				CAObjectMethod om = oms.get(i);
-				if ((target==null&&selector==null)||(om.getTarget()==target&&om.getSelector().equals(selector))) {
-					oms.remove(i);
+		ArrayList<NSInvocation> invocations = callbacks.get(controlEvent);
+		if(invocations!=null){
+			for(int i=0;i<invocations.size();i++){
+				NSInvocation invocation = invocations.get(i);
+				if ((target==null&&selector==null)||(invocation.target()==target&&invocation.selector().equals(selector))) {
+					invocations.remove(i);
 					if (controlEvent==UIControlEvent.UIControlEventTouchDown) {
 						touchDownHandlerCount--;
 					}
