@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.cocoa4android.third.sbjson;
+package org.cocoa4android.util.sbjson;
 
 import java.util.Iterator;
 

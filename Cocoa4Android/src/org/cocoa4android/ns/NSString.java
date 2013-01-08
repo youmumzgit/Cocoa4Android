@@ -15,7 +15,7 @@
  */
 package org.cocoa4android.ns;
 
-import org.cocoa4android.third.sbjson.SBJsonParser;
+import org.cocoa4android.util.sbjson.SBJsonParser;
 
 public class NSString extends NSObject {
 	protected String content = null;

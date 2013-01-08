@@ -19,7 +19,7 @@ import org.cocoa4android.cg.CGAffineTransform;
 import org.cocoa4android.cg.CGPoint;
 import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.cg.CGSize;
-import org.cocoa4android.third.sbjson.SBJsonWriter;
+import org.cocoa4android.util.sbjson.SBJsonWriter;
 
 import android.util.Log;
 
