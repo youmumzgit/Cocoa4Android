@@ -32,13 +32,13 @@ public class NSRunLoop extends NSObject {
 	}
 	//FIXME didn't use the mode
 	public void addTimer(NSTimer aTimer,String mode){
-		final Handler handler = new MyHandler(looper,aTimer);
+		final Handler handler = new CocoaHandler(looper,aTimer);
 		aTimer.handler = handler;
         aTimer.startTimer();
 	}
-	static class MyHandler extends Handler{
+	static class CocoaHandler extends Handler{
 		private NSTimer timer;
-		public MyHandler(Looper looper,NSTimer timer) {
+		public CocoaHandler(Looper looper,NSTimer timer) {
 			super(looper);
 			this.timer = timer;
 		}

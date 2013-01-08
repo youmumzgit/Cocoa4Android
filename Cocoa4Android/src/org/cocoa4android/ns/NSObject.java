@@ -19,6 +19,7 @@ import org.cocoa4android.cg.CGAffineTransform;
 import org.cocoa4android.cg.CGPoint;
 import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.cg.CGSize;
+import org.cocoa4android.ui.UIApplication;
 import org.cocoa4android.util.sbjson.SBJsonWriter;
 
 import android.util.Log;
@@ -123,6 +124,40 @@ public class NSObject {
 		
 		return minx<=maxx&&miny<=maxy;
 	}
+	
+	
+	
+	//================================================================================
+    // Perform Selector
+    //================================================================================
+	public void performSelectorInBackground(String aSelector,Object arg){
+		NSMethodSignature sig = class2NSClass(this.getClass()).instanceMethodSignatureForSelector(aSelector);
+		
+		final NSInvocation invocation = NSInvocation.invocationWithMethodSignature(sig);
+		invocation.setTarget(this);
+		invocation.setArgument(arg, 2);
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				invocation.invoke();
+			}
+		});
+		thread.start();
+	}
+	public void performSelectorOnMainThread(String aSelector,Object arg,boolean wait){
+		NSMethodSignature sig = class2NSClass(this.getClass()).instanceMethodSignatureForSelector(aSelector);
+		
+		final NSInvocation invocation = NSInvocation.invocationWithMethodSignature(sig);
+		invocation.setTarget(this);
+		invocation.setArgument(arg, 2);
+		UIApplication.sharedApplication().getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				invocation.invoke();
+			}
+		});
+	}
+	
 	protected NSClass class2NSClass(Class<? extends Object> class1) {
 		return new NSClass(class1);
 	}

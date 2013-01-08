@@ -39,10 +39,17 @@ public class NSInvocation extends NSObject {
 		arguments[1] = sig.selector;
 	}
 	public void setArgument(Object argumentLocation,int idx) {
-		arguments[idx] = argumentLocation;
+		if (idx<arguments.length) {
+			arguments[idx] = argumentLocation;
+		}
+		
 	}
 	public Object getArgument(int idx){
-		return arguments[idx];
+		if (idx<arguments.length) {
+			return arguments[idx];
+		}else{
+			return null;
+		}
 	}
 	public void invoke(){
 		Object[] args = new Object[arguments.length-2];
