@@ -26,7 +26,7 @@ public class FirstViewController extends UIViewController {
 		nextPageButton.setTitle("ClickMe");
 		nextPageButton.setTitleColor(UIColor.blackColor());
 		nextPageButton.setTitleColor(UIColor.grayColor(), UIControlState.UIControlStateHighlighted);
-		nextPageButton.addTarget(this, "nextButtonClicked", UIControlEvent.UIControlEventTouchUpInside);
+		nextPageButton.addTarget(this, selector("nextButtonClicked:"), UIControlEvent.UIControlEventTouchUpInside);
 		this.view.addSubview(nextPageButton);
 	}
 	
