@@ -43,6 +43,9 @@ public class NSMethodSignature extends NSObject {
 				}
 			}
 		}
+		if (!isValid) {
+			throw new IllegalArgumentException("No Such Method");
+		}
 		return isValid;
 	}
 	

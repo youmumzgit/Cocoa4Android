@@ -1,16 +1,21 @@
 package org.cocoa4android.ns;
 
+import java.util.Timer;
 import java.util.TimerTask;
+
+import android.os.Handler;
+import android.os.Message;
+
 
 
 public class NSTimer extends NSObject {
-	private double timeInterval;
-	private Object target;
-	private String selector;
-	private boolean repeats;
-	private NSInvocation invocation;
-	
-	private TimerTask timerTask;
+	double timeInterval;
+	Object target;
+	String selector;
+	boolean repeats;
+	NSInvocation invocation;
+	Timer timer = new Timer();
+	Handler handler;
 	
 	public NSTimer(double timeInterval,Object target,String selector,Object userInfo,boolean repeats){
 		this.timeInterval = timeInterval;
@@ -19,19 +24,18 @@ public class NSTimer extends NSObject {
 		this.userInfo = userInfo;
 		this.repeats = repeats;
 		NSMethodSignature sig = class2NSClass(target.getClass()).instanceMethodSignatureForSelector(selector);
+		
 		invocation = NSInvocation.invocationWithMethodSignature(sig);
-		timerTask = new TimerTask() {
-			
-			@Override
-			public void run() {
-				invocation.invoke();
-			}
-		};
+		invocation.setTarget(target);
 	}
 	public void fire(){
-		timerTask.run();
+		if (handler!=null) {
+			Message message = new Message();  
+	        message.what = 1;  
+	        handler.sendMessage(message);  
+		}
 	}
-	private NSDate fireDate;
+	private NSDate fireDate = null;
 	public NSDate fireDate() {
 		return fireDate;
 	}
@@ -39,16 +43,17 @@ public class NSTimer extends NSObject {
 		this.fireDate = fireDate;
 	}
 	public void invalidate(){
-		
+		timer.cancel();
+		isValid = NO;
 	}
+	private boolean isValid = YES;
 	public boolean isValid(){
-		return YES;
+		return isValid;
 	}
-	//FIXME start timer
 	public static NSTimer scheduledTimerWithTimeInterval(double timeInterval,Object target,String selector,Object userInfo,boolean repeats)
 	{
 		NSTimer timer = new NSTimer(timeInterval,target,selector,userInfo,repeats);
-		
+		NSRunLoop.currentRunLoop().addTimer(timer, NSDefaultRunLoopMode);
 		return timer;
 	}
 	
@@ -58,5 +63,53 @@ public class NSTimer extends NSObject {
 
 	public Object userInfo() {
 		return userInfo;
+	}
+	void startTimer(){
+		long timeInterval =  (long) (this.timeInterval*1000);
+		if (this.repeats) {
+			if (fireDate==null) {
+				this.timer.schedule(new TimerTask() {
+					
+					@Override
+					public void run() {
+						Message message = new Message();  
+			            message.what = 1;  
+			            handler.sendMessage(message);  
+					}
+				},timeInterval, timeInterval);  
+			}else{
+				this.timer.schedule(new TimerTask() {
+					
+					@Override
+					public void run() {
+						Message message = new Message();  
+			            message.what = 1;  
+			            handler.sendMessage(message);  
+					}
+				},fireDate.getDate(), timeInterval);  
+			}
+		}else{
+			if (fireDate==null) {
+				this.timer.schedule(new TimerTask() {
+					
+					@Override
+					public void run() {
+						Message message = new Message();  
+			            message.what = 1;  
+			            handler.sendMessage(message);  
+					}
+				}, timeInterval);
+			}else{
+				this.timer.schedule(new TimerTask() {
+					
+					@Override
+					public void run() {
+						Message message = new Message();  
+			            message.what = 1;  
+			            handler.sendMessage(message);  
+					}
+				},fireDate.getDate());
+			}
+		}
 	}
 }

@@ -32,7 +32,7 @@ public class NSInvocation extends NSObject {
 	public static NSInvocation invocationWithMethodSignature(NSMethodSignature sig){
 		return new NSInvocation(sig);
 	}
-	public NSInvocation(NSMethodSignature sig){
+	private NSInvocation(NSMethodSignature sig){
 		this.sig = sig;
 		arguments = new Object[sig.numberOfArguments()+2];
 		arguments[0] = target;
