@@ -1,8 +1,5 @@
 package org.cocoa4android.ns;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;

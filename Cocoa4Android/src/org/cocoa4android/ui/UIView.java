@@ -17,6 +17,7 @@ package org.cocoa4android.ui;
 
 import java.lang.reflect.Method;
 
+import org.cocoa4android.ca.CALayer;
 import org.cocoa4android.cg.CGAffineTransform;
 import org.cocoa4android.cg.CGPoint;
 import org.cocoa4android.cg.CGRect;
@@ -25,6 +26,7 @@ import org.cocoa4android.ns.NSMutableArray;
 import org.cocoa4android.ns.NSSet;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -468,9 +470,7 @@ public class UIView extends UIResponder{
 				break;
 			}
 			animation.setRepeatCount(repeatCount);
-			//FIXME delay value not used
 			animation.setStartTime((long) (AnimationUtils.currentAnimationTimeMillis()+UIView.delay*1000));
-			//animation.startNow();
 			animation.start();
 			UIApplication.sharedApplication().getWindow().getView().postInvalidate();
 		}
@@ -620,7 +620,37 @@ public class UIView extends UIResponder{
 		}
 	}
 	
+	//================================================================================
+    // UIViewRendering
+    //================================================================================
 	
+	private CALayer layer = new CALayer(this);
+	public CALayer layer() {
+		return layer;
+	}
+	public void setLayer(CALayer layer) {
+		this.layer = layer;
+	}
+	// Only override drawRect: if you perform custom drawing.
+	// An empty implementation adversely affects performance during animation.
+	protected void drawRect(CGRect rect)
+	{
+	    
+	}
+	protected void draw(Canvas canvas){
+		this.drawRect(this.frame);
+	}
 	
+	public class CocoaRelativeLayout extends RelativeLayout{
+		public CocoaRelativeLayout(Context context) {
+			super(context);
+		}
+
+		@Override
+		protected void onDraw(Canvas canvas){
+			super.onDraw(canvas);
+			UIView.this.draw(canvas);
+		}
+	}
 	
 }
