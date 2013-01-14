@@ -501,48 +501,18 @@ public class UIView extends UIResponder{
 	}
 	private void applyCenter(CGPoint center){
 		if (animationBegan) {
-			CGPoint currentCenter = this.center();
-			float toXDelta = center.x - currentCenter.x;
-			float toYDelta = center.y - currentCenter.y;
-			//TranslateAnimation animation = new TranslateAnimation(0, toXDelta*scaleDensityX, 0, toYDelta*scaleDensityY);
-			TranslateAnimation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 
-																	this.frame.origin.x, 
-																	Animation.RELATIVE_TO_PARENT, 
-																	this.frame.origin.x+toXDelta, 
-																	Animation.RELATIVE_TO_PARENT, 
-																	this.frame.origin.y, 
-																	Animation.RELATIVE_TO_PARENT, 
-																	this.frame.origin.y+toYDelta);
+			CGPoint beforeCenter = this.center();
+			float toXDelta = beforeCenter.x-center.x;
+			float toYDelta = beforeCenter.y-center.y;
+			TranslateAnimation animation = new TranslateAnimation(toXDelta*scaleDensityX, 0, toYDelta*scaleDensityY, 0);
 			this.getView().setAnimation(animation);
 			animation.setFillAfter(YES);
 			animations.addObject(animation);
-			animation.setAnimationListener(new AnimationListener() {
-				
-				@Override
-				public void onAnimationStart(Animation animation) {
-					
-				}
-				
-				@Override
-				public void onAnimationRepeat(Animation animation) {
-					
-				}
-				
-				@Override
-				public void onAnimationEnd(Animation animation) {
-					CGRect frame = UIView.this.frame();
-					frame.origin.x = (int) (UIView.this.center.x-frame.size.width/2);
-					frame.origin.y = (int) (UIView.this.center.y-frame.size.height/2);
-					UIView.this.setFrame(frame);
-					UIView.this.getView().invalidate();
-				}
-			});
-		}else{
-			CGRect frame = this.frame();
-			frame.origin.x = (int) (center.x-frame.size.width/2);
-			frame.origin.y = (int) (center.y-frame.size.height/2);
-			this.setFrame(frame);
 		}
+		CGRect frame = this.frame();
+		frame.origin.x = (int) (center.x-frame.size.width/2);
+		frame.origin.y = (int) (center.y-frame.size.height/2);
+		this.setFrame(frame);
 	}
 	public static boolean areAnimationsEnabled(){
 		return animationsEnabled;
