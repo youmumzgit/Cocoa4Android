@@ -15,6 +15,23 @@
  */
 package org.cocoa4android.ns;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class NSURL {
+	private URL url = null;
 	
+	private NSURL(URL url){
+		this.url = url;
+	}
+	private NSURL(String URLString){
+		try {
+			this.url = new URL(URLString);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+	}
+	public static NSURL URLWithString(String URLString) {
+		return new NSURL(URLString);
+	}
 }

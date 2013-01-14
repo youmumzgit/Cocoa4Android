@@ -36,7 +36,7 @@ public abstract class UIAppDelegate extends Activity implements AppDelegate{
 	protected UIWindow window;
 	
 	protected static void NSLog(String format,Object...args){
-		Log.i("Cocoa4Android",NSString.stringWithFormat(format, args).getString());
+		Log.i("Cocoa4Android",NSString.stringWithFormat(format, args));
 	}
 	
 	@Override

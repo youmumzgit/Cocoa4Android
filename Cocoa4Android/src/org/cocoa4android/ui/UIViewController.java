@@ -59,7 +59,7 @@ public class UIViewController extends UIResponder{
 	protected void viewDidUnload(){
 		
 	}
-	protected void viewDidAppear(Boolean animated){
+	protected void viewDidAppear(boolean animated){
 		
 	}
 	

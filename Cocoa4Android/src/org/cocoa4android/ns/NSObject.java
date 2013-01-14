@@ -37,7 +37,7 @@ public class NSObject {
 	public static final String NSRunLoopCommonModes = "common";
 	
 	protected static void NSLog(String format,Object...args){
-		Log.i("Cocoa4Android",NSString.stringWithFormat(format, args).getString());
+		Log.i("Cocoa4Android",NSString.stringWithFormat(format, args));
 	}
 	
 	public boolean isEqual(NSObject o) {

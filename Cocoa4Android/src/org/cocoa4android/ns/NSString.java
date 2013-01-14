@@ -24,15 +24,15 @@ public class NSString extends NSObject {
 		return new NSString(string);
 	}
 	
-	public NSString(){
+	private NSString(){
 		this.content = "";
 	}
 	
-	public NSString(String string){
+	private NSString(String string){
 		this.content = string;
 	}
 	
-	public NSString(String string,Object ...args){
+	private NSString(String string,Object ...args){
 		this.content = String.format(string, args);
 	}
 	
@@ -41,12 +41,12 @@ public class NSString extends NSObject {
 	}
 	
 	//stringWithFormat
-	public static NSString stringWithFormat(String string,Object ...args){
-		return new NSString(string, args);
+	public static String stringWithFormat(String format,Object ...args){
+		return String.format(format, args);
 	}
 	//stringByAppendingFormat
-	public NSString stringByAppendingFormat(String string,Object ...args){
-		return new NSString(string, args);
+	public String stringByAppendingFormat(String string,String format,Object ...args){
+		return string+String.format(format, args);
 	}
 	//stringByAppendingString
 	public  String stringByAppendingString(String string){
@@ -58,11 +58,6 @@ public class NSString extends NSObject {
 //		return new NSString(string);
 //	}
 	
-	//initWithString
-	public  NSString initWithString(String string) {
-		this.content = string;
-		return this;
-	}
 
 	//subStringFromIndex
 	public String subStringFromIndex(int start){
@@ -235,8 +230,8 @@ public class NSString extends NSObject {
 	public Double doubleValue() {
 		return Double.parseDouble(this.content);
 	}
-	public Boolean boolValue() {
-		return Boolean.parseBoolean(this.content);
+	public boolean boolValue() {
+		return Integer.parseInt(this.content)!=0;
 	}
 	//toString
 	public String toString() 	{
@@ -249,5 +244,34 @@ public class NSString extends NSObject {
 	 */
 	public Object JSONValue(){
 		return SBJsonParser.objectWithString(this.getString());
+	}
+	
+	public class NSStringEncoding{
+		public static final int NSASCIIStringEncoding = 1;		/* 0..127 only */
+		public static final int NSNEXTSTEPStringEncoding = 2;
+		public static final int NSJapaneseEUCStringEncoding = 3;
+		public static final int NSUTF8StringEncoding = 4;
+		public static final int NSISOLatin1StringEncoding = 5;
+		public static final int NSSymbolStringEncoding = 6;
+		public static final int NSNonLossyASCIIStringEncoding = 7;
+		public static final int NSShiftJISStringEncoding = 8;          /* kCFStringEncodingDOSJapanese */
+		public static final int NSISOLatin2StringEncoding = 9;
+		public static final int NSUnicodeStringEncoding = 10;
+		public static final int NSWindowsCP1251StringEncoding = 11;    /* Cyrillic; same as AdobeStandardCyrillic */
+		public static final int NSWindowsCP1252StringEncoding = 12;    /* WinLatin1 */
+		public static final int NSWindowsCP1253StringEncoding = 13;    /* Greek */
+		public static final int NSWindowsCP1254StringEncoding = 14;    /* Turkish */
+		public static final int NSWindowsCP1250StringEncoding = 15;    /* WinLatin2 */
+		public static final int NSISO2022JPStringEncoding = 21;        /* ISO 2022 Japanese encoding for e-mail */
+		public static final int NSMacOSRomanStringEncoding = 30;
+
+		public static final int NSUTF16StringEncoding = NSUnicodeStringEncoding;      /* An alias for NSUnicodeStringEncoding */
+
+		public static final int NSUTF16BigEndianStringEncoding = 0x90000100;          /* NSUTF16StringEncoding encoding with explicit endianness specified */
+		public static final int NSUTF16LittleEndianStringEncoding = 0x94000100;       /* NSUTF16StringEncoding encoding with explicit endianness specified */
+
+		public static final int NSUTF32StringEncoding = 0x8c000100;                   
+		public static final int NSUTF32BigEndianStringEncoding = 0x98000100;          /* NSUTF32StringEncoding encoding with explicit endianness specified */
+		public static final int NSUTF32LittleEndianStringEncoding = 0x9c000100;       /* NSUTF32StringEncoding encoding with explicit endianness specified */
 	}
 }

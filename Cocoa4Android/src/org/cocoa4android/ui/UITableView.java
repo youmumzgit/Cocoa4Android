@@ -239,7 +239,11 @@ public class UITableView extends UIView {
 			selectedView = null;
 		}
 	}
-	
+	public UITableViewCell cellForRowAtIndexPath(NSIndexPath indexPath){
+		int position = mappingList.indexOf(indexPath);
+		
+		return (UITableViewCell) cellsList.get(position);
+	}
 	public void setSeparatorStyle(UITableViewCellSeparatorStyle style) {
 		switch(style) {
 		case UITableViewCellSeparatorStyleNone:
