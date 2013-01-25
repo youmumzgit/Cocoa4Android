@@ -214,11 +214,11 @@ public class UINavigationController extends UIViewController {
 		}
 		
 		
-		animation1.setDuration(500);
+		animation1.setDuration(400);
 		fromView.getView().startAnimation(animation1);
 		animation1.startNow();
 		
-		animation2.setDuration(500);
+		animation2.setDuration(400);
 		toView.getView().startAnimation(animation2);
 		animation2.startNow();
 		
