@@ -64,10 +64,13 @@ public abstract class UIAppDelegate extends Activity implements AppDelegate{
 	public void onBackPressed(){
 		if(window!=null){
         	UIViewController viewController = window.rootViewController();
-        	boolean handled = viewController.onBackPressed();
-        	if(!handled){
-        		super.onBackPressed();
-        	}
+        	if (viewController!=null) {
+        		boolean handled = viewController.onBackPressed();
+            	if(!handled){
+            		System.exit(0);
+            	}
+			}
+        	
     	}
 	}
 	public void launchApplication(){
