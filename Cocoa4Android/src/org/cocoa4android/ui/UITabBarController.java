@@ -118,12 +118,12 @@ public class UITabBarController extends UIViewController {
 	}
 	
 	@Override
-	public boolean backKeyDidClicked(){
+	public boolean onBackPressed(){
 		//current node
 		if(this.viewControllers!=null&&this.viewControllers.count()>0){
 			//current node
 			UIViewController viewController = (UIViewController) this.viewControllers.objectAtIndex(this.selectedIndex);
-			if(viewController.backKeyDidClicked()){
+			if(viewController.onBackPressed()){
 				return YES;
 			}
 		}

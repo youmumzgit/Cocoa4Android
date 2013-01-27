@@ -258,7 +258,7 @@ public class UINavigationController extends UIViewController {
     // backKey
     //================================================================================
 	@Override
-	public boolean backKeyDidClicked(){
+	public boolean onBackPressed(){
 		if(stack.size()>1){
 			this.popViewController(true);
 			return YES;

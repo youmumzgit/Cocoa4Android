@@ -59,20 +59,17 @@ public abstract class UIAppDelegate extends Activity implements AppDelegate{
         
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
+
 	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-        	if(window!=null){
-	        	UIViewController viewController = window.rootViewController();
-	        	if(viewController!=null){
-	        		return viewController.backKeyDidClicked();
-	        	}
+	public void onBackPressed(){
+		if(window!=null){
+        	UIViewController viewController = window.rootViewController();
+        	boolean handled = viewController.onBackPressed();
+        	if(!handled){
+        		super.onBackPressed();
         	}
-            return true;
-        }
-        return false;
-    }
-	
+    	}
+	}
 	public void launchApplication(){
 		UIApplication.sharedApplication().setApplicationLaunched(YES);
 		final UIImageView imageView = new UIImageView();
