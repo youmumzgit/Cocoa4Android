@@ -259,15 +259,10 @@ public class UINavigationController extends UIViewController {
     //================================================================================
 	@Override
 	public boolean backKeyDidClicked(){
-		if(!super.backKeyDidClicked()){
-			return false;
-		}
-		//fix me 
-		
 		if(stack.size()>1){
 			this.popViewController(true);
-			return false;
+			return YES;
 		}
-		return true;
+		return NO;
 	}
 }

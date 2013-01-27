@@ -258,9 +258,9 @@ public class UIViewController extends UIResponder{
 	public boolean backKeyDidClicked(){
 		if(this.presentedViewController!=null){
 			this.dismissModalViewController(true);
-			return false;
+			return YES;
 		}
-		return true;
+		return NO;
 	}
 
 	public String title() {
