@@ -62,7 +62,7 @@ public class UIControl extends UIView {
 				if (invocation.getParamsCount()==1) {
 					invocation.setArgument(UIControl.this, 2);
 				}
-				invocation.invoke();
+				invocation.performSelectorOnMainThread("invoke", null, NO);
 			}
 		}
 	}
