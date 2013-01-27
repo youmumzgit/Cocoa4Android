@@ -16,6 +16,7 @@
 package org.cocoa4android.ui;
 
 import org.cocoa4android.cg.CGRect;
+import org.cocoa4android.ns.NSURLRequest;
 
 
 import android.content.Context;
@@ -64,6 +65,9 @@ public class UIWebView extends UIView {
 	}
 	public void loadHTMLString(String string,String baseUrl){
 		webView.loadDataWithBaseURL(baseUrl, string, "text/html", "utf-8", null);
+	}
+	public void loadRequest(NSURLRequest request){
+		webView.loadUrl(request.URL().absoluteString());
 	}
 	public class ResizableWebView extends WebView{
 		private int currX;

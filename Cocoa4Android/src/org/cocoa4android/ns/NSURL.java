@@ -19,6 +19,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class NSURL {
+	private String URLString;
 	private URL url = null;
 	
 	private NSURL(URL url){
@@ -27,11 +28,15 @@ public class NSURL {
 	private NSURL(String URLString){
 		try {
 			this.url = new URL(URLString);
+			this.URLString = URLString;
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
 	}
 	public static NSURL URLWithString(String URLString) {
 		return new NSURL(URLString);
+	}
+	public String absoluteString(){
+		return URLString;
 	}
 }
