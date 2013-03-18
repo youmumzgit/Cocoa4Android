@@ -259,9 +259,15 @@ public class UINavigationController extends UIViewController {
     //================================================================================
 	@Override
 	public boolean onBackPressed(){
+		if (super.onBackPressed()) {
+			return YES;
+		}
 		if(stack.size()>1){
 			this.popViewController(true);
 			return YES;
+		}else if(stack.size()==1){
+			UIViewController currentViewController = this.stack.firstElement();
+			return currentViewController.onBackPressed();
 		}
 		return NO;
 	}

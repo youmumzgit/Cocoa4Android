@@ -62,6 +62,8 @@ public class UITextField extends UIView {
 				
 				if (keyCode == KeyEvent.KEYCODE_ENTER) {
 					if (delegate!=null) {
+						UITextField.firstResponder = UITextField.this;
+						UITextField.this.resignFirstResponder();
 						return delegate.textFieldShouldReturn(UITextField.this);
 					}
 				}
@@ -73,7 +75,8 @@ public class UITextField extends UIView {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (delegate!=null) {
-					return delegate.textFieldShouldReturn(UITextField.this);
+					//UITextField.this.resignFirstResponder();
+					//return delegate.textFieldShouldReturn(UITextField.this);
 				}
 				return false;
 			}

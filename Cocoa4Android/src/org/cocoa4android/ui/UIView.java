@@ -453,22 +453,25 @@ public class UIView extends UIResponder{
 		for (int i = 0; i < animations.count(); i++) {
 			Animation animation = (Animation) animations.objectAtIndex(i);
 			animation.setDuration((long) (UIView.duation*1000));
-			switch (curve) {
-			case UIViewAnimationCurveEaseInOut:
-				animation.setInterpolator(new AccelerateDecelerateInterpolator());
-				break;
-			case UIViewAnimationCurveEaseIn:
-				animation.setInterpolator(new DecelerateInterpolator());
-				break;
-			case UIViewAnimationCurveEaseOut:
-				animation.setInterpolator(new AccelerateInterpolator());
-				break;
-			case UIViewAnimationCurveLinear:
-				animation.setInterpolator(new LinearInterpolator());
-				break;
-			default:
-				break;
+			if (curve!=null) {
+				switch (curve) {
+				case UIViewAnimationCurveEaseInOut:
+					animation.setInterpolator(new AccelerateDecelerateInterpolator());
+					break;
+				case UIViewAnimationCurveEaseIn:
+					animation.setInterpolator(new DecelerateInterpolator());
+					break;
+				case UIViewAnimationCurveEaseOut:
+					animation.setInterpolator(new AccelerateInterpolator());
+					break;
+				case UIViewAnimationCurveLinear:
+					animation.setInterpolator(new LinearInterpolator());
+					break;
+				default:
+					break;
+				}
 			}
+			
 			animation.setRepeatCount(repeatCount);
 			animation.setStartTime((long) (AnimationUtils.currentAnimationTimeMillis()+UIView.delay*1000));
 			animation.start();

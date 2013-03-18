@@ -119,6 +119,9 @@ public class UITabBarController extends UIViewController {
 	
 	@Override
 	public boolean onBackPressed(){
+		if (super.onBackPressed()) {
+			return YES;
+		}
 		//current node
 		if(this.viewControllers!=null&&this.viewControllers.count()>0){
 			//current node
