@@ -25,6 +25,7 @@ import org.cocoa4android.ns.NSArray;
 import org.cocoa4android.ns.NSMutableArray;
 import org.cocoa4android.ns.NSSet;
 
+import android.R.anim;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -167,6 +168,7 @@ public class UIView extends UIResponder{
 		}
 	}
 	public void removeFromSuperView(){
+		this.getView().clearAnimation();
 		if(this.superView!=null){
 			this.superView.removeSubView(this);
 		}
@@ -473,9 +475,14 @@ public class UIView extends UIResponder{
 			}
 			
 			animation.setRepeatCount(repeatCount);
-			animation.setStartTime((long) (AnimationUtils.currentAnimationTimeMillis()+UIView.delay*1000));
-			animation.start();
-			UIApplication.sharedApplication().getWindow().getView().postInvalidate();
+			if (UIView.delay>0) {
+				animation.setStartTime((long) (AnimationUtils.currentAnimationTimeMillis()+UIView.delay*1000));
+				animation.start();
+			}else{
+				animation.startNow();
+			}
+			
+			//UIApplication.sharedApplication().getWindow().getView().postInvalidate();
 		}
 		
 		animationBegan = NO;
