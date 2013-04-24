@@ -57,6 +57,7 @@ public class UIWebView extends UIView {
 	}
 	public UIWebView(){
 		webView = new ResizableWebView(context);
+		webView.getSettings().setBuiltInZoomControls(true);
 		CocoaWebViewClient client = new CocoaWebViewClient();
 		webView.setWebViewClient(client);
 		this.setView(webView);
