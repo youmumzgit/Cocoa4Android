@@ -138,7 +138,7 @@ public class UIViewController extends UIResponder{
 		if (!isTransition) {
 			isTransition = YES;
 			UIView modalView = viewController.view();
-			modalView.setFrame(UIScreen.mainScreen().applicationFrame());
+			//modalView.setFrame(UIScreen.mainScreen().applicationFrame());
 			modalView.setBackgroundColor(UIColor.whiteColor());
 			UIApplication.sharedApplication().getWindow().addSubview(modalView);
 			this.setPresentedViewController(viewController);

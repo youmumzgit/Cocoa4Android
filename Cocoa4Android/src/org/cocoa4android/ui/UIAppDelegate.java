@@ -23,6 +23,7 @@ import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.ns.NSString;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -38,6 +39,8 @@ public abstract class UIAppDelegate extends Activity implements AppDelegate{
 	protected static void NSLog(String format,Object...args){
 		Log.i("Cocoa4Android",NSString.stringWithFormat(format, args));
 	}
+	
+	
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +62,19 @@ public abstract class UIAppDelegate extends Activity implements AppDelegate{
         
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
-
+	@Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        // TODO Auto-generated method stub
+    	super.onConfigurationChanged(newConfig);
+        if(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE){
+           // Nothing need to be done here
+        	
+        	
+        } else {
+           // Nothing need to be done here
+        	
+        }       
+    }
 	@Override
 	public void onBackPressed(){
 		if(window!=null){

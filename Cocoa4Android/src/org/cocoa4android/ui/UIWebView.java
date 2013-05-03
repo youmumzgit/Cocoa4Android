@@ -36,6 +36,7 @@ public class UIWebView extends UIView {
 	
 	private UIWebViewDelegate delegate;
 	
+	
 	public UIWebViewDelegate delegate() {
 		return delegate;
 	}
@@ -61,6 +62,7 @@ public class UIWebView extends UIView {
 		CocoaWebViewClient client = new CocoaWebViewClient();
 		webView.setWebViewClient(client);
 		this.setView(webView);
+		
 		
 	}
 	public UIWebView(CGRect frame){
