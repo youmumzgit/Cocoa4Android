@@ -15,6 +15,7 @@
  */
 package org.cocoa4android.ui;
 
+import android.R.integer;
 import android.graphics.Color;
 
 public class UIColor {
@@ -23,7 +24,14 @@ public class UIColor {
 	public static UIColor colorWithRed(float red,float green,float blue,float alpha){
 		return new UIColor(red,green,blue,alpha);
 	}
-	
+	public static UIColor colorWithPixel(int pixel){
+		return UIColor.colorWithPixel(pixel, 1);
+	}
+	public static UIColor colorWithPixel(int pixel,float alpha){
+		int alphaInt = (int)(alpha*255);
+		pixel = alphaInt<<24|pixel;
+		return new UIColor(pixel);
+	}
 	public UIColor(int color){
 		this.color = color;
 	}

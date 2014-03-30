@@ -92,14 +92,24 @@ public class UIView extends UIResponder{
 	public boolean isHidden() {
 		return isHidden;
 	}
+
 	public void setHidden(boolean isHidden) {
 		this.isHidden = isHidden;
-		this.view.setVisibility(isHidden?View.INVISIBLE:View.VISIBLE);
+		this.view.setVisibility(isHidden ? View.INVISIBLE : View.VISIBLE);
 	}
-	
+
+	public void setEnabled(boolean enabled) {
+		this.view.setEnabled(enabled);
+	}
+
+	public boolean enabled() {
+		return this.view.isEnabled();
+	}
+
 	public UIColor backgroundColor() {
 		return backgroundColor;
 	}
+
 	public void setBackgroundColor(UIColor backgroundColor) {
 		this.backgroundColor = backgroundColor;
 		this.view.setBackgroundColor(backgroundColor.getColor());

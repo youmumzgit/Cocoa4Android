@@ -86,89 +86,16 @@ public class UIWebView extends UIView {
 		webView.loadUrl(request.URL().absoluteString());
 	}
 	public class ResizableWebView extends WebView{
-		private int currX;
-		private int currY;
-		private int prevX;
-		private int prevY;
-		
-		private int maxX=-1;
-		private int maxY=-1;
-		
 		public ResizableWebView(Context context) {
 			super(context);
 		}
 		@Override
 		protected void onSizeChanged(int xNew, int yNew, int xOld, int yOld){
 			super.onSizeChanged(xNew, yNew, xOld, yOld);
-			maxX = this.getMaxScrollX();
-			maxY = this.getMaxScrollY();
 			if(webViewSizeChangeLisener!=null){
 				webViewSizeChangeLisener.webViewDidChangeSize(xNew/scaleDensityX, yNew/scaleDensityY);
 			}
 			
-		}
-		@Override
-	    public boolean onTouchEvent(MotionEvent event){
-			if (enableMutipleScroll) {
-				prevX = currX;
-				prevY = currY;
-				currX = (int) event.getX();
-				currY = (int) event.getY();
-				
-				int deltaX = currX-prevX;
-				int deltaY = currY-prevY;
-				
-				int scrollX = this.getScrollX();
-				int scrollY = this.getScrollY();
-				
-				boolean blockTouch = true;
-				if (event.getAction()==MotionEvent.ACTION_MOVE) {
-					//if it is moved
-					//decide if the webView can scroll
-					boolean cannotScroll = NO;
-					if (Math.abs(deltaX)>Math.abs(deltaY)) {
-						cannotScroll = (scrollX==maxX&&deltaX<0)||(scrollX==0&&deltaX>0);
-					}else{
-						cannotScroll = (scrollY==maxY&&deltaY<0)||(scrollY==0&&deltaY>0);
-					}
-					if(cannotScroll&&(deltaX!=0||deltaY!=0)){
-						blockTouch = false;
-					}
-					
-				}
-				
-				if (blockTouch) {
-					//block
-					//webView handle the scroll
-					requestDisallowInterceptTouchEvent(true);
-				}else{
-					//parent handle the scroll
-					requestDisallowInterceptTouchEvent(false);
-				}
-			}
-			return super.onTouchEvent(event);
-	    } 
-		private int getMaxScrollX(){
-			int viewWidth = 0;
-			if (!isVerticalScrollBarEnabled()||overlayVerticalScrollbar()) {
-				viewWidth = getWidth();
-	        } else {
-	        	viewWidth =  getWidth() - getVerticalScrollbarWidth();
-	        }
-			
-			int max = Math.max(computeHorizontalScrollRange() - viewWidth, 0);
-			return max;
-		}
-		private int getMaxScrollY(){
-			int viewHeight = 0;
-			if (!isHorizontalScrollBarEnabled()||overlayHorizontalScrollbar()) {
-				viewHeight = getHeight();
-	        } else {
-	        	viewHeight =  getHeight() - getHorizontalScrollbarHeight();
-	        }
-			 int maxContentH = computeVerticalScrollRange();
-			 int max = Math.max(maxContentH - viewHeight, 0);
-		     return max;
 		}
 	}
 	public interface WebViewSizeChangeLisener{

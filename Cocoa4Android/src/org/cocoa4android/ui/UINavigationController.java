@@ -75,6 +75,11 @@ public class UINavigationController extends UIViewController {
 		titleLabel.getLabel().setShadowLayer(0.4f, 0, -1, 0x55000000);
 		navigationBar.addSubview(titleLabel);
 	}
+	
+	public UIView navigationBar(){
+		return this.navigationBar;
+	}
+	
 	//FIXME no animation on buttons and labels
 	private void invalidateBackButton(){
 		if (stack.size()>1&&!navigationBarHidden) {

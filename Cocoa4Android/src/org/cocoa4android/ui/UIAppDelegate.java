@@ -19,7 +19,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.cocoa4android.R;
-import org.cocoa4android.cg.CGRect;
 import org.cocoa4android.ns.NSString;
 
 import android.app.Activity;
@@ -27,7 +26,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.KeyEvent;
+import android.view.Window;
 import android.view.WindowManager;
 
 public abstract class UIAppDelegate extends Activity implements AppDelegate{
@@ -45,7 +44,10 @@ public abstract class UIAppDelegate extends Activity implements AppDelegate{
 	@Override
     public void onCreate(Bundle savedInstanceState) {
 		//work before onCreate
-		setTheme(android.R.style.Theme_Translucent_NoTitleBar);
+		//setTheme(android.R.style.Theme_Translucent_NoTitleBar);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        
         super.onCreate(savedInstanceState);
         UIApplication.sharedApplication().setContext(this);
         UIApplication.sharedApplication().setDelegate(this);
