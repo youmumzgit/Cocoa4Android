@@ -57,6 +57,9 @@ public class UITextField extends UIView {
 			
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_HOME || keyCode == KeyEvent.KEYCODE_MENU) {
+					return NO;
+				}
 				if (event.getAction()!=KeyEvent.ACTION_DOWN)
                     return YES;
 				
