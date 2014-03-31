@@ -89,7 +89,7 @@ public class UINavigationController extends UIViewController {
 				backButton = new UIButton(CGRectMake(0, 0, backWidth, backHeight));
 				backButton.setKeepAspectRatio(YES);
 				backButton.setAutoHighlight(YES);
-				backButton.setImage(UIImage.imageNamed(R.drawable.zz_c4a_navigationbar_return));
+				backButton.setImage(UIImage.imageNamed(R.drawable.zz_c4a_navigationbar_back));
 				backButton.addTarget(this, selector("popViewController"), UIControlEvent.UIControlEventTouchUpInside);
 				backButton.setCenter(CGPointMake(appFrame.size.width/12.0f,((int)navigationBarHeight)>>1));
 				backButton.titleLabel().setTextAlignment(NSTextAlignment.NSTextAlignmentCenter);
@@ -100,12 +100,14 @@ public class UINavigationController extends UIViewController {
 				this.navigationBar.addSubview(backButton);
 			}
 			backButton.setHidden(NO);
+			/*
 			String title = stack.get(stack.size()-2).title();
 			if (title==null) {
 				backButton.setTitle("·µ»Ø");
 			}else{
 				backButton.setTitle(title);
 			}
+			*/
 		}else{
 			if (backButton!=null) {
 				backButton.setHidden(YES);
