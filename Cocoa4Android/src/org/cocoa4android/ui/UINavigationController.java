@@ -84,8 +84,8 @@ public class UINavigationController extends UIViewController {
 	private void invalidateBackButton(){
 		if (stack.size()>1&&!navigationBarHidden) {
 			if (backButton==null) {
-				int backWidth = (int)(appFrame.size.width)>>3;
-				int backHeight = (int) (backWidth*0.6f);
+				int backWidth = (int)(appFrame.size.width)>>4;
+				int backHeight = (int) (backWidth*1.3f);
 				backButton = new UIButton(CGRectMake(0, 0, backWidth, backHeight));
 				backButton.setKeepAspectRatio(YES);
 				backButton.setAutoHighlight(YES);
