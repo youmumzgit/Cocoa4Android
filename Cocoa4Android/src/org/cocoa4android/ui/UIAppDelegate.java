@@ -109,4 +109,9 @@ public abstract class UIAppDelegate extends Activity implements AppDelegate{
 			}
 		}, 3000);
 	}
+	@Override
+	public void finish() {
+		UIApplication.sharedApplication().setApplicationLaunched(NO);
+		super.finish();
+	}
 }
